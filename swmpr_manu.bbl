@@ -1,10 +1,117 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{Glasgow04}
+Glasgow HB, Burkholder JM, Reed RE, Lewitus AJ, Kleinman JE.
+\newblock Real-time remote monitoring of water quality: a review of current
+  applications, and advancements in sensor, telemetry, and computing
+  technologies.
+\newblock Journal of Experimental Marine Biology and Ecology.
+  2004;300(1-2):409--448.
+
+\bibitem{Fries08}
+Fries DP, Ivanov SZ, Bhanushali PH, wilson JA, Broadbent HA, Sanderson AC.
+\newblock Broadband, low-cost, coastal sensor nets.
+\newblock Oceanography. 2008;20(4):150--155.
+
+\bibitem{Reed10}
+Reed RE, Burkholder JM, Allen EH.
+\newblock Current online monitoring technology for surveillance of algal
+  blooms, potential toxicity, and physicalechemical structure in rivers,
+  reservoirs, and lakes.
+\newblock In: {American Water Works Association Manual M57, Algae}. Denver,
+  Colorado: American Water Works Association; 2010. p. 1--24.
+
+\bibitem{HADS15}
+{National Weather Service, National Oceanic and Atmospheric Administration}.
+  Hydrometeorological Automated Data System website; 2015.
+\newblock \url{http://www.nws.noaa.gov/oh/hads/}. (Accessed March, 2015).
+
+\bibitem{Sanders01}
+Sanders CA, Rodriguez M, Greenbaum E.
+\newblock Stand-off tissue-based biosensors for the detection of chemical
+  warfare agents using photosynthetic fluorescence induction.
+\newblock Biosensors and Bioelectronics. 2008;16(7-8):439--446.
+
+\bibitem{Campbell13}
+Campbell JL, Rustad LE, Porter JH, Taylor JR, Dereszynski EW, Shanley JB,
+  et~al.
+\newblock Quantity is nothing without quality: Automated {QA/QC} for streaming
+  environmental sensor data.
+\newblock BioScience. 2013;63(7):574--585.
+
+\bibitem{Millie13}
+Millie DF, Weckman GR, Young WA, Ivey JE, Fries DP, Ardjmand E, et~al.
+\newblock Coastal `big data' and nature-inspired computation: prediction
+  potentials, uncertainties, and knowledge derivation of neural netowrks for an
+  algal metric.
+\newblock Estuarine, Coastal and Shelf Science. 2013;125:57--67.
+
+\bibitem{Bulthius95}
+Bulthius DA.
+\newblock Distribution of seagrasses in a north {P}uget {S}ound estuary -
+  {P}adilla {B}ay, {W}ashington, {USA}.
+\newblock Aquatic Botany. 1995;50(1):99--105.
+
+\bibitem{Dix08}
+Dix NG, Phlips EJ, Gleeson RA.
+\newblock Water quality changes in the {G}uana {T}olomato {M}atanzas {N}ational
+  {E}stuarine {R}esearch {R}eserve, {F}lorida, associated with four tropical
+  storms.
+\newblock Journal of Coastal Research. 2008;55(SI):26--37.
+
+\bibitem{Caffrey03}
+Caffrey JM.
+\newblock Production, respiration and net ecosystem metabolism in {U.S.}
+  estuaries.
+\newblock Environmental Monitoring and Assessment. 2003;81(1-3):207--219.
+
+\bibitem{Caffrey04}
+Caffrey JM.
+\newblock Factors controlling net ecosystem metabolism in {U.S.} estuaries.
+\newblock Estuaries. 2004;27(1):90--101.
+
+\bibitem{Sanger02}
+Sanger DM, Arendt MD, Chen Y, Wenner EL, Holland AF, Edwards D, et~al.
+\newblock A synthesis of water quality data: National Estuarine Research
+  Reserve System-wide Monitoring Program (1995-2000).
+\newblock Charleston, South Carolina: National Estuarine Research Reserve
+  Technical Report Series 2002:3. South Carolina Department of Natural
+  Resources, Marine Resources Division Contribution No. 500; 2002.
+
+\bibitem{Wenner04}
+Wenner E, Sanger D, Arendt M, Holland AF, Chen Y.
+\newblock Variability in dissolved oxygen and other water-quality variables
+  within the {N}ational {E}stuarine {R}esearch {R}eserve {S}ystem.
+\newblock Journal of Coastal Research. 2004;45(SI):17--38.
+
+\bibitem{SWMP14}
+{System-Wide Monitoring Program Data Analysis Training}. SWMP Data Analysis
+  Training Workshop provided at the 2014 NERRS/NERRA Annual Meeting, November
+  17, 2014; 2014.
+\newblock \url{http://copepod.org/nerrs-swmp-workshop/}.
+
+\bibitem{RDCT14}
+{RDCT (R Development Core Team)}. {R: A language and environment for
+  statistical computing, v3.1.2. R Foundation for Statistical Computing,
+  Vienna, Austria}; 2014.
+\newblock \url{http://www.R-project.org}.
+
+\bibitem{Wickham14}
+Wickham H.
+\newblock Advanced R.
+\newblock Boca Raton, Florida: Chapman and Hall, CRC Press; 2014.
 
 \bibitem{Cloern10}
 Cloern JE, Jassby AD.
 \newblock Patterns and scales of phytoplankton variability in estuarine-coastal
   ecosystems.
 \newblock Estuaries and Coasts. 2010;33(2):230--241.
+
+\bibitem{shiny15}
+Chang W, Cheng J, Allaire J, Xie Y, McPherson J. shiny: Web Application
+  Framework for R; 2015.
+\newblock R package version 0.11.1.
+\newblock Available from: \url{http://CRAN.R-project.org/package=shiny}.
 
 \bibitem{Odum56}
 Odum HT.
@@ -17,5 +124,11 @@ Caffrey JM, Murrell MC, Amacker KS, Harper J, Phipps S, Woodrey M.
   and net ecosystem metabolism in 3 estuaries in the northeast {G}ulf of
   {M}exico.
 \newblock Estuaries and Coasts. 2013;37(1):222--241.
+
+\bibitem{ggmap13}
+Kahle D, Wickham H. ggmap: A package for spatial visualization with Google Maps
+  and OpenStreetMap; 2013.
+\newblock R package version 2.3.
+\newblock Available from: \url{http://CRAN.R-project.org/package=ggmap}.
 
 \end{thebibliography}
