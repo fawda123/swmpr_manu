@@ -1,8 +1,12 @@
 base
+Formula
 ggplot2
+Hmisc
 knitr
+lattice
 mapproj
 maps
+survival
 SWMPr
 xtable
 zoo
