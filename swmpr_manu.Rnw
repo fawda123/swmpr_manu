@@ -221,7 +221,7 @@ Four core data elements are collected through the \ac{SWMP} monitoring network: 
 
 The \ac{CDMO} web portal was established to support priority areas of \ac{SWMP} that focus on the continuation and advancement of data and information management.  As such, \ac{CDMO} provides access to over 35 million water quality, weather, and nutrient records that have been authenticated through systematic \ac{QAQC} procedures.  Estuary data must be obtained from \ac{CDMO} prior to using most of the functions within the SWMPr package.  In most cases, the analysis needs will typically define the location, date range, and parameters of interest that need to be obtained from \ac{CDMO}.  All stations in the \ac{SWMP} network are identified by a 7 or 8 character name that specifies the reserve, station, and parameter type.  For example, `apaebwq' is the water quality identifier for the East Bay station at the Apalachicola reserve.  Similarly, a suffix of `met' or `nut' would specify the weather (meteorological) or nutrients station.  
 
-\ac{SWMP} data can be used in R after they are obtained directly from the \ac{CDMO} through an online query or by using the package's retrieval functions.  Prior to any data request, the site, parameter type, and date ranges need to be identified based on the analysis needs.  All reserve names, stations, and date ranges for the water quality, weather, or nutrients data can be viewed on the \ac{CDMO} \href{http://cdmo.baruch.sc.edu/}{website}. Alternatively, the \texttt{site\_codes} (all sites) or \texttt{site\_codes\_ind} (single site) functions provided by the SWMPr package can be used to view the same information.  As noted below, the computer's IP address must be registered by \ac{CDMO} staff before using the data retrieval functions in SWMPr.  \href{http://cdmo.baruch.sc.edu/webservices.cfm}{Web services} are provided by \ac{CDMO} to provide direct access to \ac{SWMP} data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in SWMPr are simple calls to the existing retrieval functions on \ac{CDMO} web services.  For example, the \texttt{all\_params} function in SWMPr uses the \texttt{exportAllParamsXMLNew} function from the web services to retrieve metadata for all the \ac{SWMP} sites.  The text below describes the data retrieval functions in more detail.
+Prior to any data request to the \ac{CDMO}, the site, parameter type, and date ranges need to be identified based on the analysis needs.  All reserve names, stations, and date ranges for the water quality, weather, or nutrients data can be viewed on the \ac{CDMO} \href{http://cdmo.baruch.sc.edu/}{website}. Alternatively, the \texttt{site\_codes} (all sites) or \texttt{site\_codes\_ind} (single site) functions provided by the SWMPr package can be used to view the same information.  As noted below, the computer's IP address must be registered by \ac{CDMO} staff before using the data retrieval functions in SWMPr.  \href{http://cdmo.baruch.sc.edu/webservices.cfm}{Web services} are provided by \ac{CDMO} to provide direct access to \ac{SWMP} data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in SWMPr are simple calls to the existing retrieval functions on \ac{CDMO} web services.  For example, the \texttt{all\_params} function in SWMPr uses the \texttt{exportAllParamsXMLNew} function from the web services to retrieve metadata for all the \ac{SWMP} sites.  The text below describes the data retrieval functions in more detail.
 
 \section*{Structure of the SWMPr package}
 
@@ -243,17 +243,18 @@ The SWMPr package was developed by considering a standard workflow that categori
 
 \subsection*{Data retrieval}
 
-\ac{SWMP} data must be obtained from the \ac{CDMO} prior to organizing and analyzing the information.  Two approaches can be used.  First, the data can be obtained outside of R using the graphical query forms on the \ac{CDMO} website (\href{http://cdmo.baruch.sc.edu/get/landing.cfm}{see here}).  Second, functions from the SWMPr package can be used to import the data directly from the online server using \ac{CDMO} web services (\Cref{tab:retrieve}).  In the latter case, the IP address for the computer making the request must be registered with \ac{CDMO}.  This can be done by following instructions \href{http://cdmo.baruch.sc.edu/webservices.cfm}{here}.  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with \ac{CDMO}. 
+Three approaches can be used for retrieving \ac{SWMP} data for import into R.  First, functions from the SWMPr package can be used to import the data directly from the online server using \ac{CDMO} web services (\Cref{tab:retrieve}).  To do so, the IP address for the computer making the request must be registered with \ac{CDMO}.  This can be done by following instructions \href{http://cdmo.baruch.sc.edu/webservices.cfm}{here}.  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with \ac{CDMO}. 
 
 % table for retrieval functions
 <<results = 'asis', echo = FALSE>>=
-funcs <- c('all\\_params', 'all\\_params\\_dtrng', 'import\\_local', 'single\\_param', 'site\\_codes', 'site\\_codes\\_ind')
+funcs <- c('all\\_params', 'all\\_params\\_dtrng', 'import\\_local', 'import\\_remote', 'single\\_param', 'site\\_codes', 'site\\_codes\\_ind')
 funcs <- paste0('\\texttt{', funcs, '}')
 
 descrips <- c(
   'Retrieve up to 100 records starting with the most recent at a given station, all parameters.  Wrapper to \\texttt{exportAllParamsXMLNew} function on web services.',
   'Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter.  Maximum of 1000 records. Wrapper to \\texttt{exportAllParamsDateRangeXMLNew}.', 
-  'Import files from a local path.  The files must be in a specific format, specifically those returned from the \\ac{CDMO} using the zip downloads option for a reserve.', 
+  'Import files from a local path.  The files must be in a specific format, specifically those returned from the \\ac{CDMO} using the zip downloads option for a reserve.',
+  'Import site data from an independent server. These files have been downloaded from \\ac{CDMO} up to December 2014, processed using functions in this package, and uploaded to an Amazon server for quicker import into R.',
   'Retrieve up to 100 records for a single parameter starting with the most recent at a given station.  Wrapper to \\texttt{exportSingleParamXMLNew} function on web services.', 
   'Metadata for all stations, wrapper to \\texttt{exportStationCodesXMLNew} function on web services.',
   'Metadata for all stations at a single site, wrapper  to \\texttt{NERRFilterStationCodesXMLNew} function on web services.'
@@ -302,7 +303,14 @@ all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'),
 single_param('hudscwq', 'do_mgl')
 @
 
-For larger requests, data are easier to obtain outside of R using the \ac{CDMO} query system and then importing using the \texttt{import\_local} function.  Data can be retrieved from the \ac{CDMO} several ways.  The \texttt{import\_local} function is designed for data from the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature in the advanced query section of the \ac{CDMO}. The function may also work using data from the \href{http://cdmo.baruch.sc.edu/get/export.cfm}{data export system}, but this feature has not been extensively tested.  The zip downloads feature is an easy way to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used after the folder is decompressed.
+A second approach for importing \ac{SWMP} data into R is using the \texttt{import\_remote} function.  This method imports site data into R from an independent server where \ac{SWMP} data have been downloaded previously and uploaded as \texttt{swmpr} objects in .RData binary format.  This approach is advantageous because the files can be imported very quickly and the computer's IP address does not need to be registered.  The files are hosted via third party web services and include almost all available \ac{SWMP} data for each site up to December 2014.  Always use the \ac{CDMO} for the most recent data.  The files can be accessed by copying the URL to a web browser (see the \Cref{sec:supp_info}) or by using the function as follows.
+
+<<eval = F>>=
+## import a file from an independent server
+import_remote('acebbwq')
+@
+
+A third approach is to use the \texttt{import\_local} function to import data into R that are locally available after downloading outside of R (\href{http://cdmo.baruch.sc.edu/get/landing.cfm}{see here}).  This approach may be best for larger, more customized data requests to \ac{CDMO}. Data can be retrieved from the \ac{CDMO} several ways.  The \texttt{import\_local} function is designed for data from the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature in the advanced query section of the \ac{CDMO}. The function may also work using data from the \href{http://cdmo.baruch.sc.edu/get/export.cfm}{data export system}, but this feature has not been extensively tested.  The zip downloads feature is an easy way to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used after the folder is decompressed.
 
 Occasionally, duplicate time stamps are present in the raw data.  The \texttt{import\_local} function handles duplicate entries differently depending on the data type (water quality,  weather, or nutrients).  For water quality and nutrient data, duplicate time stamps are simply removed.  Note that nutrient data often contain replicate samples with similar but not duplicated time stamps within a few minutes of each other.  Replicates with unique time stamps are not removed but can be further processed using \texttt{rem\_reps}.  Weather data prior to 2007 may contain duplicate time stamps at frequencies for 60 (hourly) and 144 (daily) averages, in addition to 15 minute frequencies.  Duplicate values that correspond to the smallest value in the frequency column (15 minutes) are retained.  
 
@@ -704,122 +712,122 @@ map_reserve('jac')
 
 \section*{Applications using the SWMPr package}
 
-The ability to evaluate environmental characteristics between estuaries within the \ac{NERRS} program has been greatly improved using functions in the SWMPr package.  This section describes two examples of applications using the SWMPr package to illustrate the improved ability to synthesize and evaluate multi-year time series of estuarine data.  First, the open-water method for estimating metabolism was applied to nearly all co-located water quality and weather sites at the \ac{NERRS} reserve for all years of available data.  The results are provided primarily to illustrate ease of use of the functions and secondarily to provide an update to results described in Caffrey \cite{Caffrey03} and Caffrey \cite{Caffrey04}.  A comprehensive evaluation of metabolic rates between estuaries has not been conducted using the most recent \ac{SWMP} data.  The results are presented to facilitate additional research to evaluate factors that influence variation between sites.
+The ability to evaluate environmental characteristics between estuaries within the \ac{NERRS} program has been greatly improved using functions in the SWMPr package.  This section describes three examples using the SWMPr package to illustrate the improved ability to synthesize and evaluate multi-year time series of estuarine data.  
 
-Caffrey \cite{Caffrey03} and Caffrey \cite{Caffrey04} describe the theory and application of the open-water method to estimate ecosystem metabolism using two sites at each of the \ac{NERRS} reserve.  Time series data included approximately five years of half-hour water quality observations at each site.  Additionally, the air-sea gas exchange model, as implemented by the current \texttt{ecometab} function (see Ro and Hunt \cite{Ro06} and Thebault et al. \cite{Thebault08}), was not incorporated into the initial metabolism estimates such that a constant value for the reaeration coefficient was assumed.  This coefficient provides an estimate of the rate of air-sea gas exchange that varies as a function of wind speed, temperature, barometric pressure, salinity, and depth of the water column  The inclusion of weather data in the calculation allows for a more precise estimate of air-sea gas exchange and consequently more reliable estimates of ecosystem metabolism (see Caffrey et al. \cite{Caffrey14} for details).
+First, the open-water method for estimating metabolism was applied to nearly all co-located water quality and weather sites at the \ac{NERRS} reserve for all years of available data.  The results are provided primarily to illustrate ease of use of the functions and secondarily to provide an update to results described in Caffrey \cite{Caffrey03} and Caffrey \cite{Caffrey04}.   The results are presented to facilitate additional research to evaluate factors that influence variation between sites.  Caffrey \cite{Caffrey03} and Caffrey \cite{Caffrey04} describe the theory and application of the open-water method to estimate ecosystem metabolism using two sites at each of the \ac{NERRS} reserve.  Time series data included approximately five years of half-hour water quality observations at each site.  Additionally, the air-sea gas exchange model, as implemented by the current \texttt{ecometab} function (see Ro and Hunt \cite{Ro06} and Thebault et al. \cite{Thebault08}), was not incorporated into the initial metabolism estimates such that a constant value for the reaeration coefficient was assumed.  This coefficient provides an estimate of the rate of air-sea gas exchange that varies as a function of wind speed, temperature, barometric pressure, salinity, and depth of the water column  The inclusion of weather data in the calculation allows for a more precise estimate of air-sea gas exchange and consequently more reliable estimates of ecosystem metabolism (see Caffrey et al. \cite{Caffrey14} for details).
 
-All water quality and weather observations for all \ac{NERRS} sites were obtained through a bulk data request in November of 2014 using the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature of \ac{CDMO}.  After the download was complete, all csv files for each station were imported into R using the \texttt{import\_local} function, saved again on a local hard drive as a binary .RData file, and uploaded.  This resulted in a single \texttt{swmpr} object for each site.  All files were then uploaded to a remote server.  An R script was executed that retrieved and processed the \texttt{swmpr} objects for each site using the following functions in sequence: 
+All water quality and weather observations for all \ac{NERRS} sites were obtained through a bulk data request in November 2014 using the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature of \ac{CDMO}.  After the download was complete, all csv files for each station were imported into R using the \texttt{import\_local} function, saved again on a local hard drive as a binary .RData file, and uploaded.  This resulted in a single \texttt{swmpr} object for each site.  All files were then uploaded to a remote server.  An \href{https://gist.github.com/fawda123/4fc51c2cb86341ed9291}{R script} was executed that retrieved and processed combined water quality and weather data for each site. 
 
-The weather station with the most data was retained if more than one weather station was available for a single reserve.  
+<<eval = F, echo = F>>=
+# # packages to use
+# library(SWMPr)
+# library(httr)
+# library(XML)
+# library(foreach)
+# library(doParallel)
+# 
+# # names of files on server
+# files_s3 <- httr::GET('https://s3.amazonaws.com/swmpalldata/')$content
+# files_s3 <- rawToChar(files_s3)
+# files_s3 <- htmlTreeParse(files_s3, useInternalNodes = T)
+# files_s3 <- xpathSApply(files_s3, '//contents//key', xmlValue)
+# files_s3 <- gsub('\\.RData$', '', files_s3) 
+# 
+# # find only active water quality and weather sites
+# # IP address must be registed with CDMO 
+# meta <- site_codes()
+# sel <- meta$status %in% 'Active' & !grepl('nut$', meta$station_code)
+# meta <- meta[sel, ]
+# 
+# # get wq sites from meta, then filter by those on server
+# wq_sites <- grep('wq$', meta$station_code, value = T)
+# wq_sites <- files_s3[gsub('\\.RData$', '', files_s3) %in% wq_sites]
+# 
+# ##
+# # process each site
+# 
+# # setup parallel backend for processing
+# cl <- makeCluster(8)
+# registerDoParallel(cl)
+# strt <- Sys.time()
+# 
+# # output
+# metabs <- foreach(wq_site = wq_sites) %dopar% {
+#  
+#   library(SWMPr)
+#   
+#   # progress
+#   sink('log.txt')
+#   cat(wq_site, which(wq_site == wq_sites), 'of', length(wq_sites), '\n')
+#   print(Sys.time() - strt)
+#   sink()
+#   
+#   # find corresponding wx station
+#   met_site <- substr(wq_site, 1, 3)
+#   met_site <- grep(paste0('^', met_site, '.*met'), files_s3, value = T)
+#   met_site <- gsub('\\.RData$', '', met_site)
+#   
+#   # continue if wx data found
+#   if(length(met_site) > 0){
+#   
+#     ##
+#     # load the files
+#     
+#     # wq
+#     wq <- import_remote(wq_site)
+#     
+#     # met
+#     met <- import_remote(met_site)
+#     
+#     ## 
+#     # combine, subset up to 2013, estimate metabolism, reduce data volume
+#     dat <- comb(wq, met, method = met_site)
+#     dat <- subset(dat, subset = '2014-01-01 0:0', operator = '<')
+#     dat <- ecometab(dat)
+#     dat <- dat[1, ]
+#     
+#     dat
+#     
+#   }
+#   
+# }
+# names(metabs) <- wq_sites
+# save(metabs, file = 'metabs.RData')
 
-<<eval = F>>=
-# packages to use
-library(SWMPr)
-library(httr)
-library(XML)
-library(foreach)
-library(doParallel)
+# make a plot.....
 
-# names of files on server
-files_s3 <- httr::GET('https://s3.amazonaws.com/swmpalldata/')$content
-files_s3 <- rawToChar(files_s3)
-files_s3 <- htmlTreeParse(files_s3, useInternalNodes = T)
-files_s3 <- xpathSApply(files_s3, '//contents//key', xmlValue)
 
-# find only active water quality and weather sites
-# IP address must be registed with CDMO 
-meta <- site_codes()
-sel <- meta$status %in% 'Active' & !grepl('nut$', meta$station_code)
-meta <- meta[sel, ]
-
-# get wq sites
-wq_sites <- grep('wq$', meta$station_code, value = T)
-
-##
-# process each site
-
-# setup parallel backend for processing
-cl <- makeCluster(8)
-registerDoParallel(cl)
-strt <- Sys.time()
-
-# output
-metabs <- foreach(wq_site = wq_sites) %dopar% {
- 
-  library(SWMPr)
-  
-  # progress
-  sink('log.txt')
-  cat(wq_site, which(wq_site == wq_sites), 'of', length(wq_sites), '\n')
-  print(Sys.time() - strt)
-  sink()
-  
-  # find corresponding wx station
-  met_site <- substr(wq_site, 1, 3)
-  met_site <- grep(paste0('^', met_site, '.*met'), files_s3, value = T)
-  met_site <- gsub('\\.RData$', '', met_site)
-  
-  # continue if wx data found
-  if(length(met_site) > 0){
-  
-    ##
-    # load the files
-    
-    # wq
-    raw_content <- paste0('https://s3.amazonaws.com/swmpalldata/', wq_site, '.RData')
-    raw_content <- httr::GET(raw_content)$content
-    connect <- rawConnection(raw_content)
-    load(connect)
-    wq <- get(wq_site)
-    rm(list = wq_site)
-    close(connect) 
-    
-    # met
-    raw_content <- paste0('https://s3.amazonaws.com/swmpalldata/', met_site, '.RData')
-    raw_content <- httr::GET(raw_content)$content
-    connect <- rawConnection(raw_content)
-    load(connect)
-    met <- get(met_site)
-    rm(list = met_site)
-    close(connect) 
-    
-    ## 
-    # combine, subset up to 2013, estimate metabolism
-    dat <- SWMPr::comb(wq, met, method = met_site)
-    dat <- subset(dat, subset = '2014-01-01 0:0', operator = '<')
-    dat <- SWMPr::ecometab(dat)
-    
-    dat
-    
-  }
-  
-}
-names(metabs) <- wq_sites
-save(metabs, file = 'metabs.RData')
 @
 
+The second and third examples are two Shiny web applications \cite{Chang15} that illustrate summaries and comparisons of \ac{SWMP} data within and between reserves (see the \nameref{supp_info}).  The second application evaluates trends in \ac{SWMP} data within and between sites using an interactive map.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-levels trends are described below the map using a simple linear regression to show an increase or decrease in values over time.  Trends on the map at each station are plotted as circles that identify the direction and significance of the trend.  The trend direction is blue for decreasing and red for increasing.  The significance is indicated by radius of the circle and color shading where larger points with darker colors indicate a strong trend.  The third application provides graphical summaries of water quality, weather, or nutrient station data at individual stations. The drop down menus can be used to select the station, date range, and parameter for plotting. Plots are based on daily averages for each parameter.  The data used for each application are similar to those used to estimate ecosystem metabolism described above.  
+
+% add figs to show each....
 
 \section*{Summary}
+
+Add some stuff....
 
 \section*{Supporting Information}
 \label{supp_info}
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
-\subsection*{Trends in SWMP parameters}
+\subsection*{Trends in \ac{SWMP} parameters}
 \label{swmp_trends}
-\href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}
-\bigskip
-This widget is an interactive tool to evaluate trends in SWMP data within and between sites.  Trends are described by an increase or decrease in values over time using a simple linear regression of summarized data.  The regression for each station can be viewed by clicking on a map location.  Trends at each station are plotted as circles that identify the direction and significance of the trend.  The trend direction is blue for decreasing and red for increasing.  The significance is indicated by radius of the circle and color shading where larger points with darker colors indicate a strong trend.
+Evaluate trends within and between reserves using an interactive map: \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}
 
-\subsection*{Monthly and annual summary of SWMP parameters}
+\subsection*{Monthly and annual summary of \ac{SWMP} parameters}
 \label{swmp_summary}
-\href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary/}
+Summarize trends in \ac{SWMP} parameters for an individual site: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary/} 
 
-This interactive widget provides graphical summaries of water quality, weather, and nutrient station data from SWMP. The drop down menus can be used to select the station, date range, and parameter for plotting. The raw data used for plotting include all SWMP records from the earliest date at each station after processing to remove QAQC flags.  The data were downloaded from the \href{http://cdmo.baruch.sc.edu/}{CDMO web services} on November 25th, 2014 and include observations up to that date.  Plots are based on daily averages for each parameter.  Cumulative precipitation data are based on the daily maximum.
+\subsection*{\ac{SWMP} data as R binary files}
+
+Quickly access all \ac{SWMP} data: \href{https://s3.amazonaws.com/swmpalldata/}{https://s3.amazonaws.com/swmpalldata/} 
+
+This is an online link for all \ac{SWMP} data from January 1994 to December 2014 as binary .RData files.  Separate files are available for each site and parameter type, e.g., acebbnut.RData includes all available nutrient data for the Big Bay site at ACE Basin.  Individual files can be downloaded by pasting the file name to the URL, e.g., \href{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}, then using the \texttt{load} function to import the file in the current R workspace.  Files can also be downloaded directly within R using \texttt{import\_remote} function.
 
 \section*{Acknowledgments}
 
-I acknowledge the significant efforts of \ac{NERRS} researchers and staff for providing access to high-quality monitoring data.  Thanks particularly to Dwayne Porter and Melissa Ide from \ac{CDMO} for maintaining the online database.  Thanks to Marie Bundy and Nikki Dix for providing me the opportunity to share this package with the broader \ac{NERRS} community.  Thanks to Todd O'Brien for the inspiration for the online widgets in the supporting information. Thanks to Mike Murrell and Jim Hagy III for assistance with documentation and implementation of the ecosystem metabolism functions. The views expressed in this article are those of the authors and do not necessarily reflect the views or policies of the U.S. Environmental Protection Agency.   
+I acknowledge the significant efforts of \ac{NERRS} researchers and staff for providing access to high-quality monitoring data.  Thanks particularly to Dwayne Porter and Melissa Ide from \ac{CDMO} for maintaining the online database.  Thanks to Marie Bundy and Nikki Dix for providing me the opportunity to share this package with the broader \ac{NERRS} community.  Thanks to Todd O'Brien for the inspiration for the online widgets in the supporting information. Thanks to Mike Murrell and Jim Hagy III for assistance with documentation and implementation of the ecosystem metabolism functions. The views expressed in this article are those of the authors and do not necessarily reflect the views or policies of the U.S. Environmental Protection Agency.  The use of trade names or products does not constitute endorsement by the US Government.   
 
 \nolinenumbers
 
