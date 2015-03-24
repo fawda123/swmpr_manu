@@ -1,4 +1,5 @@
 base
+dplyr
 Formula
 ggplot2
 Hmisc
@@ -8,5 +9,6 @@ mapproj
 maps
 survival
 SWMPr
+tidyr
 xtable
 zoo
