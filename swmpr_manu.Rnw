@@ -1,22 +1,6 @@
 % Template for PLoS
 % Version 3.1 February 2015
 %
-% To compile to pdf, run:
-% latex plos.template
-% bibtex plos.template
-% latex plos.template
-% latex plos.template
-% dvipdf plos.template
-%
-% % % % % % % % % % % % % % % % % % % % % %
-%
-% -- IMPORTANT NOTE
-%
-% This template contains comments intended 
-% to minimize problems and delays during our production 
-% process. Please follow the template instructions
-% whenever possible.
-%
 % % % % % % % % % % % % % % % % % % % % % % % 
 %
 % Once your paper is accepted for publication, 
@@ -65,10 +49,6 @@
 % Please add line breaks to long display equations when possible in order to fit size of the column. 
 %
 % For inline equations, please do not include punctuation (commas, etc) within the math environment unless this is part of the equation.
-%
-% % % % % % % % % % % % % % % % % % % % % % % % 
-%
-% Please contact latex@plos.org with any questions.
 %
 % % % % % % % % % % % % % % % % % % % % % % % %
 
@@ -371,7 +351,7 @@ Example data as raw, comma-separated files have not been included in the package
 
 The retrieval functions import the data into R as a swmpr object for use with the organize and analyze functions. The organize functions are used to clean or prepare the data for analysis, including removal of QAQC flags, subsetting, creating a standardized time series vector, and combining data of different types (\Cref{tab:organize}).
 
-The \texttt{qaqc} function is a simple screen to retain values from the data with specified QAQC flags (described \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{here}).  Each parameter in the \texttt{swmpr} data typically has a corresponding QAQC column of the same name with the added prefix \texttt{f\_}.  Values in the QAQC column specify a flag from -5 to 5.  Generally, only data with the  \texttt{0} \ac{QAQC} flag should be used, which is the default option for the \texttt{QAQC} function.  Data that do not satisfy \ac{QAQC} criteria are converted to \texttt{NA} values.   Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. Processed data will have QAQC columns removed, in addition to removal of values in the actual parameter columns that do not meet the criteria. 
+The \texttt{qaqc} function is a simple screen to retain values from the data with specified QAQC flags (see the \ac{CDMO} descriptions \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{here}).  Each parameter in the \texttt{swmpr} data typically has a corresponding QAQC column of the same name with the added prefix \texttt{f\_}.  Values in the QAQC column specify a flag from -5 to 5.  Generally, only data with the  \texttt{0} \ac{QAQC} flag should be used, which is the default option for the \texttt{QAQC} function.  Data that do not satisfy \ac{QAQC} criteria are converted to \texttt{NA} values.   Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. Processed data will have QAQC columns removed, in addition to removal of values in the actual parameter columns that do not meet the criteria. 
 
 % table for organize functions
 <<results = 'asis', echo = FALSE>>=
@@ -417,7 +397,7 @@ qaqc(dat, qaqc_keep = NULL)
 qaqc(dat, qaqc_keep = c(0, -1))
 @
 
-Viewing the number of observations for each parameter that are assigned to a \ac{QAQC} flag may be useful for deciding how to process the data with ), \texttt{qaqc}.  The \texttt{qaqcchk} function can be used to view this information.  Consult the \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{online documentation} for a description of each QAQC flag. 
+Viewing the number of observations for each parameter that are assigned to a \ac{QAQC} flag may be useful for deciding how to process the data with \texttt{qaqc}.  The \texttt{qaqcchk} function can be used to view this information.
 
 <<eval = F, cache = T>>=
 # view the number of observations in each QAQC flag
@@ -440,7 +420,7 @@ func <- function(x) max(x, na.rm = T)
 rem_reps(swmp1, FUN = func)
 @
 
-A subset method added to the existing \texttt{subset} function is available for \texttt{swmpr} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator input as a character string passed to the argument, such as \texttt{>} or \texttt{<}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (i.e., \%Y-\%m\%-\%d \%H:\%M in POSIX standards).  Be aware that an error may be returned using this function if the subset argument is in the correct format but the calendar date does not exist, e.g. \texttt{2012-11-31 12:00}.  Finally, the function can be used to remove rows and columns that do not contain data. 
+A subset method added to the existing generic \texttt{subset} function in R is available for \texttt{swmpr} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator input as a character string passed to the argument, such as \texttt{>} or \texttt{<}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (i.e., \%Y-\%m\%-\%d \%H:\%M in POSIX standards).  Be aware that an error may be returned using this function if the subset argument is in the correct format but the calendar date does not exist, e.g. \texttt{2012-11-31 12:00}.  Finally, the function can be used to remove rows and columns that do not contain data. 
 
 <<eval = F, cache = T>>=
 # select two parameters from dat
@@ -499,7 +479,7 @@ comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
 
 \subsection*{Data analysis}
 
-The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (\Cref{tab:analyze}).  The latter category includes a limited number of functions that were developed by myself or others.  The general purpose tools are \texttt{swmpr} methods that were developed for existing generic functions in the R base installation or relevant packages.  These functions include \texttt{swmpr} methods for \texttt{aggregate}, \texttt{filter}, and \texttt{approx} to deal with missing or noisy data and more general functions for exploratory data analaysis, such as \texttt{plot}, \texttt{summary}, and \texttt{hist} methods.  Decomposition functions \texttt{decomp} and \texttt{decomp\_cj}) are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. The analysis functions may or may not return a \texttt{swmpr} object depending on whether further processing with \texttt{swmpr} methods is possible from the output.    
+The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (\Cref{tab:analyze}).  The latter category includes a limited number of functions that were developed by myself or others.  The general purpose tools are \texttt{swmpr} methods that were developed for existing generic functions in the R base installation or relevant packages.  These functions include \texttt{swmpr} methods for \texttt{aggregate}, \texttt{filter}, and \texttt{approx} to deal with missing or noisy data and more general functions for exploratory data analaysis, such as \texttt{plot}, \texttt{summary}, and \texttt{hist} methods.  Decomposition functions, \texttt{decomp} and \texttt{decomp\_cj}, are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. The analysis functions may or may not return a \texttt{swmpr} object depending on whether further processing with \texttt{swmpr} methods is possible from the output.    
 
 The \texttt{aggregate} function aggregates parameter data for a \texttt{swmpr} object by set periods of observation.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales, or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours for a user-defined function, which defaults to the mean.  A \texttt{swmpr} object is returned for the aggregated data, although the \texttt{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \texttt{round} method for IDate objects \href{http://cran.r-project.org/web/packages/data.table/index.html}{data.table} package.  This approach was used to facilitate plotting using predefined methods for Date and POSIX objects.  Additionally, the method of treating NA values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned (see the example below).  Finally, the default argument for \texttt{na.action} is set to \texttt{na.pass} for \texttt{swmpr} objects to preserve the time series of the input data.
 
@@ -716,9 +696,10 @@ The ability to evaluate environmental characteristics between estuaries within t
 
 First, the open-water method for estimating metabolism was applied to nearly all co-located water quality and weather sites at the \ac{NERRS} reserve for all years of available data.  The results are provided primarily to illustrate ease of use of the functions and secondarily to provide an update to results described in Caffrey \cite{Caffrey03} and Caffrey \cite{Caffrey04} using the most recent \ac{SWMP} data.  Additionally, previous methods to evaluate metabolism at \ac{NERRS} reserves did not incorporate \textit{in situ} weather data to estimate the air-sea gas exchange model.  Caffrey \cite{Caffrey03} and Caffrey \cite{Caffrey04} applied the open-water method to estimate ecosystem metabolism using five years of water quality observations at two sites at each of the \ac{NERRS} reserves.  Additionally, the air-sea gas exchange model assumed a constant value for the reaeratio coefficientt.  This coefficient provides an estimate of the rate of air-sea gas exchange that varies as a function of wind speed, temperature, barometric pressure, salinity, and depth of the water column.  The inclusion of weather data in the calculation allows for a more precise estimate of air-sea gas exchange and consequently more reliable estimates of ecosystem metabolism (see Caffrey et al. \cite{Caffrey14} for details).
 
-Water quality and weather observations from January 1995 to December 2014 for all \ac{NERRS} sites were obtained through a bulk data request using the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature of \ac{CDMO}.  After the download was complete, all csv files for each station were imported into R using the \texttt{import\_local} function, processed using the \texttt{setstep} and \texttt{qaqc} functions, then saved on a local hard drive as binary RData files (see \href{https://github.com/fawda123/swmp_rats/blob/master/R/dat_proc.R}{here} for the R script). This resulted in a single \texttt{swmpr} object for each paramter at each site.  All files were then uploaded to a remote server.  An \href{https://gist.github.com/fawda123/4fc51c2cb86341ed9291}{R script} was executed that retrieved and processed combined the water quality and weather data for each site. 
+Water quality and weather observations from January 1995 to December 2014 for all \ac{NERRS} sites were obtained through a bulk data request using the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature of \ac{CDMO}.  All csv files for each station were imported into R using the \texttt{import\_local} function, processed using the \texttt{setstep} and \texttt{qaqc} functions, then saved on a local hard drive as binary RData files (see \href{https://github.com/fawda123/swmp_rats/blob/master/R/dat_proc.R}{here} for the R script). This resulted in a single \texttt{swmpr} object for each parameter at each site.  All files were then uploaded to a remote server.  An additional \href{https://gist.github.com/fawda123/4fc51c2cb86341ed9291}{R script} was executed that retrieved and processed combined the water quality and weather data for each site to esimate metabolism.  For brevity, only two sites at each reserve were evaluated.  Mean annual values at each site, organized by region, are shown in \Cref{fig:metab_plo}, whereas decadal comparisons are shown in \Cref{tab:metab_tab}.  All sites were generally net heterotrophic across the range of observations (i.e., sink of organic matter, in agreement with Caffrey \cite{Caffrey03}), although differences were observed in early (i.e., 1995-2004) as compared to recent (2005-2014) time periods. Overall, the results indicate that between-region and within-site differences in metabolism are apparent and varying by time period, such that a more comprehensive evaluation of factors that influence metabolic rates is needed.  More importantly, the use of the data retreival, synthesis, and analysis functions to create the results shown in \Cref{fig:metab_plo,tab:metab_tab} illustrates the utility provided by the SWMPr package.
 
-<<metab_plo, eval = T, cache = T, echo = F, fig.cap = 'Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \\ac{NERRS} reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series.', fig.height = 6, fig.width = 8>>=
+% metabolism figure
+<<metab_plo, eval = T, cache = T, echo = F, fig.cap = 'Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \\ac{NERRS} reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Regions are approximations of geographic coordinates and are not exact, e.g., Old Woman Creek (Lake Erie) is Atlantic.', fig.height = 6, fig.width = 8, out.width = '\\textwidth'>>=
 # # packages to use
 # library(SWMPr)
 # library(httr)
@@ -876,32 +857,48 @@ metabs_plo <- gather(metabs_sum, 'metab', 'value', 4:6) %>%
     lower = value - margs
     )
 
+# get region
+data(stat_locs)
+names(stat_locs)[names(stat_locs) %in% 'station_code'] <- 'site'
+metabs_plo$site <- gsub('wq$', '', metabs_plo$site)
+metabs_plo <- left_join(metabs_plo, stat_locs, by = 'site')
+region <- rep('Pacific', nrow(metabs_plo))
+region[metabs_plo$longitude > -110] <- 'Gulf'
+region[metabs_plo$latitude > 28 & metabs_plo$longitude > -84] <- 'Atlantic'
+
+# combine, select, sort
+metabs_plo <- select(metabs_plo, -c(latitude, longitude, gmt_off))
+metabs_plo$region <- region
+metabs_plo <- arrange(metabs_plo, region, site)
+
 # plot prep
 to_plo <- data.frame(metabs_plo)
 
 #reassign factors for ranking in plot
-sort_val <- order(to_plo[to_plo$metab == 'Pg', 'value'])
-to_plo$site <- factor(gsub('wq$', '', to_plo$site))
+sort_val <- to_plo[to_plo$metab == 'Pg', c('region', 'value', 'site')]
+sort_val <- order(sort_val$region, sort_val$value)
+to_plo$site <- factor(to_plo$site)
 to_plo$site <- factor(
   to_plo$site,
   levels = levels(to_plo$site)[sort_val],
   labels = levels(to_plo$site)[sort_val]
   )
-new_labs <- c('Mean net annual metabolism', 'Mean annual gross production', 'Mean annual total respiration')
+new_labs <- c('Mean net metabolism', 'Mean gross production', 'Mean total respiration')
 to_plo$metab <- factor(to_plo$metab, levels = c('NEM', 'Pg', 'Rt'), labels = new_labs)
 
 ylabs <- expression(paste('g ', O[2],' ', m^-2,' ', d^-1))
+library(ggplot2)
 p <- ggplot(to_plo, 
     aes(x = site, y = value, group = metab, fill = metab)
   ) + 
   geom_bar(stat = 'identity', width = 1, colour = 'black') + 
   scale_y_continuous(ylabs) + 
-  facet_wrap( ~ metab, ncol = 1, scales = 'free_y') + 
+  facet_grid(metab ~ region, scales = 'free') + 
   scale_x_discrete(name = element_blank()) + 
-  theme_classic() + 
+  theme_bw() + 
   theme(
     axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, 
-      size = 8),
+      size = 7),
     legend.position = 'none'
     ) +
   geom_errorbar(aes(ymin = lower, ymax = upper), width = 0)
@@ -910,26 +907,78 @@ print(p)
 @
 
 % table summary of trends
-<<eval = F, cache = T, echo = F>>=
+<<eval = T, results = 'asis', cache = T, echo = F>>=
 
 data(metabs_sum)
 
 library(dplyr)
 library(tidyr)
 
-# summarize for annual means, get conf ints
+# summarize by time periods
 metabs_tab <- gather(metabs_sum, 'metab', 'value', 4:6)
-metabs_tab$yr_grp <- '1995 - 2004'
-metabs_tab$yr_grp[metabs_tab$year > 2004] <- '2005-2014'
+metabs_tab$yr_grp <- '1995-2004'
+metabs_tab$yr_grp[metabs_tab$date > 2004] <- '2005-2014'
 metabs_tab <- mutate(metabs_tab, value = 0.032 * value) %>% 
-  group_by(metabs_tab, site, metab, yr_grp)
+  group_by(site, metab, yr_grp) %>% 
+  arrange(yr_grp, date, metab) %>% 
+  summarize(ave = round(mean(value, na.rm = TRUE), 2)) %>% 
+  spread(yr_grp, ave) 
+trends <- apply(metabs_tab, 1, function(x){
   
-# summarize trends
+  val <- as.numeric(x[['2005-2014']])
+  trnd <- val > as.numeric(x[['1995-2004']])
+  
+  if(is.na(trnd)) return(val)
+  if(trnd) return(paste0('{\\bf ', val, '}'))
+  if(!trnd) return(paste0('{\\it ', val, '}'))
+  
+})
+metabs_tab[, '2005-2014'] <- trends
+metabs_tab <- gather(metabs_tab, 'period', 'value', 3:4) %>% 
+  unite('var', metab, period, sep = ' ') %>% 
+  spread(var, value) %>% 
+  mutate(site = gsub('wq$', '', site))
 
+# get region
+data(stat_locs)
+names(stat_locs)[names(stat_locs) %in% 'station_code'] <- 'site'
+metabs_tab <- left_join(metabs_tab, stat_locs, by = 'site')
+region <- rep('Pacific', nrow(metabs_tab))
+region[metabs_tab$longitude > -110] <- 'Gulf'
+region[metabs_tab$latitude > 28 & metabs_tab$longitude > -84] <- 'Atlantic'
+
+# combine, select, sort
+metabs_tab <- select(metabs_tab, -c(latitude, longitude, gmt_off)) %>% 
+  mutate(region = region) %>% 
+  arrange(region, site)
+
+nrgroups <- as.numeric(table(metabs_tab$region))
+# table
+
+cap <- 'Trends in metabolism for two sites at each of the \\ac{NERRS} reserves.  Values are averages of mean annual estimates for each period of observation (1994-2004 and 2005-2014).  Bold values indicate an increase from the first period, whereas italic values indicate a decrease.  Regions are approximations of geographic coordinates and are not exact, e.g., Old Woman Creek (Lake Erie) is Atlantic.' 
+foots <- '\\footnotesize{\\textsuperscript{{\\it a}}NEM: net ecosystem metabolism, Pg: gross production, Rt: total respiration, all values in g O$_2$ m$^{-2}$ d$^{-1}$ as annual averages.}' 
+
+library(Hmisc)
+latex(
+  metabs_tab[, !names(metabs_tab) %in% c('site', 'region')], 
+  file = '', 
+  caption = cap, 
+  cgroup = c('NEM\\textsuperscript{{\\it a}}', 'Pg', 'Rt'), 
+  n.cgroup = c(2, 2, 2), 
+  colheads = rep(c('1995-2004', '2005-2014'), 3),
+  rowlabel = 'Site', 
+  rowname = metabs_tab$site,
+  digits = 2,
+  insert.bottom = foots,
+  rgroup = unique(metabs_tab$region),
+  n.rgroup = nrgroups,
+  label = 'tab:metab_tab',
+  size = 'footnotesize'
+  )
+  
 @
 
-
-The second and third examples are two Shiny web applications \cite{Chang15} that illustrate summaries and comparisons of \ac{SWMP} data within and between reserves (see the \nameref{supp_info}).  The second application evaluates trends in \ac{SWMP} data within and between sites using an interactive map.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-levels trends are described below the map using a simple linear regression to show an increase or decrease in values over time.  Trends on the map at each station are plotted as circles that identify the direction and significance of the trend.  The trend direction is blue for decreasing and red for increasing.  The significance is indicated by radius of the circle and color shading where larger points with darker colors indicate a strong trend.  The third application provides graphical summaries of water quality, weather, or nutrient station data at individual stations. The drop down menus can be used to select the station, date range, and parameter for plotting. Plots are based on daily averages for each parameter.  The data used for each application are similar to those used to estimate ecosystem metabolism described above.  
+The second and third examples are two Shiny web applications \cite{Chang15} that illustrate summaries and comparisons of \ac{SWMP} data within and between reserves that were created using the SWMPr package (see the \nameref{supp_info}).  The second application evaluates trends in \ac{SWMP} data within and between sites using an interactive map.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-levels trends are described below the map using a simple linear regression to show an increase or decrease in values over time.  Trends on the map at each station are plotted as circles that identify the direction and significance of the trend.  The trend direction is blue for decreasing and red for increasing.  The significance is indicated by radius of the circle and color shading where larger points with darker colors indicate a strong trend.  The third application provides graphical summaries of water quality, weather, or nutrient station data at individual stations. The drop down menus can be used to select the station, date range, and parameter for plotting. Plots are based on daily averages for each parameter.  The data used for each application are similar to those used to estimate ecosystem metabolism described above.  
 
 \section*{Summary}
 
