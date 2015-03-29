@@ -35,22 +35,7 @@
 %
 % For tables that exceed the width of the text column, use the adjustwidth environment as illustrated in the example table in text below.
 %
-% % % % % % % % % % % % % % % % % % % % % % % %
-%
-% -- EQUATIONS, MATH SYMBOLS, SUBSCRIPTS, AND SUPERSCRIPTS
-%
-% IMPORTANT
-% Below are a few tips to help format your equations and other special characters according to our specifications. For more tips to help reduce the possibility of formatting errors during conversion, please see our LaTeX guidelines at http://www.plosone.org/static/latexGuidelines
-%
-% Please be sure to include all portions of an equation in the math environment.
-%
-% Do not include text that is not math in the math environment. For example, CO2 will be CO\textsubscript{2}.
-%
-% Please add line breaks to long display equations when possible in order to fit size of the column. 
-%
-% For inline equations, please do not include punctuation (commas, etc) within the math environment unless this is part of the equation.
-%
-% % % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % 
 
 \documentclass[10pt,letterpaper]{article}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
@@ -137,7 +122,8 @@
 
 % packages I added
 \usepackage{cleveref}
-\usepackage[colorlinks=true,allcolors=Blue]{hyperref}
+\usepackage[colorlinks=true,allcolors=Gray]{hyperref}
+% \usepackage[hidelinks]{hyperref}
 \usepackage[usenames,dvipsnames]{xcolor}
 
 % Remove comment for double spacing
@@ -206,12 +192,13 @@
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \vspace*{0.35in}
+\urlstyle{same}
 
 % Title must be 250 characters or less.
 % Please capitalize all terms in the title except conjunctions, prepositions, and articles.
 \begin{flushleft}
 {\Large
-\textbf\newline{SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries}
+\textbf\newline{SWMPr: An R package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries}
 }
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
@@ -226,51 +213,49 @@ Marcus William Beck\textsuperscript{1, *}
 * beck.marcus@epa.gov
 
 \end{flushleft}
-% Please keep the abstract below 300 words
+
 \section*{Abstract}
-Standardized monitoring programs have vastly improved the quantity and quality of data that form the basis of environmental decision-making.  One example in the United States is the \ac{SWMP} that was implemented in 1995 by the federally-funded \ac{NERRS}.  This program has provided two decades of continuous monitoring data at over 300 fixed stations in 28 estuaries across the United States.  \ac{SWMP} data have been used in a variety applications with the general objective of describing dynamics of estuarine ecosystems to better inform effective coastal management.  However, simple tools for processing and evaluating the large and increasing quantity of data provided by the monitoring network have prevented large-scale comparisons between systems and, in some cases, simple trend analysis of water quality parameters at individual sites.  We describe a new open-source software package, SWMPr, developed in program R for use with \ac{SWMP} environmental data.  The package provides several functions that facilitate data retrieval, organization, and analysis of time series data to describe water quality, weather, and nutrient dynamics in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  Tools included with the SWMPr package have facilitated a cross-reserve comparison of trends, including simple evaluation of changes over time and comparisons of patterns in primary productivity.  Overall, the package provides an effective approach to link quantitative information with analysis tools that will greatly inform management programs aimed at coastal protection and restoration.
+Standardized monitoring programs have vastly improved the quantity and quality of data that form the basis of environmental decision-making.  One example in the United States is the \ac{SWMP} that was implemented in 1995 by the federally-funded \ac{NERRS}.  This program has provided two decades of continuous monitoring data at over 300 fixed stations in 28 estuaries.  \ac{SWMP} data have been used in a variety of applications with the general objective of describing dynamics of estuarine ecosystems to better inform effective coastal management.  However, simple tools for processing and evaluating the increasing quantity of data provided by the monitoring network have prevented broad-scale comparisons between systems and, in some cases, simple trend analysis of water quality parameters at individual sites.  We describe a new open-source software package, SWMPr, developed in program R for use with \ac{SWMP} environmental data.  The package provides several functions that facilitate data retrieval, organization, and analysis of time series data to describe water quality, weather, and nutrient dynamics in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  Tools included with the SWMPr package have facilitated a cross-reserve comparison of trends, including simple evaluation of changes over time and comparisons of patterns in primary productivity.  Overall, the package provides an effective approach to link quantitative information with analysis tools that will greatly inform management programs aimed at coastal protection and restoration.
 
 \linenumbers
 
 \section*{Introduction}
 
-The development of low-cost, automated sensors that have the ability to collect data in near real-time has enabled a proliferation of standardized environmental monitoring programs \cite{Glasgow04,Fries08}.  These programs provide access to invaluable sources of data that can be used to address a variety of research and management objectives.  Applications from automated remote sensors are numerous with notable examples including prediction of harmful algal blooms and toxicants in aquatic systems \cite{Reed10}, development of a hydrometeorological monitoring network to support flash flood warning programs \cite{HADS15}, and automated detection of airborne chemical warfare agents \cite{Sanders01}.  Automated remote monitoring programs offer several advantages over traditional site-specific, field-based methods including streamlining of data acquisition, minimizing human error, and reducing the overall cost of the collection process \cite{Glasgow04}.  However, the growing quantity of available information to address relevant questions has contributed to the notion of `big data' science where analysis limitations are more often defined by compututational requirements and signal identification in the presence of noise rather than the availability of information.  Growing concerns over the use of adequate quality assurance and control methods, challenges for synthesis and interpretation, and increased emphasis on exploratory-based analytical techniques have characterized applications of data from automated monitoring programs \cite{Campbell13,Millie13}.
+The development of low-cost, automated sensors that have the ability to collect data in near real-time has enabled a proliferation of standardized environmental monitoring programs \cite{Glasgow04,Fries08}.  These programs provide access to invaluable sources of data that can be used to address a variety of research and management objectives.  Applications from automated remote sensors are numerous for aquatic environments with notable examples including prediction of harmful algal blooms and toxicants in freshwater systems \cite{Reed10}, development of a hydrometeorological monitoring network to support flash flood warning programs \cite{HADS15}, and a national marine buoy network covering large portions of the open ocean and coastal zones of the United States \cite{NDBC15}.  Automated remote monitoring programs offer several advantages over traditional site-specific, field-based methods including streamlining of data acquisition, minimizing human error, and reducing the overall cost of the collection process \cite{Glasgow04}.  However, the growing quantity of available information to address relevant questions has contributed to the notion of `big data' science where analysis limitations are often defined by compututational requirements and signal identification in the presence of noise rather than the availability of information.  Growing concerns over the use of adequate quality assurance and control methods, challenges for synthesis and interpretation, and increased emphasis on exploratory-based analytical techniques have characterized applications of data from automated monitoring programs \cite{Campbell13,Millie13}.
 
-The \acl{NERRS} (\acs{NERRS}, \url{http://www.nerrs.noaa.gov/}) is a network of 28 estuarine reserves in the United States that was established by the Coastal Zone Management Act of 1972.  The reserves represent different biogeographic regions and estuarine types that were chosen to address multiple goals for long-term research, monitoring, education, and stewardship in support of coastal management.  As part of this effort, the \acf{SWMP} program was implemented in 1995 at over 300 stations at each of the reserves to provide a robust, long-term monitoring system for water quality, weather, and land-use/habitat change.  The \ac{SWMP} network has provided a continous source of data collected at near real-time at each of the reserves with the intent to evaluate natural and anthrogogenic causes of spatiotemporal variation in environmental condition and ecosystem function.  These data have been useful for evaluating relevant characteristics at individual reserves (eg., \cite{Bulthius95,Dix08}) and differences between reserves (e.g., ecosystem metabolism \cite{Caffrey03,Caffrey04}, tidal characteristics \cite{Sanger02}, dissolved oxygen \cite{Wenner04}).  However, no cross-reserve comparisons have been conducted within the last decade despite the online availability of current \ac{SWMP} data.  \ac{NERRS} researchers and staff have also expressed a need for quantitative analysis tools to evaluate trends in water quality time series given the quantity and quality of data provided by \ac{SWMP} \cite{SWMP14}.          
+The \acl{NERRS} (\acs{NERRS})\footnote{\url{http://www.nerrs.noaa.gov/}} is a network of 28 estuarine reserves in the United States that was established by the Coastal Zone Management Act of 1972.  The reserves represent different biogeographic regions and estuarine types that were chosen to address multiple goals for long-term research, monitoring, education, and stewardship in support of coastal management.  As part of this effort, the \acf{SWMP}\footnote{\url{http://nerrs.noaa.gov/RCDefault.aspx?ID=18}} was implemented in 1995 at over 300 stations at the reserves to provide a robust, long-term monitoring system for water quality, weather, and land-use/habitat change.  The \ac{SWMP} network has provided a continuous source of data collected at near real-time with the intent to evaluate natural and anthropogenic causes of spatiotemporal variation in environmental condition and ecosystem function.  These data have been applied in evaluations of relevant characteristics at individual reserves (eg., \cite{Bulthius95,Dix08}) and differences between reserves (e.g., ecosystem metabolism \cite{Caffrey03,Caffrey04}, tidal characteristics \cite{Sanger02}, dissolved oxygen \cite{Wenner04}).  However, no cross-reserve comparisons have been conducted within the last decade despite the online availability of current \ac{SWMP} data.  \ac{NERRS} researchers and staff have also expressed a need for quantitative analysis tools to evaluate trends in water quality time series given the quantity and quality of data provided by \ac{SWMP} \cite{SWMP14}.          
 
-This article describes a software package that was developed to address research needs of the \ac{NERRS} program using the open-source statistical programming language R \cite{RDCT14}.  SWMPr (pronounced `swamper') is an R package that contains functions for retrieving, organizing, and analyzing estuary monitoring data from the System Wide Monitoring Program (\href{http://nerrs.noaa.gov/RCDefault.aspx?ID=18}{SWMP}).  Functions provided by SWMPr address many of the common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify key parameters of interest.  Additionally, a cross-reserve comparison of current ecosystem metabolism estimates is provided to illustrate a potential application using the functions in this package.  The software is provided specifically for use with \ac{NERRS} data, although many of the applications are relevant for addressing common challenges working with large datasets.
+This article describes a software package that was developed to address research needs of the \ac{NERRS} program using the open-source statistical programming language R \cite{RDCT14}.  SWMPr (pronounced `swamper') is an R package that contains functions for retrieving, organizing, and analyzing estuary monitoring data from the \acl{SWMP}.  Functions provided by SWMPr address many of the common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify key parameters of interest.  Additionally, a cross-reserve comparison of water quality trends and current ecosystem metabolism estimates is provided to illustrate potential applications using the functions in this package.  The software is provided specifically for use with \ac{NERRS} data, although many of the applications are relevant for addressing common challenges working with large datasets.
 
 \section*{SWMP overview and data retrieval}
 
-Four core data elements are collected through the \ac{SWMP} monitoring network: abiotic monitoring data, biotic observations, habitat and land use mapping, and sentinel monitoring.  The SWMPr package is developed for the continous abiotic monitoring network which includes a majority of the data collected by \ac{SWMP}.  Abiotic elements monitored at each reserve include water quality (water temperature, specific conductivity, salinity, dissolved oxygen concentration, dissolved oxygen saturation, depth, pH, turbidity, chlorophyll fluorescence), weather (air temperature, relative humidity, barometric pressure, wind speed, wind direction, photosynthetically active radiation, precipitation), and nutrient data (orthophosphate, ammonium, nitrite, nitrate, nitrite + nitrate, chlorophyll a).  Each reserve has no less than four water quality stations and one weather station at fixed locations.  Water quality and weather data are collected at 15 minute intervals, whereas nutrient data are collected monthly at each water quality station.  All data are made accessible through the \ac{CDMO} web portal, where multiple \ac{QAQC} measures are used to screen the information.  The final data include all observations with relevant \ac{QAQC} flags indicating the appropriate qualifier (\href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{view codes}).
+Four core data elements are collected through the \ac{SWMP} monitoring network: abiotic monitoring data, biotic observations, habitat and land use mapping, and sentinel monitoring.  The SWMPr package is developed for the continous abiotic monitoring network which includes a majority of the data collected by \ac{SWMP}.  Abiotic elements monitored at each reserve include water quality (water temperature, specific conductivity, salinity, dissolved oxygen concentration, dissolved oxygen saturation, depth, pH, turbidity, chlorophyll fluorescence), weather (air temperature, relative humidity, barometric pressure, wind speed, wind direction, photosynthetically active radiation, precipitation), and nutrient data (orthophosphate, ammonium, nitrite, nitrate, nitrite + nitrate, chlorophyll a).  Each reserve has no less than four water quality stations and one weather station at fixed locations.  Water quality and weather data are collected at 15 minute intervals, whereas nutrient data are collected monthly at each water quality station.  All data are made accessible through the \ac{CDMO} web portal\footnote{\url{http://cdmo.baruch.sc.edu/}}, where multiple \ac{QAQC} measures are used to screen the information for accuracy and reliability.  The final data include all timestamped observations including relevant \ac{QAQC} flags with the appropriate qualifier.
 
-The \ac{CDMO} web portal was established to support priority areas of \ac{SWMP} that focus on the continuation and advancement of data and information management.  As such, \ac{CDMO} provides access to over 35 million water quality, weather, and nutrient records that have been authenticated through systematic \ac{QAQC} procedures.  Estuary data must be obtained from \ac{CDMO} prior to using most of the functions within the SWMPr package.  In most cases, the analysis needs will typically define the location, date range, and parameters of interest that need to be obtained from \ac{CDMO}.  All stations in the \ac{SWMP} network are identified by a 7 or 8 character name that specifies the reserve, station, and parameter type.  For example, `apaebwq' is the water quality identifier for the East Bay station at the Apalachicola reserve.  Similarly, a suffix of `met' or `nut' would specify the weather (meteorological) or nutrients station.  
-
-Prior to any data request to the \ac{CDMO}, the site, parameter type, and date ranges need to be identified based on the analysis needs.  All reserve names, stations, and date ranges for the water quality, weather, or nutrients data can be viewed on the \ac{CDMO} \href{http://cdmo.baruch.sc.edu/}{website}. Alternatively, the \texttt{site\_codes} (all sites) or \texttt{site\_codes\_ind} (single site) functions provided by the SWMPr package can be used to view the same information.  As noted below, the computer's IP address must be registered by \ac{CDMO} staff before using the data retrieval functions in SWMPr.  \href{http://cdmo.baruch.sc.edu/webservices.cfm}{Web services} are provided by \ac{CDMO} to provide direct access to \ac{SWMP} data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in SWMPr are simple calls to the existing retrieval functions on \ac{CDMO} web services.  For example, the \texttt{all\_params} function in SWMPr uses the \texttt{exportAllParamsXMLNew} function from the web services to retrieve metadata for all the \ac{SWMP} sites.  The text below describes the data retrieval functions in more detail.
+The \ac{CDMO} web portal was established to support priority areas of \ac{SWMP} that focus on the continuation and advancement of data management.  As such, \ac{CDMO} provides access to over 35 million water quality, weather, and nutrient records that have been authenticated through systematic \ac{QAQC} procedures.    Prior to any data request to the \ac{CDMO}, the location, parameter type, and date ranges need to be identified based on the analysis needs. All stations in the \ac{SWMP} network are identified by a 7 or 8 character name that specifies the reserve, station, and parameter type.  For example, `apaebwq' is the water quality identifier (`wq') for the East Bay station (`eb') at the Apalachicola reserve (`apa').  Similarly, a suffix of `met' or `nut' would specify the weather (meteorological) or nutrients station.  All reserve names, stations, and date ranges for each parameter type can be viewed on the \ac{CDMO} website. Alternatively, the \texttt{site\_codes} (all sites) or \texttt{site\_codes\_ind} (single site) functions provided by the SWMPr package can be used to view the same information.  As noted below, the computer's IP address must be registered with \ac{CDMO} before using the data retrieval functions in SWMPr.  Web services\footnote{\url{http://cdmo.baruch.sc.edu/webservices.cfm}} are provided by \ac{CDMO} for direct access to \ac{SWMP} data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in SWMPr are simple calls to the existing retrieval functions on \ac{CDMO} web services.  For example, the \texttt{site\_codes} function in SWMPr uses the \texttt{exportStationCodesXMLNew} function from the web services to retrieve metadata for all the \ac{SWMP} sites.  The text below describes the data retrieval functions in more detail, including all other functions available in SWMPr.
 
 \section*{Structure of the SWMPr package}
 
 \subsection*{Installing the package}
 
-The SWMPr package was developed for use with the R statistical programming language and a recent version of R (v3.0.0 or greater) should be installed (see \href{http://cran.r-project.org/}{http://cran.r-project.org/}). The SWMPr package can be installed from \href{https://github.com/fawda123/SWMPr}{GitHub} by executing the following commands at the R terminal.  The package is loaded in the current workspace by using the \texttt{library} command.
+The SWMPr package was developed for use with the R ($\geq$v3.0.0) statistical programming language \cite{RDCT14}. The SWMPr package can be installed from GitHub\footnote{\url{https://github.com/fawda123/SWMPr}} by executing the following commands at the R console prompt.  The package is loaded in the workspace using the \texttt{library} command.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{install.packages}\hlstd{(}\hlstr{'devtools'}\hlstd{)}
-\hlkwd{library}\hlstd{(devtools)}
-\hlkwd{install_github}\hlstd{(}\hlstr{'fawda123/SWMPr'}\hlstd{)}
-\hlkwd{library}\hlstd{(SWMPr)}
-\end{alltt}
+\begin{verbatim}
+> install.packages('devtools')
+> library(devtools)
+> install_github('fawda123/SWMPr')
+> library(SWMPr)
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
-The SWMPr package was developed by considering a standard workflow that categorizes the functions as one of three steps based on their intended use: {\bf{\it retrieving}}, {\bf{\it organizing}}, and {\bf{\it analyzing}}.  Functions for retrieving are used to import the data into R as a \texttt{swmpr} object class.  Functions for organizing and analyzing the data provide methods for working with the \texttt{swmpr} object class.  An additional class of functions, termed `miscellaneous', are also included as helpers for the main functions.  The following describes a general approach for using each category of functions based on a standard data workflow.  
+The SWMPr package was developed by considering a standard workflow that categorizes the functions as one of three steps based on their intended use: retrieving, organizing, and analyzing.  Functions for retrieving are used to import the data into R as a \texttt{swmpr} object class following standard S3 documentation methods \cite{Wickham14}.  Functions for organizing and analyzing the data provide methods for working with a \texttt{swmpr} object.  An additional group of `miscellaneous' functions are included as helpers for the main functions.  The following describes a general approach for using each category of functions.
 
 \subsection*{Data retrieval}
 
-Three approaches can be used for retrieving \ac{SWMP} data for import into R.  First, functions from the SWMPr package can be used to import the data directly from the online server using \ac{CDMO} web services (\Cref{tab:retrieve}).  To do so, the IP address for the computer making the request must be registered with \ac{CDMO}.  This can be done by following instructions \href{http://cdmo.baruch.sc.edu/webservices.cfm}{here}.  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with \ac{CDMO}. 
+Three approaches can be used to import \ac{SWMP} data into R, either through direct download or by importing local data (\Cref{tab:retrieve}). First, functions from the package can be used to import the data directly from the online server using \ac{CDMO} web services. To do so, the IP address for the computer making the request must be registered with \ac{CDMO}.\footnote{Follow instructions here: \url{http://cdmo.baruch.sc.edu/webservices.cfm}}  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with \ac{CDMO}. 
 
 % table for retrieval functions
 %latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?all\\_params} at the command line).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:retrieve",     table.env = FALSE)%
@@ -283,8 +268,8 @@ Three approaches can be used for retrieving \ac{SWMP} data for import into R.  F
 \hline
 \texttt{all\_params}&Retrieve up to 100 records starting with the most recent at a given station, all parameters.  Wrapper to \texttt{exportAllParamsXMLNew} function on web services.\tabularnewline
 \texttt{all\_params\_dtrng}&Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter.  Maximum of 1000 records. Wrapper to \texttt{exportAllParamsDateRangeXMLNew}.\tabularnewline
-\texttt{import\_local}&Import files from a local path.  The files must be in a specific format, specifically those returned from the \ac{CDMO} using the zip downloads option for a reserve.\tabularnewline
-\texttt{import\_remote}&Import site data from an independent server. These files have been downloaded from \ac{CDMO} up to December 2014, processed using functions in this package, and uploaded to an Amazon server for quicker import into R.\tabularnewline
+\texttt{import\_local}&Import files from a local path.  The files must be in a specific format, such as those returned from the \ac{CDMO} using the zip downloads option.\tabularnewline
+\texttt{import\_remote}&Import site data from an independent server. These files have been downloaded from \ac{CDMO} up to December 2014, processed using SWMPr functions, and uploaded to an Amazon server for quicker import into R.\tabularnewline
 \texttt{single\_param}&Retrieve up to 100 records for a single parameter starting with the most recent at a given station.  Wrapper to \texttt{exportSingleParamXMLNew} function on web services.\tabularnewline
 \texttt{site\_codes}&Metadata for all stations, wrapper to \texttt{exportStationCodesXMLNew} function on web services.\tabularnewline
 \texttt{site\_codes\_ind}&Metadata for all stations at a single site, wrapper  to \texttt{NERRFilterStationCodesXMLNew} function on web services.\tabularnewline
@@ -296,96 +281,79 @@ Three approaches can be used for retrieving \ac{SWMP} data for import into R.  F
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# retrieve metadata for all sites}
-\hlkwd{site_codes}\hlstd{()}
-
-\hlcom{# retrieve metadata for a single site}
-\hlkwd{site_codes_ind}\hlstd{(}\hlstr{'apa'}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-Due to rate limitations on the \ac{CDMO} server, the retrieval functions return a limited number of records.  The functions are more useful for evaluating short time periods, although these functions could be used iteratively (i.e., with \texttt{for} loops) to obtain longer time series.  Data retrieval functions to access the \ac{CDMO} include \texttt{all\_params}, \texttt{all\_params\_dtrng}, and \texttt{single\_param}.  These are functions that call the existing web protocol methods on the CDMO web services.  \texttt{all\_params} returns the most recent records of all parameters at a station, \texttt{all\_params\_dtrng} returns all records within a date range for all parameters or a single parameter, and \texttt{single\_param} is identical to \texttt{all\_params} except that a single parameter is requested.    
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# all parameters for a station, most recent}
-\hlkwd{all_params}\hlstd{(}\hlstr{'hudscwq'}\hlstd{)}
-
-\hlcom{# get all parameters within a date range}
-\hlkwd{all_params_dtrng}\hlstd{(}\hlstr{'hudscwq'}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{'09/10/2012'}\hlstd{,} \hlstr{'02/8/2013'}\hlstd{))}
-
-\hlcom{# get single parameter within a date range}
-\hlkwd{all_params_dtrng}\hlstd{(}\hlstr{'hudscwq'}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{'09/10/2012'}\hlstd{,} \hlstr{'02/8/2013'}\hlstd{),}
-  \hlkwc{param} \hlstd{=} \hlstr{'do_mgl'}\hlstd{)}
-
-\hlcom{# single parameter for a station, most recent}
-\hlkwd{single_param}\hlstd{(}\hlstr{'hudscwq'}\hlstd{,} \hlstr{'do_mgl'}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-A second approach for importing \ac{SWMP} data into R is using the \texttt{import\_remote} function.  This method imports site data into R from an independent server where \ac{SWMP} data have been downloaded previously and uploaded as \texttt{swmpr} objects in RData binary format.  This approach is advantageous because the files can be imported very quickly and the computer's IP address does not need to be registered.  The files are hosted via third party web services and include almost all available \ac{SWMP} data for each site up to December 2014.  Always use the \ac{CDMO} for the most recent data.  The files can be accessed by copying the URL to a web browser with the site name and file extension (e.g., \href{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}, see the \nameref{supp_info}) or by using the function as follows.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## import a file from an independent server}
-\hlkwd{import_remote}\hlstd{(}\hlstr{'acebbwq'}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-A third approach is to use the \texttt{import\_local} function to import data into R that are locally available after downloading outside of R (\href{http://cdmo.baruch.sc.edu/get/landing.cfm}{see here}).  This approach may be best for larger, more customized data requests to \ac{CDMO}. Data can be retrieved from the \ac{CDMO} several ways.  The \texttt{import\_local} function is designed for data from the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature in the advanced query section of the \ac{CDMO}. The function may also work using data from the \href{http://cdmo.baruch.sc.edu/get/export.cfm}{data export system}, but this feature has not been extensively tested.  The zip downloads feature is an easy way to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used after the folder is decompressed.
-
-Occasionally, duplicate time stamps are present in the raw data.  The \texttt{import\_local} function handles duplicate entries differently depending on the data type (water quality,  weather, or nutrients).  For water quality and nutrient data, duplicate time stamps are simply removed.  Note that nutrient data often contain replicate samples with similar but not duplicated time stamps within a few minutes of each other.  Replicates with unique time stamps are not removed but can be further processed using \texttt{rem\_reps}.  Weather data prior to 2007 may contain duplicate time stamps at frequencies for 60 (hourly) and 144 (daily) averages, in addition to 15 minute frequencies.  Duplicate values that correspond to the smallest value in the frequency column (15 minutes) are retained.  
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# import data for apaebmet that you downloaded}
-
-\hlcom{# this is an example path with the csv files, change as needed}
-\hlstd{path} \hlkwb{<-} \hlstr{'C:/my_path/'}
-
-\hlcom{# import, do not include file extension}
-\hlkwd{import_local}\hlstd{(path,} \hlstr{'apaebmet'}\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-All data retrieval functions return a \texttt{swmpr} object that includes relevant data and several attributes describing the dataset.  The data include a \texttt{datetimestamp} column in the appropriate timezone for a station.  Note that the \texttt{datetimestamp} is standard time for each timezone and does not include daylight savings. Additional columns include parameters for a given data type (weather, nutrients, or water quality) and correspondingg \ac{QAQC} columns if returned from the initial data request.  The attributes for a \texttt{swmpr} object include \texttt{names} of the dataset, \texttt{row.names} of the dataset, \texttt{class} (character string indicating \texttt{swmpr} and \texttt{data.frame}) \texttt{station} (7 or 8 characters identifying the station),  \texttt{parameters} (character vector of data columns, e.g., \texttt{`do\_mgl'}), \texttt{qaqc\_cols} (logical \texttt{T} or \texttt{F} if present or not), \texttt{date\_rng} (\texttt{POSIXct} vector of minimum/maximum dates), \texttt{timezone} (text string in country/city format), and \texttt{stamp\_class} (class of \texttt{datetimestamp} vector, \texttt{POSIXct} or \texttt{Date}).  Attributes of a \texttt{swmpr} object can be viewed as follows.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# import binary data}
-\hlkwd{data}\hlstd{(apadbwq)}
-\hlstd{dat} \hlkwb{<-} \hlstd{apadbwq}
-
-\hlcom{# verify that dat is swmpr class}
-\hlkwd{class}\hlstd{(dat)}
-\end{alltt}
 \begin{verbatim}
-## [1] "swmpr"      "data.frame"
+> # retrieve metadata for all sites
+> site_codes()
+> 
+> # retrieve metadata for a single site
+> site_codes_ind('apa')
 \end{verbatim}
-\begin{alltt}
-\hlcom{# all attributes of dat}
-\hlkwd{names}\hlstd{(}\hlkwd{attributes}\hlstd{(dat))}
-\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Due to rate limitations on the \ac{CDMO} server, the retrieval functions return a limited number of records.  The functions are more useful for evaluating short time periods, although these functions could be used iteratively (i.e., with \texttt{for} loops) to obtain longer time series.  Data retrieval functions to access the \ac{CDMO} include \texttt{all\_params}, \texttt{all\_params\_dtrng}, and \texttt{single\_param}: \texttt{all\_params} returns the most recent records of all parameters at a station, \texttt{all\_params\_dtrng} returns all records within a date range for all parameters or a single parameter, and \texttt{single\_param} is identical to \texttt{all\_params} except that a single parameter is requested.    
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-## [1] "names"       "row.names"   "class"       "station"    
-## [5] "parameters"  "qaqc_cols"   "date_rng"    "timezone"   
-## [9] "stamp_class"
+> # all parameters for a station, most recent
+> all_params('hudscwq')
+> 
+> # get all parameters within a date range
+> all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'))
+> 
+> # get single parameter within a date range
+> all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'), 
+>   param = 'do_mgl')
+> 
+> # single parameter for a station, most recent
+> single_param('hudscwq', 'do_mgl')
 \end{verbatim}
-\begin{alltt}
-\hlcom{# a single attribute of dat}
-\hlkwd{attr}\hlstd{(dat,} \hlstr{'station'}\hlstd{)}
-\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+A second approach for importing \ac{SWMP} data into R uses the \texttt{import\_remote} function.  This method imports site data from an independent server where \ac{SWMP} data have been downloaded previously and uploaded as \texttt{swmpr} objects in RData binary format.  This approach is advantageous because the files can be imported very quickly and an IP address does not need to be registered.  The files include almost all available \ac{SWMP} data for each site up to December 2014.  However, the files will not be regularly updated and \ac{CDMO} should always be used for the most recent and accurate data.  The files can be accessed by copying the URL to a web browser with the site name and file extension (e.g., \href{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}, see the \nameref{supp_info}) or by using the function as follows.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-## [1] "apadbwq"
+> # import a file from an independent server
+> import_remote('acebbwq')
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+A third approach for data retrieval is to use the \texttt{import\_local} function to import data into R that are locally available after downloading from \ac{CDMO}.  This approach is most appropriate for large, specific data requests. The \texttt{import\_local} function is designed for data from the zip downloads\footnote{\url{http://cdmo.baruch.sc.edu/aqs/zips.cfm}} feature in the advanced query section of the \ac{CDMO}. The function may also work using data from the data export system,\footnote{\url{http://cdmo.baruch.sc.edu/get/export.cfm}} although this feature has not been extensively tested.  The zip downloads feature is an easy way to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used after the folder is decompressed.
+
+Occasionally, duplicate time stamps are present in the raw data.  The \texttt{import\_local} function handles duplicate entries differently depending on the data type (water quality,  weather, or nutrients).  For water quality and nutrient data, duplicate time stamps are simply removed.  Note that nutrient data often contain replicate samples with similar but not identical time stamps within the span of a few minutes.  Replicates with unique time stamps are not removed but can be further processed using \texttt{rem\_reps}.  Weather data prior to 2007 may also contain duplicate time stamps at frequencies for hourly (denoted as `60') and daily (`144') averages, in addition to 15 minute frequencies.  Only duplicate values at 15 minutes are averaged for weather data.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import local data for apaebmet
+> 
+> # this is an example path with the decompressed csv files
+> path <- 'C:/my_path/'
+> 
+> # import, do not include file extension
+> import_local(path, 'apaebmet') 
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+All data retrieval functions return a \texttt{swmpr} object that includes relevant data and several attributes describing the dataset.  The data include a \texttt{datetimestamp} column in the appropriate timezone for a station.  Additional columns include parameters for a given data type (weather, nutrients, or water quality) and correspondingg \ac{QAQC} columns if returned from the initial data request.  The attributes for a \texttt{swmpr} object include \texttt{names} of the dataset, \texttt{row.names} of the dataset, \texttt{class} (character string indicating \texttt{swmpr} and \texttt{data.frame}), \texttt{station} (7 or 8 characters identifying the station),  \texttt{parameters} (character vector of data columns, e.g., \texttt{`do\_mgl'}), \texttt{qaqc\_cols} (logical \texttt{T} or \texttt{F} if present or not), \texttt{date\_rng} (\texttt{POSIXct} vector of minimum/maximum dates), \texttt{timezone} (text string in country/city format, standard time only), and \texttt{stamp\_class} (class of \texttt{datetimestamp} vector, \texttt{POSIXct} or \texttt{Date}).  Attributes of a \texttt{swmpr} object can be viewed as follows.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import data
+> dat <- import_remote('apadbwq')
+>  
+> # view all attributes of dat
+> attributes(dat)
+>  
+> # view a single attribute of dat
+> attr(dat, 'station')
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -394,49 +362,20 @@ The \texttt{swmpr} object class was created for use with specific methods follow
  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# available methods for swmpr class}
-\hlkwd{methods}\hlstd{(}\hlkwc{class} \hlstd{=} \hlstr{'swmpr'}\hlstd{)}
-\end{alltt}
 \begin{verbatim}
-##  [1] aggregate.swmpr       aggregate_metab.swmpr comb.swmpr           
-##  [4] decomp.swmpr          decomp_cj.swmpr       ecometab.swmpr       
-##  [7] hist.swmpr            lines.swmpr           na.approx.swmpr      
-## [10] plot.swmpr            plot_metab.swmpr      plot_summary.swmpr   
-## [13] qaqc.swmpr            qaqcchk.swmpr         rem_reps.swmpr       
-## [16] setstep.swmpr         smoother.swmpr        subset.swmpr
+> # view available methods for swmpr class
+> methods(class = 'swmpr')
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-Example data as raw, comma-separated files have not been included in the package due to size limitations.  However, a sample dataset can be \href{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}{downloaded} for use with the examples below.  This dataset has an identical format as the data returned from the zip downloads feature of the \ac{CDMO}.  Processed verions of the raw data are included with the package as binary data files (RData) to decrease processing times with the examples.  Information for each binary file can be viewed as follows.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# view help files for complementary data}
-\hlcom{# all files are samples from Apalachicola Bay}
-
-\hlcom{# cat point station, nutrients}
-\hlopt{?}\hlstd{apacpnut}
-
-\hlcom{# cat point station, water quality}
-\hlopt{?}\hlstd{apacpwq}
-
-\hlcom{# dry bar station, water quality}
-\hlopt{?}\hlstd{apadbwq}
-
-\hlcom{# east bay station, weater}
-\hlopt{?}\hlstd{apaebmet}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+A sample dataset can be downloaded for use with the examples below.\footnote{\url{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}}  This dataset has an identical format as the data returned from the zip downloads feature of the \ac{CDMO}.  Processed verions of the raw data are also included with the package as binary data files (RData).  These include \texttt{swmpr} objects for four stations at Apalachicola Bay: apacpnut, apacpwq, apadbwq, and apaebmet.  Information for each file can be viewed in the help documentation (e.g., \texttt{?apacpnut}).
 
 \subsection*{Data organizing}
 
-The retrieval functions import the data into R as a swmpr object for use with the organize and analyze functions. The organize functions are used to clean or prepare the data for analysis, including removal of QAQC flags, subsetting, creating a standardized time series vector, and combining data of different types (\Cref{tab:organize}).
+The organize functions are used to clean or prepare the imported data for analysis, including viewing and removal of QAQC flags, subsetting, combining replicate nutrient observations, creating a standardized time series, and combining data of different types (\Cref{tab:organize}).
 
-The \texttt{qaqc} function is a simple screen to retain values from the data with specified QAQC flags (see the \ac{CDMO} descriptions \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{here}).  Each parameter in the \texttt{swmpr} data typically has a corresponding QAQC column of the same name with the added prefix \texttt{f\_}.  Values in the QAQC column specify a flag from -5 to 5.  Generally, only data with the  \texttt{0} \ac{QAQC} flag should be used, which is the default option for the \texttt{QAQC} function.  Data that do not satisfy \ac{QAQC} criteria are converted to \texttt{NA} values.   Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. Processed data will have QAQC columns removed, in addition to removal of values in the actual parameter columns that do not meet the criteria. 
+The \texttt{qaqc} function is a simple screen to retain observations from the data with specified QAQC flags.\footnote{\ac{CDMO} flags: \url{http://cdmo.baruch.sc.edu/data/qaqc.cfm}} Each parameter in the imported \texttt{swmpr} object will have a corresponding QAQC column of the same name with the added prefix \texttt{f\_} (e.g., \texttt{do\_mgl}, \texttt{f\_do\_mgl}).  Values in the QAQC column range from -5 to 5 to indicate the \ac{QAQC} flag that was assigned by \ac{CDMO} during initial processing.  The \ac{QAQC} function is used to remove observations in the raw data with given flags, with the default option to retain only values with the \texttt{0} \ac{QAQC} flag (i.e., passed initial \ac{CDMO} checks).     Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. The function returns the original data with the QAQC columns removed and \texttt{NA} (not available) values for observations that do not meet the criteria specified in the function call.
 
 % table for organize functions
 %latex.default(to_tab[, "Description", drop = F], file = "", caption = "Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?comb.swmpr} at the command line).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:organize",     table.env = FALSE)%
@@ -449,7 +388,7 @@ The \texttt{qaqc} function is a simple screen to retain values from the data wit
 \hline
 \texttt{comb.swmpr}&Combines \texttt{swmpr} objects to a common time series using setstep, such as combining the weather, nutrients, and water quality data for a single station. Only different data types can be combined.\tabularnewline
 \texttt{qaqc.swmpr}&Remove \ac{QAQC} columns and remove data based on \ac{QAQC} flag values for a \texttt{swmpr} object.  Only applies if \ac{QAQC} columns are present. \tabularnewline
-\texttt{qaqcchk.swmpr}&View a summary of the number of observations in a \texttt{swmpr} object that are assigned to different \ac{QAQC} flags used by \ac{CDMO}.  The output is used to inform further processing but is not used explicitly.\tabularnewline
+\texttt{qaqcchk.swmpr}&View a summary of the number of observations in a \texttt{swmpr} object that are assigned to different \ac{QAQC} flags used by \ac{CDMO}.  The output can be used to inform further processing.\tabularnewline
 \texttt{rem\_reps.swmpr}&Remove replicate nutrient data that occur on the same day.  The default is to average replicates.\tabularnewline
 \texttt{setstep.swmpr}&Format data from a \texttt{swmpr} object to a continuous time series at a given timestep.  The function is used in \texttt{comb.swmpr} and can also be used with individual stations.\tabularnewline
 \texttt{subset.swmpr}&Subset by dates and/or columns for a \texttt{swmpr} object.  This is a method passed to the generic \texttt{subset} function provided in the base package.\tabularnewline
@@ -461,16 +400,16 @@ The \texttt{qaqc} function is a simple screen to retain values from the data wit
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# qaqc screen for a swmpr object, retain only '0'}
-\hlkwd{qaqc}\hlstd{(dat)}
-
-\hlcom{# retain all data regardless of flag}
-\hlkwd{qaqc}\hlstd{(dat,} \hlkwc{qaqc_keep} \hlstd{=} \hlkwa{NULL}\hlstd{)}
-
-\hlcom{# retain only '0' and '-1' flags}
-\hlkwd{qaqc}\hlstd{(dat,} \hlkwc{qaqc_keep} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{))}
-\end{alltt}
+\begin{verbatim}
+> # qaqc screen for a swmpr object, retain only '0'
+> qaqc(dat)
+> 
+> # retain all data regardless of flag
+> qaqc(dat, qaqc_keep = NULL)
+> 
+> # retain only '0' and '-1' flags
+> qaqc(dat, qaqc_keep = c(0, -1))
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -478,105 +417,112 @@ Viewing the number of observations for each parameter that are assigned to a \ac
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# view the number of observations in each QAQC flag}
-\hlkwd{qaqcchk}\hlstd{(dat)}
-\end{alltt}
+\begin{verbatim}
+> # view the number of observations in each QAQC flag
+> qaqcchk(dat)
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-Raw nutrient data obtained from the \ac{CDMO} will usually include replicate samples that were taken within a few minutes of each other.  The \texttt{rem\_reps.swmpr} function combines nutrient data that occur on the same day to preserve an approximate monthly time step.  The \texttt{datetimestamp} column will always be averaged for replicates, but the actual observations will be combined based on the user-supplied function which defauls to the mean.  Other suggested functions include the \texttt{median}, \texttt{min}, or \texttt{max}.  The entire function call including treatment of NA values should be passed to the \texttt{FUN} argument (see the examples).  The function is meant to be used after \texttt{qaqc} processing, although it works with a warning if QAQC columns are present.
+Raw nutrient data obtained from the \ac{CDMO} will usually include replicate samples that were taken within a few minutes of each other.  The \texttt{rem\_reps.swmpr} function combines nutrient data that occur on the same day to preserve an approximate monthly time step.  The \texttt{datetimestamp} column will always be averaged for replicates, but the actual observations will be combined based on the user-supplied function which defaults to the mean.  Other suggested functions include the \texttt{median}, \texttt{min}, or \texttt{max}.  The entire function call, including treatment of \texttt{NA}, values should be passed to the \texttt{FUN} argument (see the examples).  The function is meant to be used after \texttt{qaqc} processing, although it works with a warning if \ac{QAQC} columns are present.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# get nutrient data}
-\hlkwd{data}\hlstd{(apacpnut)}
-\hlstd{swmp1} \hlkwb{<-} \hlstd{apacpnut}
-\hlstd{swmp1} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(swmp1)}
-
-\hlcom{# remove replicate nutrient data}
-\hlkwd{rem_reps}\hlstd{(swmp1)}
-
-\hlcom{# use different function to aggregate replicates}
-\hlstd{func} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{max}\hlstd{(x,} \hlkwc{na.rm} \hlstd{= T)}
-\hlkwd{rem_reps}\hlstd{(swmp1,} \hlkwc{FUN} \hlstd{= func)}
-\end{alltt}
+\begin{verbatim}
+> # get nutrient data
+> data(apacpnut)
+> dat <- apacpnut
+> dat <- qaqc(dat)
+> 
+> # remove replicate nutrient data
+> rem_reps(dat)
+> 
+> # use different function to aggregate replicates
+> func <- function(x) max(x, na.rm = T)
+> rem_reps(dat, FUN = func)
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-A subset method added to the existing generic \texttt{subset} function in R is available for \texttt{swmpr} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator input as a character string passed to the argument, such as \texttt{>} or \texttt{<}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (i.e., \%Y-\%m\%-\%d \%H:\%M in POSIX standards).  Be aware that an error may be returned using this function if the subset argument is in the correct format but the calendar date does not exist, e.g. \texttt{2012-11-31 12:00}.  Finally, the function can be used to remove rows and columns that do not contain data. 
+A subset method added to the existing generic \texttt{subset} function in R is available for \texttt{swmpr} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator as a character string passed to the argument, such as \texttt{`>'} or \texttt{`<='}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (e.g., `2007-01-01 06:30').  Be aware that an error may be returned using this function if the subset argument is in the correct format but the calendar date does not exist, e.g. \texttt{`2012-11-31 12:00'}.  Finally, the function can be used to remove rows and columns that do not contain data. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# select two parameters from dat}
-\hlkwd{subset}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'rh'}\hlstd{,} \hlstr{'bp'}\hlstd{))}
-
-\hlcom{# subset records greater than or equal to a date}
-\hlkwd{subset}\hlstd{(dat,} \hlkwc{subset} \hlstd{=} \hlstr{'2013-01-01 0:00'}\hlstd{,} \hlkwc{operator} \hlstd{=} \hlstr{'>='}\hlstd{)}
-
-\hlcom{# subset records within a date range}
-\hlkwd{subset}\hlstd{(dat,} \hlkwc{subset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'2012-07-01 6:00'}\hlstd{,} \hlstr{'2012-08-01 18:15'}\hlstd{))}
-
-\hlcom{# subset records within a date range, select two parameters}
-\hlkwd{subset}\hlstd{(dat,} \hlkwc{subset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'2012-07-01 6:00'}\hlstd{,} \hlstr{'2012-08-01 18:15'}\hlstd{),}
-  \hlkwc{select} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'atemp'}\hlstd{,} \hlstr{'totsorad'}\hlstd{))}
-
-\hlcom{# remove rows/columns that do not contain data}
-\hlkwd{subset}\hlstd{(dat,} \hlkwc{rem_rows} \hlstd{= T,} \hlkwc{rem_cols} \hlstd{= T)}
-\end{alltt}
+\begin{verbatim}
+> # import data
+> data(apaebmet)
+> dat <- apaebmet
+> 
+> # select two parameters from dat
+> subset(dat, select = c('rh', 'bp'))
+> 
+> # subset records greater than or equal to a date
+> subset(dat, subset = '2013-01-01 0:00', operator = '>=')
+> 
+> # subset records within a date range
+> subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'))
+> 
+> # subset records within a date range, select two parameters
+> subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'),
+>   select = c('atemp', 'totsorad'))
+> 
+> # remove rows/columns that do not contain data
+> subset(dat, rem_rows = T, rem_cols = T)
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-The \texttt{setstep} function formats a \texttt{swmpr} object to a continuous time series at a given time step.  This function is not necessary for most stations but can be useful for combining data or converting an existing time series to a set interval.  The first argument of the function, \texttt{timestep}, specifies the desired time step in minutes starting from the nearest hour of the first observation.  The second argument, \texttt{differ}, specifies the allowable tolerance in minutes for matching existing observations to user-defined time steps in cases where the two are dissimilar.  Values for \texttt{differ} that are greater than one half the value of \texttt{timestep} are not allowed to prevent duplication of existing data.  Likewise, the default value for \texttt{differ} is one half the time step.  Rows that do not match any existing data within the limits of the \texttt{differ} argument are not discarded.  Output from the \texttt{setstep} function can be used with \texttt{subset} and to create a time series at a set interval with empty data removed.
+The \texttt{setstep} function formats a \texttt{swmpr} object to a continuous time series at a given time step.  This function is not necessary for most stations but can be useful for combining data or converting an existing time series to a set interval.  The first argument of the function, \texttt{timestep}, specifies the desired time step in minutes starting from the nearest hour of the first observation.  The second argument, \texttt{differ}, specifies the allowable tolerance in minutes for matching existing observations to the defined time steps in cases where the two are dissimilar.  Values for \texttt{differ} that are greater than one half the value of \texttt{timestep} are not allowed to prevent duplication of existing data.  Likewise, the default value for \texttt{differ} is one half the time step.  Time steps that do not match any existing data within the limits of the \texttt{differ} argument are not discarded, although a corresponding data value will not be assigned.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# convert time series to two hour invervals}
-\hlcom{# tolerance of +/- 30 minutes for matching existing data}
-\hlkwd{setstep}\hlstd{(dat,} \hlkwc{timestep} \hlstd{=} \hlnum{120}\hlstd{,} \hlkwc{differ} \hlstd{=} \hlnum{30}\hlstd{)}
-
-\hlcom{# convert a nutrient time series to a continuous time series}
-\hlcom{# then remove empty rows and columns}
-\hlkwd{data}\hlstd{(apacpnut)}
-\hlstd{dat_nut} \hlkwb{<-} \hlstd{apacpnut}
-\hlstd{dat_nut} \hlkwb{<-} \hlkwd{setstep}\hlstd{(dat_nut,} \hlkwc{timestep} \hlstd{=} \hlnum{60}\hlstd{)}
-\hlkwd{subset}\hlstd{(dat_nut,} \hlkwc{rem_rows} \hlstd{= T,} \hlkwc{rem_cols} \hlstd{= T)}
-\end{alltt}
+\begin{verbatim}
+> # import, qaqc removal
+> data(apadbwq)
+> dat <- qaqc(apadbwq)
+> 
+> # convert time series to two hour invervals
+> # tolerance of +/- 30 minutes for matching existing data
+> setstep(dat, timestep = 120, differ = 30)
+> 
+> # convert a nutrient time series to a continuous time series
+> # then remove empty rows and columns
+> data(apacpnut)
+> dat_nut <- apacpnut
+> dat_nut <- setstep(dat_nut, timestep = 60)
+> subset(dat_nut, rem_rows = T, rem_cols = T)
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-The \texttt{comb} function is used to combine multiple \texttt{swmpr} objects into a single object with a continuous time series at a given step.  The \texttt{timestep} function is used internally such that \texttt{timestep} and \texttt{differ} are accepted arguments for \texttt{comb}.  The function requires one or more \texttt{swmpr} objects as input as separate, undefined arguments.  The remaining arguments must be called explicitly since an arbitrary number of objects can be used as input.  In general, the function combines data by creating a master time series that is used to iteratively merge all \texttt{swmpr} objects.  The time series for merging depends on the value passed to the \texttt{method} argument.  Passing \texttt{union} to \texttt{method} will create a time series that is continuous starting from the earliest date and the latest date for all input objects.  Passing \texttt{intersect} to \texttt{method} will create a time series that is continuous from the set of dates that are shared between all input objects.  Finally, a seven or eight character station name passed to \texttt{method} will merge all input objects based on a continuous time series for the given station.  The specified station must be present in the input data.  Currently, combining data types from different stations is not possible, excluding weather data which are typically at a single, dedicated station.  
+The \texttt{comb} function is used to combine multiple \texttt{swmpr} objects into a single object with a continuous time series at a given step.  The \texttt{timestep} function is used internally such that \texttt{timestep} and \texttt{differ} are accepted arguments for \texttt{comb}.  All arguments must be called explicitly since an arbitrary number of \texttt{swmpr} objects can be used as input.  The function combines data by creating a master time series that is used to iteratively merge all \texttt{swmpr} objects.  The time series for merging depends on the value passed to the \texttt{method} argument.  Passing \texttt{union} to \texttt{method} will create a time series that is continuous from the earliest and latest dates for all input objects.  Passing \texttt{intersect} to \texttt{method} will create a time series that is continuous from the set of dates that are shared between all input objects.  Finally, a seven or eight character station name passed to \texttt{method} will merge all data based on a continuous time series for the specified station, which must be present in the input data.  Currently, combining identical data types from different stations is not possible (e.g., two water quality stations from the same reserve).  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# get nuts, wq, and met data as separate objects for the same station}
-\hlcom{# note that most sites usually have one weather station}
-\hlkwd{data}\hlstd{(apacpnut)}
-\hlkwd{data}\hlstd{(apacpwq)}
-\hlkwd{data}\hlstd{(apaebmet)}
-\hlstd{swmp1} \hlkwb{<-} \hlstd{apacpnut}
-\hlstd{swmp2} \hlkwb{<-} \hlstd{apacpwq}
-\hlstd{swmp3} \hlkwb{<-} \hlstd{apaebmet}
-
-\hlcom{# combine nuts and wq data by union}
-\hlkwd{comb}\hlstd{(swmp1, swmp2,} \hlkwc{method} \hlstd{=} \hlstr{'union'}\hlstd{)}
-
-\hlcom{# combine nuts and wq data by intersect}
-\hlkwd{comb}\hlstd{(swmp1, swmp3,} \hlkwc{method} \hlstd{=} \hlstr{'intersect'}\hlstd{)}
-
-\hlcom{# combine nuts, wq, and met data by nuts time series, two hour time step}
-\hlkwd{comb}\hlstd{(swmp1, swmp2, swmp3,} \hlkwc{timestep} \hlstd{=} \hlnum{120}\hlstd{,} \hlkwc{method} \hlstd{=} \hlstr{'apacpnut'}\hlstd{)}
-\end{alltt}
+\begin{verbatim}
+> # get nuts, wq, and met data as separate objects for the same reserve
+> data(apacpnut)
+> data(apacpwq)
+> data(apaebmet)
+> swmp1 <- apacpnut
+> swmp2 <- apacpwq
+> swmp3 <- apaebmet
+> 
+> # combine nuts and wq data by union
+> comb(swmp1, swmp2, method = 'union')
+> 
+> # combine nuts and wq data by intersect
+> comb(swmp1, swmp3, method = 'intersect')
+> 
+> # combine nuts, wq, and met data by nuts time series, two hour time step
+> comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 \subsection*{Data analysis}
 
-The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (\Cref{tab:analyze}).  The latter category includes a limited number of functions that were developed by myself or others.  The general purpose tools are \texttt{swmpr} methods that were developed for existing generic functions in the R base installation or relevant packages.  These functions include \texttt{swmpr} methods for \texttt{aggregate}, \texttt{filter}, and \texttt{approx} to deal with missing or noisy data and more general functions for exploratory data analaysis, such as \texttt{plot}, \texttt{summary}, and \texttt{hist} methods.  Decomposition functions, \texttt{decomp} and \texttt{decomp\_cj}, are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. The analysis functions may or may not return a \texttt{swmpr} object depending on whether further processing with \texttt{swmpr} methods is possible from the output.    
+The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (\Cref{tab:analyze}).  The general purpose tools are \texttt{swmpr} methods that were developed for existing generic functions in the R base installation or relevant packages.  These functions include \texttt{swmpr} methods for \texttt{aggregate}, \texttt{filter}, and \texttt{approx} to deal with missing or noisy data and more general functions for exploratory data analaysis, such as \texttt{plot}, \texttt{summary}, and \texttt{hist} methods.  Decomposition functions, \texttt{decomp} and \texttt{decomp\_cj}, are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. Functions to estimate and plot ecosystem metabolism from combined water quality and weather data are provided by the \texttt{ecometab} and \texttt{plot\_metab} functions.  The analysis functions may or may not return a \texttt{swmpr} object depending on whether further processing with \texttt{swmpr} methods is possible from the output.    
 
 The \texttt{aggregate} function aggregates parameter data for a \texttt{swmpr} object by set periods of observation.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales, or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours for a user-defined function, which defaults to the mean.  A \texttt{swmpr} object is returned for the aggregated data, although the \texttt{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \texttt{round} method for IDate objects \href{http://cran.r-project.org/web/packages/data.table/index.html}{data.table} package.  This approach was used to facilitate plotting using predefined methods for Date and POSIX objects.  Additionally, the method of treating NA values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned (see the example below).  Finally, the default argument for \texttt{na.action} is set to \texttt{na.pass} for \texttt{swmpr} objects to preserve the time series of the input data.
 
@@ -609,19 +555,19 @@ The \texttt{aggregate} function aggregates parameter data for a \texttt{swmpr} o
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# combine, qaqc, remove empty columns}
-\hlstd{dat} \hlkwb{<-} \hlkwd{comb}\hlstd{(swmp1, swmp2,} \hlkwc{method} \hlstd{=} \hlstr{'union'}\hlstd{)}
-\hlstd{dat} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(dat)}
-\hlstd{swmpr_in} \hlkwb{<-} \hlkwd{subset}\hlstd{(dat,} \hlkwc{rem_cols} \hlstd{= T)}
-
-\hlcom{# get mean DO by quarters}
-\hlkwd{aggregate}\hlstd{(swmpr_in,} \hlstr{'quarters'}\hlstd{,} \hlkwc{params} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'do_mgl'}\hlstd{))}
-
-\hlcom{# get mean DO by quarters, remove NA when calculating means}
-\hlstd{fun_in} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{mean}\hlstd{(x,} \hlkwc{na.rm} \hlstd{= T)}
-\hlkwd{aggregate}\hlstd{(swmpr_in,} \hlkwc{FUN} \hlstd{= fun_in,} \hlstr{'quarters'}\hlstd{,} \hlkwc{params} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'do_mgl'}\hlstd{))}
-\end{alltt}
+\begin{verbatim}
+> # combine, qaqc, remove empty columns
+> dat <- comb(swmp1, swmp2, method = 'union')
+> dat <- qaqc(dat)
+> swmpr_in <- subset(dat, rem_cols = T)
+> 
+> # get mean DO by quarters
+> aggregate(swmpr_in, 'quarters', params = c('do_mgl'))
+> 
+> # get mean DO by quarters, remove NA when calculating means
+> fun_in <- function(x) mean(x, na.rm = T)
+> aggregate(swmpr_in, FUN = fun_in, 'quarters', params = c('do_mgl'))
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -629,22 +575,22 @@ Time series can be smoothed to better characterize a signal independent of noise
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# import data}
-\hlkwd{data}\hlstd{(apadbwq)}
-\hlstd{swmp1} \hlkwb{<-} \hlstd{apadbwq}
-
-\hlcom{# qaqc and subset imported data}
-\hlstd{dat} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(swmp1)}
-\hlstd{dat} \hlkwb{<-} \hlkwd{subset}\hlstd{(dat,} \hlkwc{subset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'2012-07-09 00:00'}\hlstd{,} \hlstr{'2012-07-24 00:00'}\hlstd{))}
-
-\hlcom{# filter}
-\hlstd{test} \hlkwb{<-} \hlkwd{smoother}\hlstd{(dat,} \hlkwc{window} \hlstd{=} \hlnum{50}\hlstd{,} \hlkwc{params} \hlstd{=} \hlstr{'do_mgl'}\hlstd{)}
-
-\hlcom{# plot to see the difference}
-\hlkwd{plot}\hlstd{(do_mgl} \hlopt{~} \hlstd{datetimestamp,} \hlkwc{data} \hlstd{= dat,} \hlkwc{type} \hlstd{=} \hlstr{'l'}\hlstd{)}
-\hlkwd{lines}\hlstd{(test,} \hlkwc{select} \hlstd{=} \hlstr{'do_mgl'}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{'red'}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
-\end{alltt}
+\begin{verbatim}
+> # import data
+> data(apadbwq)
+> swmp1 <- apadbwq
+> 
+> # qaqc and subset imported data
+> dat <- qaqc(swmp1)
+> dat <- subset(dat, subset = c('2012-07-09 00:00', '2012-07-24 00:00'))
+> 
+> # filter
+> test <- smoother(dat, window = 50, params = 'do_mgl')
+> 
+> # plot to see the difference
+> plot(do_mgl ~ datetimestamp, data = dat, type = 'l')
+> lines(test, select = 'do_mgl', col = 'red', lwd = 2)
+\end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
 
@@ -662,31 +608,31 @@ A common issue with any statistical analysis is the treatment of missing values.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# get data}
-\hlkwd{data}\hlstd{(apadbwq)}
-\hlstd{swmp1} \hlkwb{<-} \hlstd{apadbwq}
-
-\hlcom{# qaqc and subset imported data}
-\hlstd{dat} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(swmp1)}
-\hlstd{dat} \hlkwb{<-} \hlkwd{subset}\hlstd{(dat,} \hlkwc{subset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'2013-01-22 00:00'}\hlstd{,} \hlstr{'2013-01-26 00:00'}\hlstd{))}
-
-\hlcom{# interpolate, maxgap of 10 records}
-\hlstd{test} \hlkwb{<-} \hlkwd{na.approx}\hlstd{(dat,} \hlkwc{params} \hlstd{=} \hlstr{'do_mgl'}\hlstd{,} \hlkwc{maxgap} \hlstd{=} \hlnum{10}\hlstd{)}
-
-\hlcom{# interpolate maxgap of 30 records}
-\hlstd{test2} \hlkwb{<-} \hlkwd{na.approx}\hlstd{(dat,} \hlkwc{params} \hlstd{=} \hlstr{'do_mgl'}\hlstd{,} \hlkwc{maxgap} \hlstd{=} \hlnum{30}\hlstd{)}
-
-\hlcom{# plot for comparison}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{3}\hlstd{,} \hlnum{1}\hlstd{))}
-\hlkwd{plot}\hlstd{(do_mgl} \hlopt{~} \hlstd{datetimestamp, dat,} \hlkwc{main} \hlstd{=} \hlstr{'Raw'}\hlstd{,} \hlkwc{type} \hlstd{=} \hlstr{'l'}\hlstd{)}
-\hlkwd{plot}\hlstd{(do_mgl} \hlopt{~} \hlstd{datetimestamp, test,} \hlkwc{col} \hlstd{=} \hlstr{'red'}\hlstd{,}
-  \hlkwc{main} \hlstd{=} \hlstr{'Interpolation - maximum gap of 10 records'}\hlstd{,} \hlkwc{type} \hlstd{=} \hlstr{'l'}\hlstd{)}
-\hlkwd{lines}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlstr{'do_mgl'}\hlstd{)}
-\hlkwd{plot}\hlstd{(do_mgl} \hlopt{~} \hlstd{datetimestamp, test2,} \hlkwc{col} \hlstd{=} \hlstr{'red'}\hlstd{,}
-  \hlkwc{main} \hlstd{=} \hlstr{'Interpolation - maximum gap of 30 records'}\hlstd{,} \hlkwc{type} \hlstd{=} \hlstr{'l'}\hlstd{)}
-\hlkwd{lines}\hlstd{(dat,} \hlkwc{select} \hlstd{=} \hlstr{'do_mgl'}\hlstd{)}
-\end{alltt}
+\begin{verbatim}
+> # get data
+> data(apadbwq)
+> swmp1 <- apadbwq
+> 
+> # qaqc and subset imported data
+> dat <- qaqc(swmp1)
+> dat <- subset(dat, subset = c('2013-01-22 00:00', '2013-01-26 00:00'))
+> 
+> # interpolate, maxgap of 10 records
+> test <- na.approx(dat, params = 'do_mgl', maxgap = 10)
+> 
+> # interpolate maxgap of 30 records
+> test2 <- na.approx(dat, params = 'do_mgl', maxgap = 30)
+> 
+> # plot for comparison
+> par(mfrow = c(3, 1))
+> plot(do_mgl ~ datetimestamp, dat, main = 'Raw', type = 'l')
+> plot(do_mgl ~ datetimestamp, test, col = 'red', 
++   main = 'Interpolation - maximum gap of 10 records', type = 'l')
+> lines(dat, select = 'do_mgl')
+> plot(do_mgl ~ datetimestamp, test2, col = 'red', 
++   main = 'Interpolation - maximum gap of 30 records', type = 'l')
+> lines(dat, select = 'do_mgl')
+\end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
 
@@ -706,18 +652,18 @@ The \texttt{decompose} function requires a \texttt{ts} object with a specified f
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# get data}
-\hlkwd{data}\hlstd{(apadbwq)}
-\hlstd{swmp1} \hlkwb{<-} \hlstd{apadbwq}
-
-\hlcom{# subset for daily decomposition}
-\hlstd{dat} \hlkwb{<-} \hlkwd{subset}\hlstd{(swmp1,} \hlkwc{subset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'2013-07-01 00:00'}\hlstd{,} \hlstr{'2013-07-31 00:00'}\hlstd{))}
-
-\hlcom{# decomposition and plot}
-\hlstd{test} \hlkwb{<-} \hlkwd{decomp}\hlstd{(dat,} \hlkwc{param} \hlstd{=} \hlstr{'do_mgl'}\hlstd{,} \hlkwc{frequency} \hlstd{=} \hlstr{'daily'}\hlstd{)}
-\hlkwd{plot}\hlstd{(test)}
-\end{alltt}
+\begin{verbatim}
+> # get data
+> data(apadbwq)
+> swmp1 <- apadbwq
+> 
+> # subset for daily decomposition
+> dat <- subset(swmp1, subset = c('2013-07-01 00:00', '2013-07-31 00:00'))
+> 
+> # decomposition and plot
+> test <- decomp(dat, param = 'do_mgl', frequency = 'daily')
+> plot(test)
+\end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
 
@@ -735,15 +681,15 @@ An alternative approach to time series decomposition is provided by the \texttt{
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# get data}
-\hlkwd{data}\hlstd{(apacpnut)}
-\hlstd{dat} \hlkwb{<-} \hlstd{apacpnut}
-\hlstd{dat} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(dat,} \hlkwc{qaqc_keep} \hlstd{=} \hlkwa{NULL}\hlstd{)}
-
-\hlcom{# decomposition of chl, ggplot}
-\hlkwd{decomp_cj}\hlstd{(dat,} \hlkwc{param} \hlstd{=} \hlstr{'chla_n'}\hlstd{)}
-\end{alltt}
+\begin{verbatim}
+> # get data
+> data(apacpnut)
+> dat <- apacpnut
+> dat <- qaqc(dat, qaqc_keep = NULL)
+> 
+> # decomposition of chl, ggplot
+> decomp_cj(dat, param = 'chla_n')
+\end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
 
@@ -761,14 +707,14 @@ Several graphics showing seasonal and annual trends for a given SWMP parameter c
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## import data}
-\hlkwd{data}\hlstd{(apacpnut)}
-\hlstd{dat} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(apacpnut)}
-
-\hlcom{## plot}
-\hlkwd{plot_summary}\hlstd{(dat,} \hlkwc{param} \hlstd{=} \hlstr{'chla_n'}\hlstd{,} \hlkwc{years} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2007}\hlstd{,} \hlnum{2013}\hlstd{))}
-\end{alltt}
+\begin{verbatim}
+> ## import data
+> data(apacpnut)
+> dat <- qaqc(apacpnut)
+> 
+> ## plot
+> plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
+\end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
 
@@ -790,20 +736,20 @@ The following is an example that shows use of the function from a combined water
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## import water quality and weather data}
-\hlkwd{data}\hlstd{(apadbwq)}
-\hlkwd{data}\hlstd{(apaebmet)}
-
-\hlcom{## qaqc, combine}
-\hlstd{wq} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(apadbwq)}
-\hlstd{met} \hlkwb{<-} \hlkwd{qaqc}\hlstd{(apaebmet)}
-\hlstd{dat} \hlkwb{<-} \hlkwd{comb}\hlstd{(wq, met)}
-
-\hlcom{## estimate metabolism}
-\hlstd{res} \hlkwb{<-} \hlkwd{ecometab}\hlstd{(dat,} \hlkwc{trace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-\hlkwd{plot_metab}\hlstd{(res)}
-\end{alltt}
+\begin{verbatim}
+> ## import water quality and weather data
+> data(apadbwq)
+> data(apaebmet)
+> 
+> ## qaqc, combine
+> wq <- qaqc(apadbwq)
+> met <- qaqc(apaebmet)
+> dat <- comb(wq, met)
+> 
+> ## estimate metabolism
+> res <- ecometab(dat, trace = FALSE)
+> plot_metab(res)
+\end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
 
@@ -847,10 +793,10 @@ For brevity, only the \texttt{reserve\_map} function is discussed.  This functio
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# plot the stations at Jacques Cousteau reserve}
-\hlkwd{map_reserve}\hlstd{(}\hlstr{'jac'}\hlstd{)}
-\end{alltt}
+\begin{verbatim}
+> # plot the stations at Jacques Cousteau reserve
+> map_reserve('jac')
+\end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
 
