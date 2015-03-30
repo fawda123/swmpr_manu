@@ -100,6 +100,22 @@ Wickham H.
 \newblock Advanced R.
 \newblock Boca Raton, Florida: Chapman and Hall, CRC Press; 2014.
 
+\bibitem{Dowle14}
+Dowle M, Short T, Lianoglou S, Srinivasan A, Saporta R, Antonyan E. data.table:
+  Extension of data.frame; 2014.
+\newblock R package version 1.9.4.
+\newblock Available from: \url{http://CRAN.R-project.org/package=data.table}.
+
+\bibitem{Kendall83}
+Kendall M, Stuart A.
+\newblock The Advanced Theory of Statistics. vol.~3.
+\newblock New York, New York: MacMillan Publishing Company; 1983.
+
+\bibitem{Jassby14}
+Jassby AD, Cloern JE. wq: Exploring water quality monitoring data; 2014.
+\newblock R package version 0.4-1.
+\newblock Available from: \url{http://CRAN.R-project.org/package=wq}.
+
 \bibitem{Cloern10}
 Cloern JE, Jassby AD.
 \newblock Patterns and scales of phytoplankton variability in estuarine-coastal
