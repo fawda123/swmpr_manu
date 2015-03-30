@@ -132,7 +132,7 @@ options(replace.assign=TRUE,width=70,digits=1)
 % Please capitalize all terms in the title except conjunctions, prepositions, and articles.
 \begin{flushleft}
 {\Large
-\textbf\newline{SWMPr: An R package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries}
+\textbf\newline{SWMPr: An R Package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries}
 }
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
@@ -495,8 +495,8 @@ dat <- subset(dat, select = 'do_mgl',
 dat_smooth <- smoother(dat, window = 50, params = 'do_mgl')
 
 # plot raw and smoothed
-plot(dat, type = 'l')
-lines(dat_smooth, select = 'do_mgl', col = 'red', lwd = 2)
+plot(dat)
+lines(dat_smooth, col = 'red', lwd = 2)
 @
 
 A common issue with any statistical analysis is the treatment of missing values.  Missing data can be excluded from the analysis, included but treated as true zeroes, or interpolated based on similar values.  In either case, an analyst should have a strong rationale for the chosen method.  A common approach implemented in the SWMPr package is linear interpolation using the \texttt{na.approx} function (\Cref{fig:interp_ex}).  A simple curve fitting method is used to create a continuous set of records between observations separated by missing data.  However, the ability of the interpolated data to approximate actual trends is related to the maximum gap size between observations with missing data.  Interpolation between larger gaps are less likely to resemble patterns of an actual parameter, whereas interpolation between smaller gaps are often more accurate.  An upper limit on the maximum gap size to interpolate trends depends on the characteristics of the dataset such that a trial and error approach is appropriate for most applications.  The \texttt{maxgap} argument passed to \texttt{na.approx} defines the maximum gap size for interpolation and the following illustrates use of different maximum values to fill missing data.  

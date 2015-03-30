@@ -1,24 +1,9 @@
 % Template for PLoS
 % Version 3.1 February 2015
 %
-% % % % % % % % % % % % % % % % % % % % % % % 
-%
-% Once your paper is accepted for publication, 
-% PLEASE REMOVE ALL TRACKED CHANGES in this file and leave only
-% the final text of your manuscript.
-%
-% There are no restrictions on package use within the LaTeX files except that 
-% no packages listed in the template may be deleted.
-%
-% Please do not include colors or graphics in the text.
-%
-% Please do not create a heading level below \subsection. For 3rd level headings, use \paragraph{}.
-%
 % % % % % % % % % % % % % % % % % % % % % % %
 %
 % -- FIGURES AND TABLES
-%
-% Please include tables/figure captions directly after the paragraph where they are first cited in the text.
 %
 % DO NOT INCLUDE GRAPHICS IN YOUR MANUSCRIPT
 % - Figures should be uploaded separately from your manuscript file. 
@@ -32,8 +17,6 @@
 % - vertically-merged cells (no tabular environments within tabular environments, do not use \multirow)
 % - colors, shading, or graphic objects
 % See http://www.plosone.org/static/figureGuidelines#tables for table guidelines.
-%
-% For tables that exceed the width of the text column, use the adjustwidth environment as illustrated in the example table in text below.
 %
 % % % % % % % % % % % % % % % % % % % % % % % 
 
@@ -123,7 +106,6 @@
 % packages I added
 \usepackage{cleveref}
 \usepackage[colorlinks=true,allcolors=Gray]{hyperref}
-% \usepackage[hidelinks]{hyperref}
 \usepackage[usenames,dvipsnames]{xcolor}
 
 % Remove comment for double spacing
@@ -169,9 +151,6 @@
 
 %% Include all macros below
 
-\newcommand{\lorem}{{\bf LOREM}}
-\newcommand{\ipsum}{{\bf IPSUM}}
-
 % cleveref options
 \crefname{table}{Table}{Tables}
 \crefname{figure}{Fig.}{Figs.}
@@ -198,7 +177,7 @@
 % Please capitalize all terms in the title except conjunctions, prepositions, and articles.
 \begin{flushleft}
 {\Large
-\textbf\newline{SWMPr: An R package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries}
+\textbf\newline{SWMPr: An R Package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries}
 }
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
@@ -582,8 +561,8 @@ Time series can be smoothed to better characterize a signal independent of noise
 > dat_smooth <- smoother(dat, window = 50, params = 'do_mgl')
 > 
 > # plot raw and smoothed
-> plot(dat, type = 'l')
-> lines(dat_smooth, select = 'do_mgl', col = 'red', lwd = 2)
+> plot(dat)
+> lines(dat_smooth, col = 'red', lwd = 2)
 \end{verbatim}
 \end{kframe}\begin{figure}[!ht]
 
