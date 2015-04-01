@@ -621,7 +621,7 @@ latex(
 
 @
 
-For brevity, only the \texttt{reserve\_map} function is discussed.  This function can be used to create a map with all stations at a reserve using functions in the ggmap package \cite{ggmap13}. The current function is limited to Google maps of four types that can be set with the \texttt{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \texttt{zoom} argument may have to be chosen through trial and error depending on the spatial extent of the reserve.  See the help documentation for the \texttt{ggmap} function for more info on \texttt{zoom}.
+For brevity, only the \texttt{reserve\_map} function is discussed.  This function can be used to create a map with all stations at a reserve using functions in the ggmap package \cite{Kahle13}. The current function is limited to Google maps of four types that can be set with the \texttt{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \texttt{zoom} argument may have to be chosen through trial and error depending on the spatial extent of the reserve.  See the help documentation for the \texttt{ggmap} function for more info on \texttt{zoom}.
 
 <<map_ex, fig.height = 5, message = F, cache = T, fig.cap = "Locations of all sites at the Jacques Cousteau reserve using the \\texttt{map\\_reserve} function.">>=
 # plot the stations at Jacques Cousteau reserve
