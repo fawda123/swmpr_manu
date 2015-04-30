@@ -1,0 +1,144 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{setspace}
+\usepackage[colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{indentfirst}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[final]{animate}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{rotating}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{subfig} 
+\usepackage[noae]{Sweave}
+\usepackage{cleveref}
+\usepackage[figureposition=bottom]{caption}
+\usepackage{paralist}
+\usepackage{acronym}
+\usepackage{outlines}
+
+%acronyms
+% \acrodef{}{}
+
+%knitr options
+<<setup, cache = F, echo = F>>=
+# set global chunk options
+opts_chunk$set(fig.align = 'center', message = F, dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!ht', warning = F, echo = F)
+options(replace.assign=TRUE,width=90,digits=1)
+@
+
+\setlength{\parskip}{5mm}
+\setlength{\parindent}{0in}
+
+\begin{document}
+\raggedright
+
+% \title{}
+% \author{}
+% \maketitle
+
+{\it Response to review from Dr. Jeff Hollister, ``SWMPr: An R Package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries'', Beck, MW.}
+
+Response to reviewer comments are provided in italics.  The original review is included as a pdf with markup comment. The original pages and line numbers are noted below.
+
+Page 1: I describe SWMPr, an open-source R package, for use ...
+
+{\it Changed.}
+
+Page 2: growth
+
+{\it Changed.}
+
+Page 2: is limited
+
+{\it Changed.}
+
+Page 2: identifying the signal from the
+
+{\it Changed.}
+
+Page 2: This feels like you are questioning the use of this type of data? Also, try to transition to the next paragraph. Feels a bit abrupt.
+
+{\it Modified as follows: `A greater focus on synthesis, exploratory-based analytical techniques, and interpretation have characterized the use of data from automated monitoring programs [6, 7].  An important monitoring network for coastal environments in the United States is the National Estuarine Research Reserve System (NERRS). This network represents 28 estuarine reserves from different biogeographic regions that were chosen to address multiple goals for long-term research, monitoring, education, and stewardship in support of coastal management.'}
+
+Page 2: both for
+
+{\it Changed.}
+
+Page 2: Why just abiotic? You should add a bit about this. Are the other data not available, just haven't done it yet? If the later, let me know, that'd be fun to work on!
+
+{\it The description in the text is vague in this regard and I have modified for clarity: `Only the abiotic data are monitored continuously with automated sensor networks, whereas the remaining elements involve field surveys or mapping products that differ between reserves given site-specific requirements.  As such, the SWMPr package is developed for the continuous abiotic monitoring network that represents a majority of the SWMP data and, consequently, the most challenging to evaluate.  '}
+
+Page 3: space
+
+{\it Added.}
+
+Page 3: On CRAN now, correct? IF so update installation directions.
+
+{\it Installation instructions were updated}
+ 
+Page 3: Would bet a lot of readers won't have any idea what this means. Since the swmpr object is central to the package, maybe a section describing its structure and a line or two on S3 might be a good idea.
+
+{\it Agreed.  This material was already in the text but not as a separate section.  I added a section describing the object structure, including the following text for clarity: `The \texttt{swmpr} object class was created for use with the organizing and analyzing functions.  This object-oriented approach is standard for R (i.e., the S3 object  system, [16]), such that specific methods for a generic function are developed for the object class.}  
+
+Page 4: Why only 100? web service limit?
+
+{\it Added footnote to the table that describes the limitation.}
+
+Page 4: Same as above. If there are service limitations should outline those. Just saw this explained below!
+
+{\it Same as above.}
+
+Page 4: This is going to be a tough one to keep relevant. What's the reason for including it?
+
+Page 4: Couldn't you build this functionality into the function itself? Perhaps next version... No need to include prior to publishing this.
+
+Page 5: Might be more informative to show the results for each request... dplyr style?
+
+Page 5: If you built in the loop to get around the limit would this not be necessary? This seems like a bandaid that will be less and less relevant over time.
+
+Page 5: Unless it is necessary, I wouldn't even mention this.
+
+Page 5: Would be nice to have the decompression as part of the function.
+
+Page 5: What is the source of the duplicates? Does it make sense to just remove them? Are the data duplicated? Could you just flag these in the output as opposed to removing? If you did this, you could then let the user decide when to remove or not remove with rem\_reps().
+
+Page 6: Re: my comment above about the object... Might make this a separate section. Include a table instead of prose to describe the object. Could closely follow the output of str(my\_swmpr\_obj).
+
+Page 7: setstep.swmpr??
+
+Page 7: Not sure how best to refer to these S3 methods. You do it both ways (with .smpr in the table) and without in the text. Could keep it that way if you add a line to table caption. I bring it up, because I think new R users would be confused by this (I was for awhile...)
+
+Page 9: Does PLOS allow Boxes? Like Box 3. Example of qaqc() funciton usage... That would be a good way to show these.
+
+Page 9: quote
+
+Page 9: quote
+
+Page 10: A section on package dependencies might be a good addition.
+
+Page 10: Include an example of this in the code examples below.
+
+Page 10: rewrite. ``a signal from noisy data'' ??
+
+Page 13: or
+
+Page 14: May not be obvious that this is 60 min / 15 min... And character string options are a great idea!
+
+Page 16: I'm just being picky, but the name on this one is tripping me up. I think I'd prefer to see eco\_metab. But, I realize that may not be an easy change, so up to you!
+
+Page 17: Do all of these functions need to be exported? Could they simply be internal functions that the users don't see? If so, you could shorten or eliminate this section. Also you could create a Viz category of functions instead of this one. In that you could talk about the plot capabilites separate from the analysis section, and the include the reserve\_map function there.
+
+Page 17: Should this be map\_reserve???
+
+Page 19: Yank this. Goes without saying.
+
+Page 20: Some of the figures have code that directly preceeds it. Other figures (like Fig 8) it is a bit more difficult to link code to figure. Would be nice to provide a link to code for all the figures. This way a reader could download a single script to reproduce the figures.
+
+Page 20: Are these examples necessary? Feel kinda tacked on and why have links as supplementary info and not part of the text? If you are going to keep these, I would flesh this out a bit more, add in some screen captures as figures and links directly in the text.
+
+Page 21: Same comment as above. Be nice to have ready access to code that reproduces this table.
+
+\end{document}
