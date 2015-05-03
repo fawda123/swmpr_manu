@@ -233,10 +233,10 @@ The SWMPr package was developed by considering a standard workflow that categori
 
 \subsection*{Data retrieval}
 
-Three approaches can be used to import \ac{SWMP} data into R, either through direct download or by importing local data (\Cref{tab:retrieve}). First, functions from the package can be used to import the data directly from the online server using \ac{CDMO} web services. To do so, the IP address for the computer making the request must be registered with \ac{CDMO}.\footnote{Follow instructions here: \url{http://cdmo.baruch.sc.edu/webservices.cfm}}  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with \ac{CDMO}. 
+Two approaches can be used to import \ac{SWMP} data into R, either through direct download or by importing local data (\Cref{tab:retrieve}). First, functions from the package can be used to import the data directly from the online server using \ac{CDMO} web services. To do so, the IP address for the computer making the request must be registered with \ac{CDMO}.\footnote{Follow instructions here: \url{http://cdmo.baruch.sc.edu/webservices.cfm}}  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with \ac{CDMO}. 
 
 % table for retrieval functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?all\\_params} at the command line).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), insert.bottom = foot,     label = "tab:retrieve", table.env = FALSE)%
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?all\\_params} at the command line).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:retrieve",     table.env = FALSE)%
 \begin{table}[!tbp]
 \caption{Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \texttt{?all\_params} at the command line).\label{tab:retrieve}} 
 \begin{center}
@@ -244,17 +244,16 @@ Three approaches can be used to import \ac{SWMP} data into R, either through dir
 \hline\hline
 \multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
 \hline
-\texttt{all\_params}&Retrieve up to 100 records\textsuperscript{\textit{a}} starting with the most recent at a given station, all parameters.  Wrapper to \texttt{exportAllParamsXMLNew} function on web services.\tabularnewline
-\texttt{all\_params\_dtrng}&Retrieve up to 1000 records of all parameters within a given date range for a station.  Optional argument for a single parameter. Wrapper to \texttt{exportAllParamsDateRangeXMLNew}.\tabularnewline
+\texttt{all\_params}&Retrieve records starting with the most recent at a given station, all parameters.  Wrapper to \texttt{exportAllParamsXMLNew} function on web services.\tabularnewline
+\texttt{all\_params\_dtrng}&Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter. Wrapper to \texttt{exportAllParamsDateRangeXMLNew}.\tabularnewline
 \texttt{import\_local}&Import files from a local path.  The files must be in a specific format, such as those returned from the \ac{CDMO} using the zip downloads option.\tabularnewline
-\texttt{import\_remote}&Import site data from an independent server. These files have been downloaded from \ac{CDMO} up to December 2014, processed using SWMPr functions, and uploaded to an Amazon server for quicker import into R.\tabularnewline
-\texttt{single\_param}&Retrieve up to 100 records for a single parameter starting with the most recent at a given station.  Wrapper to \texttt{exportSingleParamXMLNew} function on web services.\tabularnewline
+\texttt{single\_param}&Retrieve records for a single parameter starting with the most recent at a given station.  Wrapper to \texttt{exportSingleParamXMLNew} function on web services.\tabularnewline
 \texttt{site\_codes}&Metadata for all stations, wrapper to \texttt{exportStationCodesXMLNew} function on web services.\tabularnewline
 \texttt{site\_codes\_ind}&Metadata for all stations at a single site, wrapper  to \texttt{NERRFilterStationCodesXMLNew} function on web services.\tabularnewline
 \hline
 \end{tabular}\end{center}
 
-\textsuperscript{\textit{a}} \footnotesize Server limits prevent retrieving more records in a single request.\end{table}
+\end{table}
 
 
 \begin{knitrout}\small
@@ -269,7 +268,7 @@ Three approaches can be used to import \ac{SWMP} data into R, either through dir
 \end{kframe}
 \end{knitrout}
 
-Due to rate limitations on the \ac{CDMO} server, the retrieval functions return a limited number of records.  The functions are more useful for evaluating short time periods, although these functions could be used iteratively (i.e., with \texttt{for} loops) to obtain longer time series.  Data retrieval functions to access the \ac{CDMO} include \texttt{all\_params}, \texttt{all\_params\_dtrng}, and \texttt{single\_param}: \texttt{all\_params} returns the most recent records of all parameters at a station, \texttt{all\_params\_dtrng} returns all records within a date range for all parameters or a single parameter, and \texttt{single\_param} is identical to \texttt{all\_params} except that a single parameter is requested.    
+Data retrieval functions to import data directly into R from the \ac{CDMO} include \texttt{all\_params}, \texttt{all\_params\_dtrng}, and \texttt{single\_param}: \texttt{all\_params} returns the most recent records of all parameters at a station, \texttt{all\_params\_dtrng} returns all records within a date range for all parameters or a single parameter, and \texttt{single\_param} is identical to \texttt{all\_params} except that a single parameter is requested. Due to rate limitations on the \ac{CDMO} server, the retrieval functions return a limited number of records with each request.  However, the SWMPr functions use the native CDMO web services iteratively (i.e., within a loop) to obtain the desired time series.  Download time can be excessive for longer time series.     
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
@@ -290,18 +289,7 @@ Due to rate limitations on the \ac{CDMO} server, the retrieval functions return 
 \end{kframe}
 \end{knitrout}
 
-A second approach for importing \ac{SWMP} data into R uses the \texttt{import\_remote} function.  This method imports site data from an independent server where \ac{SWMP} data have been downloaded previously and uploaded as \texttt{swmpr} objects in RData binary format.  This approach is advantageous because the files can be imported very quickly and an IP address does not need to be registered.  The files include almost all available \ac{SWMP} data for each site up to December 2014.  However, the files will not be regularly updated and \ac{CDMO} should always be used for the most recent and accurate data.  The files can be accessed by copying the URL to a web browser with the site name and file extension (e.g., \href{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}{https://s3.amazonaws.com/swmpalldata/acebbnut.RData}, see the \nameref{supp_info}) or by using the function as follows.
-
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> # import a file from an independent server
-> import_remote('acebbwq')
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-A third approach for data retrieval is to use the \texttt{import\_local} function to import data into R that are locally available after downloading from \ac{CDMO}.  This approach is most appropriate for large, specific data requests. The \texttt{import\_local} function is designed for data from the zip downloads\footnote{\url{http://cdmo.baruch.sc.edu/aqs/zips.cfm}} feature in the advanced query section of the \ac{CDMO}. The function may also work using data from the data export system,\footnote{\url{http://cdmo.baruch.sc.edu/get/export.cfm}} although this feature has not been extensively tested.  The zip downloads feature is an easy way to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used after the folder is decompressed.
+The second approach for data retrieval is to use the \texttt{import\_local} function to import data into R that are locally available after downloading from \ac{CDMO}.  This approach is most appropriate for large, specific data requests. The \texttt{import\_local} function is designed for data from the zip downloads\footnote{\url{http://cdmo.baruch.sc.edu/aqs/zips.cfm}} feature in the advanced query section of the \ac{CDMO}. The function may also work using data from the data export system,\footnote{\url{http://cdmo.baruch.sc.edu/get/export.cfm}} although this feature has not been extensively tested.  The zip downloads feature is an easy way to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used after the folder is decompressed.
 
 Occasionally, duplicate time stamps are present in the raw data.  The \texttt{import\_local} function handles duplicate entries differently depending on the data type (water quality,  weather, or nutrients).  For water quality and nutrient data, duplicate time stamps are simply removed.  Note that nutrient data often contain replicate samples with similar but not identical time stamps within the span of a few minutes.  Replicates with unique time stamps are not removed but can be further processed using \texttt{rem\_reps}.  Weather data prior to 2007 may also contain duplicate time stamps at frequencies for hourly (denoted as `60') and daily (`144') averages, in addition to 15 minute frequencies.  Only duplicate values at 15 minutes are averaged for weather data.  
 
@@ -444,7 +432,7 @@ A subset method added to the existing generic \texttt{subset} function in R is a
 > 
 > # subset records within a date range, select two parameters
 > subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'),
->   select = c('atemp', 'totsorad'))
++   select = c('atemp', 'totsorad'))
 > 
 > # remove rows/columns that do not contain data
 > subset(dat, rem_rows = T, rem_cols = T)

@@ -85,7 +85,7 @@ Page 3: Would bet a lot of readers won't have any idea what this means. Since th
 
 Page 4: Why only 100? web service limit?
 
-{\it Added footnote to the table that describes the limitation.}
+{\it I've modified all functions that have limits on the number of records that can be downloaded, so this is no longer relevant.}
 
 Page 4: Same as above. If there are service limitations should outline those. Just saw this explained below!
 
@@ -93,13 +93,21 @@ Page 4: Same as above. If there are service limitations should outline those. Ju
 
 Page 4: This is going to be a tough one to keep relevant. What's the reason for including it?
 
+{\it Agreed, the description of this function was removed from the manuscript but it is retained in the package.  I think it's useful to include but shouldn't be advertised as a primary means of importing data.}
+
 Page 4: Couldn't you build this functionality into the function itself? Perhaps next version... No need to include prior to publishing this.
+
+{\it The most recent version now includes this functionality.}
 
 Page 5: Might be more informative to show the results for each request... dplyr style?
 
 Page 5: If you built in the loop to get around the limit would this not be necessary? This seems like a bandaid that will be less and less relevant over time.
 
+{\it Yes, I've removed this function from the manuscript as noted above.}
+
 Page 5: Unless it is necessary, I wouldn't even mention this.
+
+{\it Omitted.}
 
 Page 5: Would be nice to have the decompression as part of the function.
 
