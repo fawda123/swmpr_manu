@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  3 MAY 2015 14:29
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  4 MAY 2015 17:16
 entering extended mode
 **internal_review_response.tex
 (M:\docs\manuscripts\swmpr_manu\internal_review_response.tex
@@ -624,18 +624,18 @@ Package caption Info: End \AtBeginDocument code.
  [1
 
 {C:/Users/mbeck/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 205.
 Package atenddvi Info: Last page = 4.
  [4]
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 189.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 205.
 
 (M:\docs\manuscripts\swmpr_manu\internal_review_response.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 205.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 205.
 Package rerunfilecheck Info: File `internal_review_response.out' has not change
 d.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 189.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 205.
  ) 
 Here is how much of TeX's memory you used:
  10607 strings out of 493921
@@ -648,7 +648,7 @@ Here is how much of TeX's memory you used:
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on internal_review_response.pdf (4 pages, 53880 bytes).
+Output written on internal_review_response.pdf (4 pages, 56324 bytes).
 PDF statistics:
  35 PDF objects out of 1000 (max. 8388607)
  5 named destinations out of 1000 (max. 500000)

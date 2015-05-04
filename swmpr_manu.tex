@@ -289,9 +289,9 @@ Data retrieval functions to import data directly into R from the \ac{CDMO} inclu
 \end{kframe}
 \end{knitrout}
 
-The second approach for data retrieval is to use the \texttt{import\_local} function to import data into R that are locally available after downloading from \ac{CDMO}.  This approach is most appropriate for large, specific data requests. The \texttt{import\_local} function is designed for data from the zip downloads\footnote{\url{http://cdmo.baruch.sc.edu/aqs/zips.cfm}} feature in the advanced query section of the \ac{CDMO}. The function may also work using data from the data export system,\footnote{\url{http://cdmo.baruch.sc.edu/get/export.cfm}} although this feature has not been extensively tested.  The zip downloads feature is an easy way to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used after the folder is decompressed.
+The second approach for data retrieval is to use the \texttt{import\_local} function to import data into R that are locally available after downloading from \ac{CDMO}.  This approach is most appropriate for large, specific data requests. The \texttt{import\_local} function is designed for data from the zip downloads\footnote{\url{http://cdmo.baruch.sc.edu/aqs/zips.cfm}} feature in the advanced query section of the \ac{CDMO}. The zip downloads feature can be used to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used to import files directly from the zipped folder or after the folder is decompressed
 
-Occasionally, duplicate time stamps are present in the raw data.  The \texttt{import\_local} function handles duplicate entries differently depending on the data type (water quality,  weather, or nutrients).  For water quality and nutrient data, duplicate time stamps are simply removed.  Note that nutrient data often contain replicate samples with similar but not identical time stamps within the span of a few minutes.  Replicates with unique time stamps are not removed but can be further processed using \texttt{rem\_reps}.  Weather data prior to 2007 may also contain duplicate time stamps at frequencies for hourly (denoted as `60') and daily (`144') averages, in addition to 15 minute frequencies.  Only duplicate values at 15 minutes are averaged for weather data.  
+Occasionally, non-unique observations are present in the raw data.  These duplicates may be actual replicates with unique time stamps, such as replicate samples for monthly nutrient data.  Erroneous duplicates with non-unique time stamps may also be present.  The \texttt{import\_local} function handles duplicate entries differently depending on the data type.  For water quality and nutrient data, duplicate time stamps are simply removed.  Nutrient data often contain replicate samples with similar but not identical time stamps within the span of a few minutes.  Nutrient data with replicates with unique time stamps are not removed but can be further processed using \texttt{rem\_reps}.  Weather data prior to 2007 may also contain duplicate time stamps at frequencies for hourly (denoted as `60') and daily (`144') averages, in addition to 15 minute frequencies.  Only duplicate values at 15 minutes are averaged for weather data during import.  
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
@@ -302,21 +302,47 @@ Occasionally, duplicate time stamps are present in the raw data.  The \texttt{im
 > path <- 'C:/my_path/'
 > 
 > # import, do not include file extension
-> import_local(path, 'apaebmet') 
+> import_local(path, 'apadbwq') 
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 \subsection*{The \texttt{swmpr} object class}
 
-All data retrieval functions return a \texttt{swmpr} object that includes relevant data and several attributes describing the dataset.  The data include a \texttt{datetimestamp} column in the appropriate timezone for a station and additional parameters for a given data type (weather, nutrients, or water quality).  Correspondingg \ac{QAQC} columns for each parameter are also returned if provided by the initial data request.  The attributes for a \texttt{swmpr} object include \texttt{names} of the dataset, \texttt{row.names} of the dataset, \texttt{class} (character string indicating \texttt{swmpr} and \texttt{data.frame}), \texttt{station} (7 or 8 characters identifying the station),  \texttt{parameters} (character vector of data columns, e.g., \texttt{`do\_mgl'}), \texttt{qaqc\_cols} (logical \texttt{T} or \texttt{F} if present or not), \texttt{date\_rng} (\texttt{POSIXct} vector of minimum/maximum dates), \texttt{timezone} (text string in country/city format, standard time only), and \texttt{stamp\_class} (class of \texttt{datetimestamp} vector, \texttt{POSIXct} or \texttt{Date}).  Attributes of a \texttt{swmpr} object can be viewed as follows.
+All data retrieval functions return a \texttt{swmpr} object that includes relevant data and several attributes describing the dataset.  The data include a \texttt{datetimestamp} column in the appropriate timezone for a station and additional parameters for a given data type (weather, nutrients, or water quality).  Correspondingg \ac{QAQC} columns for each parameter are also returned if provided by the initial data request.  The following shows an example of the raw data imported using \texttt{all\_params}.
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # import data
-> dat <- import_remote('apadbwq')
->  
+> # import all paramaters for the station
+> # three most recent records
+> exdat <- all_params('apadbwq', Max = 3, trace = F)
+> exdat
+##         datetimestamp temp f_temp spcond f_spcond sal f_sal do_pct
+## 1 2015-04-21 13:00:00   21      0   0.07        0   0     0     99
+## 2 2015-04-21 13:15:00   21      0   0.05        0   0     0     99
+## 3 2015-04-21 13:30:00   22      0   0.03        0   0     0     98
+##   f_do_pct do_mgl f_do_mgl depth f_depth ph f_ph turb f_turb chlfluor
+## 1        0      9        0  0.02       0  8    0    2      0       NA
+## 2        0      9        0  0.02       0  8    0    2      0       NA
+## 3        0      8        0  0.02       0  8    0   16      0       NA
+##   f_chlfluor level f_level cdepth clevel f_cdepth f_clevel
+## 1         -2    NA      -1  -0.01     NA        3         
+## 2         -2    NA      -1   0.00     NA        3         
+## 3         -2    NA      -1   0.00     NA        3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The attributes for a \texttt{swmpr} object are descriptors that are appended to the raw data (\cref{tab:attributes}).  These act as metadata that are used internally by many of the package functions and are updated as the data are processed. Attributes of a \texttt{swmpr} object can also be viewed in R as follows.
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import sample data from package
+> data(apadbwq)
+> dat <- apadbwq
+> 
 > # view all attributes of dat
 > attributes(dat)
 >  
@@ -326,6 +352,30 @@ All data retrieval functions return a \texttt{swmpr} object that includes releva
 \end{kframe}
 \end{knitrout}
  
+% attributes table
+%latex.default(to_tab[, -1, drop = F], file = "", caption = "Attributes of a \\texttt{swmpr} object that describe characteristics of the data.  Similar information can be obtained using the \\texttt{str} function.",     rowlabel = "Attributes", colheads = c("Class", "Description"),     rowname = to_tab$Attributes, caption.loc = "top", insert.bottom = foot,     col.just = c("p{0.75in}", "p{3.25in}"), label = "tab:attributes",     table.env = FALSE)%
+\begin{table}[!tbp]
+\caption{Attributes of a \texttt{swmpr} object that describe characteristics of the data.  Similar information can be obtained using the \texttt{str} function.\label{tab:attributes}} 
+\begin{center}
+\begin{tabular}{lp{0.75in}p{3.25in}}
+\hline\hline
+\multicolumn{1}{l}{Attributes}&\multicolumn{1}{c}{Class}&\multicolumn{1}{c}{Description}\tabularnewline
+\hline
+\texttt{names}&character&Column names of the entire data set, inherited from the \texttt{data.frame} object class\tabularnewline
+\texttt{row.names}&integer&Row names of the data set, inherited from the \texttt{data.frame} object class\tabularnewline
+\texttt{class}&character&Class of the data object indicating \texttt{swmpr} and \texttt{data.frame}\tabularnewline
+\texttt{station}&character&Station identifier used by \ac{NERRS} as a string with 7 or 8 characters\tabularnewline
+\texttt{parameters}&character&Character vector of column names for data parameters, e.g., \texttt{`do\_mgl'}\tabularnewline
+\texttt{qaqc\_cols}&logical&Indicates if \ac{QAQC} columns are present in the raw data\tabularnewline
+\texttt{date\_rng}&POSIXct&Start and end dates for the raw data\tabularnewline
+\texttt{timezone}&character&Timezone of the station using the city/country format\textsuperscript{\textit{a}}\tabularnewline
+\texttt{stamp\_class}&character&Class of the \texttt{datetimestamp} column, usually POSIXct unless data have been aggregated\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\textsuperscript{\textit{a}}\footnotesize Time zones that do not observe daylight savings are used for \texttt{swmpr} objects and may not be cities in the United States.  For example, ``America/Jamaica" is the same as Eastern Standard Time.\end{table}
+
+
 The \texttt{swmpr} object class was created for use with the organizing and analyzing functions.  This object-oriented approach is standard for R (i.e., the S3 object  system, \cite{Wickham14}), such that specific methods for a generic function are developed for the object class.  A \texttt{swmpr} object also secondarily inherits methods from the \texttt{data.frame} class, such that common \texttt{data.frame} methods also apply to \texttt{swmpr} objects.  Available methods for the \texttt{swmpr} class are described below and can also be viewed:
  
 \begin{knitrout}\small

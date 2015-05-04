@@ -130,7 +130,7 @@ Page 3: Would bet a lot of readers won't have any idea what this means. Since th
 
 Page 4: Why only 100? web service limit?
 
-{\it Added footnote to the table that describes the limitation.}
+{\it I've modified all functions that have limits on the number of records that can be downloaded, so this is no longer relevant.}
 
 Page 4: Same as above. If there are service limitations should outline those. Just saw this explained below!
 
@@ -138,19 +138,35 @@ Page 4: Same as above. If there are service limitations should outline those. Ju
 
 Page 4: This is going to be a tough one to keep relevant. What's the reason for including it?
 
+{\it Agreed, the description of this function was removed from the manuscript but it is retained in the package.  I think it's useful to include but shouldn't be advertised as a primary means of importing data.}
+
 Page 4: Couldn't you build this functionality into the function itself? Perhaps next version... No need to include prior to publishing this.
+
+{\it The most recent version now includes this functionality.}
 
 Page 5: Might be more informative to show the results for each request... dplyr style?
 
+{\it I think this might create unecessary clutter if all the examples are shown.  I've added an example in the next section for the swmpr object class that shows the raw data.}
+
 Page 5: If you built in the loop to get around the limit would this not be necessary? This seems like a bandaid that will be less and less relevant over time.
+
+{\it Yes, I've removed this function from the manuscript as noted above.}
 
 Page 5: Unless it is necessary, I wouldn't even mention this.
 
+{\it Omitted.}
+
 Page 5: Would be nice to have the decompression as part of the function.
+
+{\it The function was modified to include this feature.  The text was updated accordingly `The \texttt{import\_local} function can be used to import files directly from the zipped folder or after the folder is decompressed'}
 
 Page 5: What is the source of the duplicates? Does it make sense to just remove them? Are the data duplicated? Could you just flag these in the output as opposed to removing? If you did this, you could then let the user decide when to remove or not remove with rem\_reps().
 
+{\it This section was revised for clarity, `Occasionally, non-unique observations are present in the raw data.  These duplicates may be actual replicates with unique time stamps, such as replicate samples for monthly nutrient data.  Erroneous duplicates with non-unique time stamps may also be present.'  I will consider adding functionality to handle duplicates but I don't think the issue of actual duplicates with non-unique time stamps is a huge issue.}
+
 Page 6: Re: my comment above about the object... Might make this a separate section. Include a table instead of prose to describe the object. Could closely follow the output of str(my\_swmpr\_obj).
+
+{\it A table was added to replace the paragraph description of the object attributes.  A separate section was also added in response to a previous comment}.
 
 Page 7: setstep.swmpr??
 
