@@ -125,15 +125,27 @@ Page 6: Re: my comment above about the object... Might make this a separate sect
 
 Page 7: setstep.swmpr??
 
+{\it See response to the next comment.}
+
 Page 7: Not sure how best to refer to these S3 methods. You do it both ways (with .smpr in the table) and without in the text. Could keep it that way if you add a line to table caption. I bring it up, because I think new R users would be confused by this (I was for awhile...)
+
+{\it Agreed, I've removed the method identifier from each function in the tables to avoid confusion.}
 
 Page 9: Does PLOS allow Boxes? Like Box 3. Example of qaqc() funciton usage... That would be a good way to show these.
 
-Page 9: quote
+{\it I've checked a few papers from PLOS One that describe software packages and most follow the format I've used, i.e., presentation of code preceded by the command prompt.}
 
 Page 9: quote
+
+{\it Added.}
+
+Page 9: quote
+
+{\it Added.}
 
 Page 10: A section on package dependencies might be a good addition.
+
+{\it I've added a footnote that directs readers to the package index page on CRAN where the dependencies and package imports can be viewed.  I'm not sure it's worth describing each in detail since this is readily available in the source code.} 
 
 Page 10: Include an example of this in the code examples below.
 

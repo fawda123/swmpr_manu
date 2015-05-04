@@ -344,7 +344,7 @@ The \texttt{qaqc} function is a simple screen to retain observations from the da
 % table for organize functions
 <<results = 'asis', echo = FALSE>>=
 
-funcs <- c('comb.swmpr', 'qaqc.swmpr', 'qaqcchk.swmpr', 'rem\\_reps.swmpr', 'setstep.swmpr', 'subset.swmpr')
+funcs <- c('comb', 'qaqc', 'qaqcchk', 'rem\\_reps', 'setstep', 'subset')
 funcs <- paste0('\\texttt{', funcs, '}')
 
 descrips <- c(
@@ -352,7 +352,7 @@ descrips <- c(
   'Remove \\ac{QAQC} columns and remove data based on \\ac{QAQC} flag values for a \\texttt{swmpr} object.  Only applies if \\ac{QAQC} columns are present. ', 
   'View a summary of the number of observations in a \\texttt{swmpr} object that are assigned to different \\ac{QAQC} flags used by \\ac{CDMO}.  The output can be used to inform further processing.', 
   'Remove replicate nutrient data that occur on the same day.  The default is to average replicates.', 
-  'Format data from a \\texttt{swmpr} object to a continuous time series at a given timestep.  The function is used in \\texttt{comb.swmpr} and can also be used with individual stations.',
+  'Format data from a \\texttt{swmpr} object to a continuous time series at a given timestep.  The function is used in \\texttt{comb} and can also be used with individual stations.',
   'Subset by dates and/or columns for a \\texttt{swmpr} object.  This is a method passed to the generic \\texttt{subset} function provided in the base package.'
   )
 
@@ -363,7 +363,7 @@ library(Hmisc)
 latex(
   to_tab[, 'Description', drop = F],
   file = '',
-  caption = "Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?comb.swmpr} at the command line).",
+  caption = "Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?comb} at the command line).",
   rowlabel = 'Function',
   colheads = 'Description',
   rowname = to_tab$Functions,
@@ -392,7 +392,7 @@ Viewing the number of observations for each parameter that are assigned to a \ac
 qaqcchk(dat)
 @
 
-Raw nutrient data obtained from the \ac{CDMO} will usually include replicate samples that were taken within a few minutes of each other.  The \texttt{rem\_reps.swmpr} function combines nutrient data that occur on the same day to preserve an approximate monthly time step.  The \texttt{datetimestamp} column will always be averaged for replicates, but the actual observations will be combined based on the user-supplied function which defaults to the mean.  Other suggested functions include the \texttt{median}, \texttt{min}, or \texttt{max}.  The entire function call, including treatment of \texttt{NA}, values should be passed to the \texttt{FUN} argument (see the examples).  The function is meant to be used after \texttt{qaqc} processing, although it works with a warning if \ac{QAQC} columns are present.
+Raw nutrient data obtained from the \ac{CDMO} will usually include replicate samples that were taken within a few minutes of each other.  The \texttt{rem\_reps} function combines nutrient data that occur on the same day to preserve an approximate monthly time step.  The \texttt{datetimestamp} column will always be averaged for replicates, but the actual observations will be combined based on the user-supplied function which defaults to the mean.  Other suggested functions include the \texttt{median}, \texttt{min}, or \texttt{max}.  The entire function call, including treatment of \texttt{NA}, values should be passed to the \texttt{FUN} argument (see the examples).  The function is meant to be used after \texttt{qaqc} processing, although it works with a warning if \ac{QAQC} columns are present.
 
 <<eval = F, cache = T>>=
 # get nutrient data
@@ -451,7 +451,7 @@ dat_nut <- setstep(dat_nut, timestep = 60)
 subset(dat_nut, rem_rows = T, rem_cols = T)
 @
 
-The \texttt{comb} function is used to combine multiple \texttt{swmpr} objects into a single object with a continuous time series at a given step.  The \texttt{timestep} function is used internally such that \texttt{timestep} and \texttt{differ} are accepted arguments for \texttt{comb}.  All arguments must be called explicitly since an arbitrary number of \texttt{swmpr} objects can be used as input.  The function combines data by creating a master time series that is used to iteratively merge all \texttt{swmpr} objects.  The time series for merging depends on the value passed to the \texttt{method} argument.  Passing \texttt{union} to \texttt{method} will create a time series that is continuous from the earliest and latest dates for all input objects.  Passing \texttt{intersect} to \texttt{method} will create a time series that is continuous from the set of dates that are shared between all input objects.  Finally, a seven or eight character station name passed to \texttt{method} will merge all data based on a continuous time series for the specified station, which must be present in the input data.  Currently, combining identical data types from different stations is not possible (e.g., two water quality stations from the same reserve).  
+The \texttt{comb} function is used to combine multiple \texttt{swmpr} objects into a single object with a continuous time series at a given step.  The \texttt{timestep} function is used internally such that \texttt{timestep} and \texttt{differ} are accepted arguments for \texttt{comb}.  All arguments must be called explicitly since an arbitrary number of \texttt{swmpr} objects can be used as input.  The function combines data by creating a master time series that is used to iteratively merge all \texttt{swmpr} objects.  The time series for merging depends on the value passed to the \texttt{method} argument.  Passing \texttt{`union'} to \texttt{method} will create a time series that is continuous from the earliest and latest dates for all input objects.  Passing \texttt{`intersect`} to \texttt{method} will create a time series that is continuous from the set of dates that are shared between all input objects.  Finally, a seven or eight character station name passed to \texttt{method} will merge all data based on a continuous time series for the specified station, which must be present in the input data.  Currently, combining identical data types from different stations is not possible (e.g., two water quality stations from the same reserve).  
 
 <<eval = F, cache = T>>=
 # get nut, wq, and met data as separate objects
@@ -474,14 +474,14 @@ comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
 
 \subsection*{Data analysis}
 
-The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (\Cref{tab:analyze}).  The general purpose tools are \texttt{swmpr} methods that were developed for existing generic functions in the R base installation or relevant packages.  These functions include \texttt{swmpr} methods for \texttt{aggreswmp}, \texttt{filter}, and \texttt{approx} to deal with missing or noisy data and more general functions for exploratory data analysis, such as \texttt{plot}, \texttt{lines}, and \texttt{hist} methods.  Decomposition functions, \texttt{decomp} and \texttt{decomp\_cj}, are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. Functions to estimate and plot ecosystem metabolism from combined water quality and weather data are provided by the \texttt{ecometab} and \texttt{plot\_metab} functions.  The analysis functions may or may not return a \texttt{swmpr} object depending on whether further processing with \texttt{swmpr} methods is possible from the output.    
+The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (\Cref{tab:analyze}).  The general purpose tools are \texttt{swmpr} methods that were developed for existing generic functions in the R base installation or relevant packages\footnote{See the listing on \ac{CRAN} for package imports and dependencies for SWMPr: \url{http://cran.r-project.org/web/packages/SWMPr/index.html}}.  These functions include \texttt{swmpr} methods for \texttt{aggreswmp}, \texttt{filter}, and \texttt{approx} to deal with missing or noisy data and more general functions for exploratory data analysis, such as \texttt{plot}, \texttt{lines}, and \texttt{hist} methods.  Decomposition functions, \texttt{decomp} and \texttt{decomp\_cj}, are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. Functions to estimate and plot ecosystem metabolism from combined water quality and weather data are provided by the \texttt{ecometab} and \texttt{plot\_metab} functions.  The analysis functions may or may not return a \texttt{swmpr} object depending on whether further processing with \texttt{swmpr} methods is possible from the output.    
 
 The \texttt{aggreswmp} function aggregates parameter data for a \texttt{swmpr} object by set units of time.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours by a predefined function, which defaults to the mean.  A \texttt{swmpr} object is returned for the aggregated data, although the \texttt{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \texttt{round} method for IDate objects created in the data.table package \cite{Dowle14}.  Additionally, the method of treating \texttt{NA} values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned, particularly for nutrient data.
 
 % table for analysis functions
 <<results = 'asis', echo = FALSE>>=
 
-funcs <- c('aggreswmp.swmpr', 'aggremetab.swmpr', 'ecometab.swmpr', 'decomp.swmpr', 'decomp\\_cj.swmpr', 'hist.swmpr', 'lines.swmpr', 'na.approx.swmpr', 'plot.swmpr', 'plot\\_metab.swmpr', 'plot\\_summary.swmpr', 'smoother.swmpr')
+funcs <- c('aggreswmp', 'aggremetab', 'ecometab', 'decomp', 'decomp\\_cj', 'hist', 'lines', 'na.approx', 'plot', 'plot\\_metab', 'plot\\_summary', 'smoother')
 funcs <- paste0('\\texttt{', funcs, '}')
 
 descrips <- c(
@@ -491,7 +491,7 @@ descrips <- c(
   'Decompose a \\texttt{swmpr} time series into trend, seasonal, and residual components.  This is a simple wrapper to \\texttt{decompose} \\cite{Kendall83}.  Decomposition of monthly or daily trends is possible.',
   'Decompose a \\texttt{swmpr} time series into grandmean, annual, seasonal, and events components.  This is a simple wrapper to \\texttt{decompTs} in the wq package \\cite{Jassby14}.  Only monthly decomposition is possible.',
   'Plot a histogram for a \\texttt{swmpr} object.',
-  'Add lines to an existing plot created with \\texttt{plot.swmpr}.',
+  'Add lines to an existing plot created with \\texttt{plot}.',
   'Linearly interpolate missing data (\\texttt{NA} values) in a \\texttt{swmpr} object. The maximum gap size that is interpolated is defined by the arguments.', 
   'Plot a univariate  time series for a \\texttt{swmpr} object.  The parameter name must be specified.',
   'Plot ecosystem metabolism estimates after running \\texttt{ecometab} on a \\texttt{swmpr} object.',  
@@ -506,7 +506,7 @@ library(Hmisc)
 latex(
   to_tab[, 'Description', drop = F],
   file = '',
-  caption = "Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \\texttt{?aggreswmp.swmpr} at the command line).",
+  caption = "Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \\texttt{?aggreswmp} at the command line).",
   rowlabel = 'Function',
   colheads = 'Description',
   rowname = to_tab$Functions,
