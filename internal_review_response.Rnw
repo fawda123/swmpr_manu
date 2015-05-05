@@ -149,24 +149,54 @@ Page 10: A section on package dependencies might be a good addition.
 
 Page 10: Include an example of this in the code examples below.
 
+{\it The example for \texttt{aggregswmp} was modified to show this issue.}
+
 Page 10: rewrite. ``a signal from noisy data'' ??
+
+{\it Changed.}
+
+Page 12, line 262: Omit.
+
+{\it The sentence was revised to remove the following: `...with arguments passed to the \texttt{filter} function from the R base installation'.}
 
 Page 13: or
 
+{\it Changed.}
+
 Page 14: May not be obvious that this is 60 min / 15 min... And character string options are a great idea!
+
+{\it Text was modified for clarity: `...96 if the time step is 15 minutes (24 hours * 60 minutes / 15 minutes).  The frequency of a parameter with annual periodicity at a 15 minute time step would be 35040 (365 days * 24 hours * 60 minutes / 15 minutes).'}
 
 Page 16: I'm just being picky, but the name on this one is tripping me up. I think I'd prefer to see eco\_metab. But, I realize that may not be an easy change, so up to you!
 
+{\it I'm trying to reduce the number of underscores in the function names so I've kept \texttt{ecometab}.}
+
+Page 14, line 310: Omit `respectively'.
+
+{\it Omitted.}
+
 Page 17: Do all of these functions need to be exported? Could they simply be internal functions that the users don't see? If so, you could shorten or eliminate this section. Also you could create a Viz category of functions instead of this one. In that you could talk about the plot capabilites separate from the analysis section, and the include the reserve\_map function there.
+
+{\it I'm hesitant to change the Namespace of the package too much because I don't want to break any functions that depend on the exported functions in the miscellaneous category.  I've also exported a lot of these functions because some users might be interested in seeing the source code, such as for the \texttt{calckl} function used by \texttt{ecometab}.  That being said, I have shortened the section to emphasize these points and have moved the \texttt{map\_reserve} function to the previous section.  I suppose looking at site locations could be considered `analysis' if you are using spatial location to interpret trends.}
 
 Page 17: Should this be map\_reserve???
 
+{\it Yes, changed.}
+
 Page 19: Yank this. Goes without saying.
+
+{\it Removed.}
 
 Page 20: Some of the figures have code that directly preceeds it. Other figures (like Fig 8) it is a bit more difficult to link code to figure. Would be nice to provide a link to code for all the figures. This way a reader could download a single script to reproduce the figures.
 
+{\it I've added an R script to the supporting information that reproduces the figures/tables in the manuscript.}
+
 Page 20: Are these examples necessary? Feel kinda tacked on and why have links as supplementary info and not part of the text? If you are going to keep these, I would flesh this out a bit more, add in some screen captures as figures and links directly in the text.
 
+{\it }
+
 Page 21: Same comment as above. Be nice to have ready access to code that reproduces this table.
+
+{\it See response to above comment.}
 
 \end{document}
