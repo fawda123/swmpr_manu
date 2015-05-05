@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  5 MAY 2015 12:00
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  5 MAY 2015 16:24
 entering extended mode
 **swmpr_manu.tex
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.tex
@@ -1451,7 +1451,7 @@ e 830.
 
 Package xcolor Warning: Incompatible color definition on input line 835.
 
-<figure/metab_plo.pdf, id=309, 578.16pt x 433.62pt>
+<figure/metab_plo.pdf, id=308, 578.16pt x 433.62pt>
 File: figure/metab_plo.pdf Graphic file (type pdf)
  <use figure/metab_plo.pdf>
 Package pdftex.def Info: figure/metab_plo.pdf used on input line 838.
@@ -1460,6 +1460,24 @@ Package pdftex.def Info: figure/metab_plo.pdf used on input line 838.
 
 LaTeX Warning: Float too large for page by 31.88213pt on input line 922.
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 925--925
+[][][]\OT1/cmr/m/n/8 (+20) Evaluate trends within and be-tween re-serves us-ing
+ an in-ter-ac-tive map:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 925--925
+[][][]\OT1/cmr/m/n/8 (+20) Summarize trends in [][] pa-ram-e-ters for an in-di-
+vid-ual site:
+ []
+
+<figure/swmp_comp.pdf, id=315, 718.8797pt x 517.02162pt>
+File: figure/swmp_comp.pdf Graphic file (type pdf)
+
+<use figure/swmp_comp.pdf>
+Package pdftex.def Info: figure/swmp_comp.pdf used on input line 929.
+(pdftex.def)             Requested size: 379.4175pt x 272.87624pt.
 Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    date: 2015-01-13 11:30:04
 (epstopdf)                    size: 283246 bytes
@@ -1468,12 +1486,12 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15311 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 930.
+(epstopdf)             \includegraphics on input line 935.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
-<use PLOS-submission-eps-converted-to.pdf>
+ <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 930.
+e 935.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
  [20]
 Package epstopdf Info: Source file: <PLOS-submission.eps>
@@ -1484,13 +1502,13 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15311 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 930.
+(epstopdf)             \includegraphics on input line 935.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 930.
+e 935.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
  [21]
 Package epstopdf Info: Source file: <PLOS-submission.eps>
@@ -1501,18 +1519,31 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15311 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 932.
+(epstopdf)             \includegraphics on input line 940.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 932.
+e 940.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
  [22 <M:/docs/manuscripts/swmpr_manu/figure/metab_plo.pdf>]
-
-Package hyperref Warning: Suppressing empty link on input line 950.
-
+Package epstopdf Info: Source file: <PLOS-submission.eps>
+(epstopdf)                    date: 2015-01-13 11:30:04
+(epstopdf)                    size: 283246 bytes
+(epstopdf)             Output file: <PLOS-submission-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-03-16 17:35:39
+(epstopdf)                    size: 15311 bytes
+(epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
+ed-to.pdf PLOS-submission.eps>
+(epstopdf)             \includegraphics on input line 951.
+Package epstopdf Info: Output file is already uptodate.
+File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
+ <use PLOS-submission-eps-converted-to.pdf>
+Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
+e 951.
+(pdftex.def)             Requested size: 144.54pt x 23.42201pt.
+ [23 <M:/docs/manuscripts/swmpr_manu/figure/swmp_comp.pdf>]
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.bbl
 Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    date: 2015-01-13 11:30:04
@@ -1522,15 +1553,15 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15311 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 16.
+(epstopdf)             \includegraphics on input line 54.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 16.
+e 54.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [23]
+ [24]
 Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    date: 2015-01-13 11:30:04
 (epstopdf)                    size: 283246 bytes
@@ -1539,15 +1570,15 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15311 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 108.
+(epstopdf)             \includegraphics on input line 148.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 108.
+e 148.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [24])
+ [25])
 
 AED: lastpage setting LastPage
 Package epstopdf Info: Source file: <PLOS-submission.eps>
@@ -1558,32 +1589,32 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15311 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 960.
+(epstopdf)             \includegraphics on input line 964.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 960.
+e 964.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [25]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 960.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 960.
+ [26]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 964.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 964.
 
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 960.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 960.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 964.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 964.
 Package rerunfilecheck Info: File `swmpr_manu.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 960.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 964.
  ) 
 Here is how much of TeX's memory you used:
- 13304 strings out of 493921
- 208192 string characters out of 3147282
+ 13308 strings out of 493921
+ 208283 string characters out of 3147282
  381688 words of memory out of 3000000
  16181 multiletter control sequences out of 15000+200000
  15388 words of font info for 91 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 42i,15n,43p,1963b,502s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,15n,43p,2069b,505s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Program Files/MiKTe
@@ -1601,9 +1632,9 @@ lic/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmtt12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
 cmtt8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb
 >
-Output written on swmpr_manu.pdf (25 pages, 1006097 bytes).
+Output written on swmpr_manu.pdf (26 pages, 1284556 bytes).
 PDF statistics:
- 462 PDF objects out of 1000 (max. 8388607)
- 106 named destinations out of 1000 (max. 500000)
- 20526 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 483 PDF objects out of 1000 (max. 8388607)
+ 109 named destinations out of 1000 (max. 500000)
+ 20531 words of extra memory for PDF output out of 20736 (max. 10000000)
 
