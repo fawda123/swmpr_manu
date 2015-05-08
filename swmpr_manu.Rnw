@@ -121,7 +121,7 @@
 <<setup, cache = F, echo = F>>=
 library(knitr)
 # set global chunk options
-opts_chunk$set(fig.align = 'center', message = F, dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!ht', warning = F, background = 'white', highlight = FALSE, prompt = TRUE, size = 'small')
+opts_chunk$set(fig.align = 'center', message = F, dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!h', warning = F, background = 'white', highlight = FALSE, prompt = TRUE, size = 'small', out.width = '0.00\\textwidth')
 options(replace.assign=TRUE,width=70,digits=1)
 @
 
@@ -216,7 +216,8 @@ latex(
   caption.loc = 'top',
   col.just=c("p{3.5in}"), 
   label = 'tab:retrieve', 
-  table.env = FALSE
+  table.env = FALSE, 
+  where = '!tbp'
   )
 @
 
@@ -272,7 +273,7 @@ exdat
 
 The attributes for a \texttt{swmpr} object are descriptors that are appended to the raw data (\cref{tab:attributes}).  These act as metadata that are used internally by many of the package functions and are updated as the data are processed. The attributes are not visible with the raw data but can be viewed as follows.
 
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # import sample data from package
 data(apadbwq)
 dat <- apadbwq
@@ -302,12 +303,12 @@ atts_desc <- c(
   "Character vector of column names for data parameters, e.g., \\texttt{`do\\_mgl'}",
   'Indicates if \\ac{QAQC} columns are present in the raw data',
   'Start and end dates for the raw data',
-  'Timezone of the station using the city/country format\\textsuperscript{\\textit{a}}',
+'Timezone of the station using the city/country format\\textsuperscript{a}',
   'Class of the \\texttt{datetimestamp} column, usually POSIXct unless data have been aggregated'
 )
 
 to_tab <- data.frame(Attributes = atts, Class = atts_class, Description = atts_desc, stringsAsFactors = F)
-foot <- c('\\textsuperscript{\\textit{a}}\\footnotesize Time zones that do not observe daylight savings are used for \\texttt{swmpr} objects and may not be cities in the United States.  For example, ``America/Jamaica" is used for Eastern Standard Time.')
+foot <- c('\\textsuperscript{a}\\footnotesize Time zones that do not observe daylight savings are used for \\texttt{swmpr} objects and may not be cities in the United States.  For example, ``America/Jamaica" is used for Eastern Standard Time.')
 
 library(Hmisc)
 
@@ -322,13 +323,14 @@ latex(
   insert.bottom = foot,
   col.just=c("p{0.75in}", "p{3.25in}"), 
   label = 'tab:attributes', 
-  table.env = FALSE
+  table.env = FALSE, 
+  where = '!tbp'
   )
 @
 
 The \texttt{swmpr} object class was created for use with the organizing and analyzing functions.  This object-oriented approach is standard for R (i.e., the S3 object  system, \cite{Wickham14}), such that specific methods for generic functions are developed for the object class.  A \texttt{swmpr} object also secondarily inherits methods from the \texttt{data.frame} class, such that common \texttt{data.frame} methods also apply to \texttt{swmpr} objects.  Available methods for the \texttt{swmpr} class are described below and can also be viewed:
  
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # view available methods for swmpr class
 methods(class = 'swmpr')
 @
@@ -370,11 +372,12 @@ latex(
   caption.loc = 'top',
   col.just=c("p{3.5in}"), 
   label = 'tab:organize', 
-  table.env = FALSE
+  table.env = FALSE, 
+  where = '!tbp'
   )
 @
 
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # qaqc screen for a swmpr object, retain only '0'
 qaqc(dat)
 
@@ -387,14 +390,14 @@ qaqc(dat, qaqc_keep = c(0, -1))
 
 Viewing the number of observations for each parameter that are assigned to a \ac{QAQC} flag may be useful for deciding how to process the data with \texttt{qaqc}.  The \texttt{qaqcchk} function can be used to view this information.
 
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # view the number of observations in each QAQC flag
 qaqcchk(dat)
 @
 
 Raw nutrient data obtained from the \ac{CDMO} will usually include replicate samples that were taken within a few minutes of each other.  The \texttt{rem\_reps} function combines nutrient data that occur on the same day to preserve an approximate monthly time step.  The \texttt{datetimestamp} column will always be averaged for replicates, but the actual observations will be combined based on the user-supplied function which defaults to the mean.  Other suggested functions include the \texttt{median}, \texttt{min}, or \texttt{max}.  The entire function call, including treatment of \texttt{NA}, values should be passed to the \texttt{FUN} argument (see the examples).  The function is meant to be used after \texttt{qaqc} processing, although it works with a warning if \ac{QAQC} columns are present.
 
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # get nutrient data
 data(apacpnut)
 dat <- apacpnut
@@ -410,7 +413,7 @@ rem_reps(dat, FUN = func)
 
 A subset method added to the existing generic \texttt{subset} function in R is available for \texttt{swmpr} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator as a character string passed to the argument, such as \texttt{`>'} or \texttt{`<='}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (e.g., `2007-01-01 06:30').  Be aware that an error may be returned using this function if the subset argument is in the correct format but the calendar date does not exist, e.g. \texttt{`2012-11-31 12:00'}.  Finally, the function can be used to remove rows and columns that do not contain data. 
 
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # import data
 data(apaebmet)
 dat <- apaebmet
@@ -434,7 +437,7 @@ subset(dat, rem_rows = T, rem_cols = T)
 
 The \texttt{setstep} function formats a \texttt{swmpr} object to a continuous time series at a given time step.  This function is not necessary for most stations but can be useful for combining data or converting an existing time series to a set interval.  The first argument of the function, \texttt{timestep}, specifies the desired time step in minutes starting from the nearest hour of the first observation.  The second argument, \texttt{differ}, specifies the allowable tolerance in minutes for matching existing observations to the defined time steps in cases where the two are dissimilar.  Values for \texttt{differ} that are greater than one half the value of \texttt{timestep} are not allowed to prevent duplication of existing data.  Likewise, the default value for \texttt{differ} is one half the time step.  Time steps that do not match any existing data within the limits of the \texttt{differ} argument are not discarded, although a corresponding data value will not be assigned.
 
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # import, qaqc removal
 data(apadbwq)
 dat <- qaqc(apadbwq)
@@ -453,7 +456,7 @@ subset(dat_nut, rem_rows = T, rem_cols = T)
 
 The \texttt{comb} function is used to combine multiple \texttt{swmpr} objects into a single object with a continuous time series at a given step.  The \texttt{timestep} function is used internally such that \texttt{timestep} and \texttt{differ} are accepted arguments for \texttt{comb}.  All arguments must be called explicitly since an arbitrary number of \texttt{swmpr} objects can be used as input.  The function combines data by creating a master time series that is used to iteratively merge all \texttt{swmpr} objects.  The time series for merging depends on the value passed to the \texttt{method} argument.  Passing \texttt{`union'} to \texttt{method} will create a time series that is continuous from the earliest and latest dates for all input objects.  Passing \texttt{`intersect'} to \texttt{method} will create a time series that is continuous from the set of dates that are shared between all input objects.  Finally, a seven or eight character station name passed to \texttt{method} will merge all data based on a continuous time series for the specified station, which must be present in the input data.  Currently, combining identical data types from different stations is not possible (e.g., two water quality stations from the same reserve).  
 
-<<eval = F, cache = T>>=
+<<eval = F, cache = F>>=
 # get nut, wq, and met data as separate objects
 data(apacpnut)
 data(apacpwq)
@@ -514,11 +517,12 @@ latex(
   caption.loc = 'top',
   col.just=c("p{3.5in}"), 
   label = 'tab:analyze', 
-  table.env = FALSE
+  table.env = FALSE, 
+  where = '!tbp'
   )
 @
 
-<<eval = T, cache = T>>=
+<<eval = T, cache = F>>=
 # get data, keep all observations
 data(apacpnut)
 dat <- qaqc(apacpnut, qaqc_keep = NULL)
@@ -619,7 +623,7 @@ The \texttt{ecometab} function is used to implement the open-water method with a
 
 The following is an example that shows use of the function from a combined water quality and weather data set.  Monthly aggregations of the raw, daily estimates are plotted using \texttt{plot\_metab} (\Cref{fig:metab_ex}).
 
-<<metab_ex, eval = TRUE, cache = TRUE, fig.height = 4, fig.width = 8, warning = FALSE, fig.cap = "Monthly means (95\\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.">>=
+<<metab_ex, eval = TRUE, cache = T, fig.height = 4, fig.width = 8, warning = FALSE, fig.cap = "Monthly means (95\\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.">>=
 ## import water quality and weather data
 data(apadbwq)
 data(apaebmet)
@@ -674,7 +678,8 @@ latex(
   caption.loc = 'top',
   col.just=c("p{3.5in}"), 
   label = 'tab:misc', 
-  table.env = FALSE
+  table.env = FALSE, 
+  where = '!tbp'
   )
 
 @
@@ -687,7 +692,7 @@ This section describes three examples using the SWMPr package to illustrate the 
 Water quality and weather observations from January 1995 to December 2014 for all \ac{NERRS} sites were obtained through a bulk data request using the zip downloads feature of \ac{CDMO}.  All csv files for each station were imported into R using the \texttt{import\_local} function, processed using the \texttt{setstep} and \texttt{qaqc} functions, then saved locally as binary RData files.\footnote{Data processing script: \url{https://github.com/fawda123/swmp_rats/blob/master/R/dat_proc.R}} This resulted in a single \texttt{swmpr} object for each parameter at each site.  All files were then uploaded to a remote server for online access.  An additional R script\footnote{Metabolism processing script: \url{https://gist.github.com/fawda123/4fc51c2cb86341ed9291}} was executed that retrieved and processed water quality and weather data at each reserve to estimate metabolism.  Two water quality sites with the longest time series at each reserve were used.  Mean annual values at each site, organized by region, are shown in \Cref{fig:metab_plo}, whereas decadal comparisons are shown in \Cref{tab:metab_tab}.  All sites were generally net heterotrophic across the range of observations (i.e., sink of organic matter, in agreement with Caffrey \cite{Caffrey03}), although differences were observed in early (i.e., 1995-2004) as compared to recent (2005-2014) time periods. Overall, the results indicate that between-region and within-site differences in metabolism are apparent and varying by time period, such that a more comprehensive evaluation of factors that influence metabolic rates is needed.  More importantly, use of the data retrieval, synthesis, and analysis functions to create the results illustrates the utility provided by the SWMPr package.
 
 % metabolism figure
-<<metab_plo, eval = T, cache = T, echo = F, fig.cap = 'Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \\ac{NERRS} reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Sites were assigned to regions based on approximate geographic coordinates.', fig.height = 6, fig.width = 8, out.width = '\\textwidth'>>=
+<<metab_plo, eval = T, cache = T, echo = F, fig.cap = 'Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \\ac{NERRS} reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Sites were assigned to regions based on approximate geographic coordinates.', fig.height = 6, fig.width = 8>>=
 # # packages to use
 # library(SWMPr)
 # library(httr)
@@ -961,7 +966,8 @@ latex(
   rgroup = unique(metabs_tab$region),
   n.rgroup = nrgroups,
   label = 'tab:metab_tab',
-  size = 'footnotesize'
+  size = 'footnotesize', 
+  where = '!tbp'
   )
   
 @
@@ -970,7 +976,7 @@ The second and third examples are two interactive web applications \cite{Chang15
 
 \begin{figure}
 \begin{center}
-\includegraphics[width = \textwidth]{figure/swmp_comp.pdf}
+\includegraphics[width = 0\textwidth]{figure/swmp_comp.pdf}
 \caption{Online application for comparing trends in \ac{SWMP} data parameters using an interactive map.  Link: \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}}
 \label{fig:swmp_comp}
 \end{center}

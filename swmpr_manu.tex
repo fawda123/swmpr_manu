@@ -236,7 +236,7 @@ The SWMPr package was developed by considering a standard workflow that categori
 Two approaches can be used to import \ac{SWMP} data into R, either through direct download or by importing local data (\Cref{tab:retrieve}). First, functions from the package can be used to import the data directly from the online server using \ac{CDMO} web services. To do so, the IP address for the computer making the request must be registered with \ac{CDMO}.\footnote{Follow instructions here: \url{http://cdmo.baruch.sc.edu/webservices.cfm}}  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with \ac{CDMO}. 
 
 % table for retrieval functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?all\\_params} for individual functions or \\texttt{help.search(`retrieve', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:retrieve",     table.env = FALSE)%
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?all\\_params} for individual functions or \\texttt{help.search(`retrieve', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:retrieve",     table.env = FALSE, where = "!tbp")%
 \begin{table}[!tbp]
 \caption{Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \texttt{?all\_params} for individual functions or \texttt{help.search(`retrieve', package = `SWMPr')} for all).\label{tab:retrieve}} 
 \begin{center}
@@ -353,7 +353,7 @@ The attributes for a \texttt{swmpr} object are descriptors that are appended to 
 \end{knitrout}
  
 % attributes table
-%latex.default(to_tab[, -1, drop = F], file = "", caption = "Attributes of a \\texttt{swmpr} object that describe characteristics of the data.",     rowlabel = "Attributes", colheads = c("Class", "Description"),     rowname = to_tab$Attributes, caption.loc = "top", insert.bottom = foot,     col.just = c("p{0.75in}", "p{3.25in}"), label = "tab:attributes",     table.env = FALSE)%
+%latex.default(to_tab[, -1, drop = F], file = "", caption = "Attributes of a \\texttt{swmpr} object that describe characteristics of the data.",     rowlabel = "Attributes", colheads = c("Class", "Description"),     rowname = to_tab$Attributes, caption.loc = "top", insert.bottom = foot,     col.just = c("p{0.75in}", "p{3.25in}"), label = "tab:attributes",     table.env = FALSE, where = "!tbp")%
 \begin{table}[!tbp]
 \caption{Attributes of a \texttt{swmpr} object that describe characteristics of the data.\label{tab:attributes}} 
 \begin{center}
@@ -368,12 +368,12 @@ The attributes for a \texttt{swmpr} object are descriptors that are appended to 
 \texttt{parameters}&character&Character vector of column names for data parameters, e.g., \texttt{`do\_mgl'}\tabularnewline
 \texttt{qaqc\_cols}&logical&Indicates if \ac{QAQC} columns are present in the raw data\tabularnewline
 \texttt{date\_rng}&POSIXct&Start and end dates for the raw data\tabularnewline
-\texttt{timezone}&character&Timezone of the station using the city/country format\textsuperscript{\textit{a}}\tabularnewline
+\texttt{timezone}&character&Timezone of the station using the city/country format\textsuperscript{a}\tabularnewline
 \texttt{stamp\_class}&character&Class of the \texttt{datetimestamp} column, usually POSIXct unless data have been aggregated\tabularnewline
 \hline
 \end{tabular}\end{center}
 
-\textsuperscript{\textit{a}}\footnotesize Time zones that do not observe daylight savings are used for \texttt{swmpr} objects and may not be cities in the United States.  For example, ``America/Jamaica" is used for Eastern Standard Time.\end{table}
+\textsuperscript{a}\footnotesize Time zones that do not observe daylight savings are used for \texttt{swmpr} objects and may not be cities in the United States.  For example, ``America/Jamaica" is used for Eastern Standard Time.\end{table}
 
 
 The \texttt{swmpr} object class was created for use with the organizing and analyzing functions.  This object-oriented approach is standard for R (i.e., the S3 object  system, \cite{Wickham14}), such that specific methods for generic functions are developed for the object class.  A \texttt{swmpr} object also secondarily inherits methods from the \texttt{data.frame} class, such that common \texttt{data.frame} methods also apply to \texttt{swmpr} objects.  Available methods for the \texttt{swmpr} class are described below and can also be viewed:
@@ -396,7 +396,7 @@ The organize functions are used to clean or prepare the imported data for analys
 The \texttt{qaqc} function is a simple screen to retain observations from the data with specified QAQC flags.\footnote{\ac{CDMO} flags: \url{http://cdmo.baruch.sc.edu/data/qaqc.cfm}} Each parameter in the imported \texttt{swmpr} object will have a corresponding QAQC column of the same name with the added prefix \texttt{f\_} (e.g., \texttt{do\_mgl}, \texttt{f\_do\_mgl}).  Values in the QAQC column range from -5 to 5 to indicate the \ac{QAQC} flag that was assigned by \ac{CDMO} during initial processing.  The \ac{QAQC} function is used to remove observations in the raw data with given flags, with the default option to retain only values with the \texttt{0} \ac{QAQC} flag (i.e., passed initial \ac{CDMO} checks).     Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. The function returns the original data with the QAQC columns removed and \texttt{NA} (not available) values for observations that do not meet the criteria specified in the function call.
 
 % table for organize functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?comb} for individual functions or \\texttt{help.search(`organize', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:organize",     table.env = FALSE)%
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?comb} for individual functions or \\texttt{help.search(`organize', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:organize",     table.env = FALSE, where = "!tbp")%
 \begin{table}[!tbp]
 \caption{Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \texttt{?comb} for individual functions or \texttt{help.search(`organize', package = `SWMPr')} for all).\label{tab:organize}} 
 \begin{center}
@@ -545,7 +545,7 @@ The analysis functions range from general purpose tools for time series analysis
 The \texttt{aggreswmp} function aggregates parameter data for a \texttt{swmpr} object by set units of time.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours by a predefined function, which defaults to the mean.  A \texttt{swmpr} object is returned for the aggregated data, although the \texttt{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \texttt{round} method for IDate objects created in the data.table package \cite{Dowle14}.  Additionally, the method of treating \texttt{NA} values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned, particularly for nutrient data (see the example below).
 
 % table for analysis functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \\texttt{?aggreswmp} for individual functions or \\texttt{help.search(`analyze', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:analyze",     table.env = FALSE)%
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \\texttt{?aggreswmp} for individual functions or \\texttt{help.search(`analyze', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:analyze",     table.env = FALSE, where = "!tbp")%
 \begin{table}[!tbp]
 \caption{Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \texttt{?aggreswmp} for individual functions or \texttt{help.search(`analyze', package = `SWMPr')} for all).\label{tab:analyze}} 
 \begin{center}
@@ -611,14 +611,13 @@ Time series can be smoothed to better characterize a signal from noisy data (\Cr
 > plot(dat)
 > lines(dat_smooth, col = 'red', lwd = 2)
 \end{verbatim}
-\end{kframe}\begin{figure}[!ht]
+\end{kframe}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\maxwidth]{figure/smooth_ex} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/smooth_ex-1} 
 
 }
 
-\caption[Raw and smoothed dissolved oxygen data for a two-week period after using the \texttt{smoother} function]{Raw and smoothed dissolved oxygen data for a two-week period after using the \texttt{smoother} function.\label{fig:smooth_ex}}
+\caption[Raw and smoothed dissolved oxygen data for a two-week period after using the \texttt{smoother} function]{Raw and smoothed dissolved oxygen data for a two-week period after using the \texttt{smoother} function.}\label{fig:smooth_ex}
 \end{figure}
 
 
@@ -649,14 +648,13 @@ A common issue with any statistical analysis is the treatment of missing values.
 > plot(fill2, col = 'red', main = 'Interpolation - maximum gap of 30 records')
 > lines(dat)
 \end{verbatim}
-\end{kframe}\begin{figure}[!ht]
+\end{kframe}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\maxwidth]{figure/interp_ex} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/interp_ex-1} 
 
 }
 
-\caption[Examples illustrating use of the \texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.]{Examples illustrating use of the \texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.\label{fig:interp_ex}}
+\caption[Examples illustrating use of the \texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.]{Examples illustrating use of the \texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.}\label{fig:interp_ex}
 \end{figure}
 
 
@@ -678,14 +676,13 @@ The disaggregation of time series into additive or multiplicative components tha
 > test <- decomp(dat, param = 'do_mgl', frequency = 'daily')
 > plot(test)
 \end{verbatim}
-\end{kframe}\begin{figure}[!ht]
+\end{kframe}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\maxwidth]{figure/decomp_ex1} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/decomp_ex1-1} 
 
 }
 
-\caption[An additive decomposition of dissolved oxygen into a trend, seasonal, and random component using the \texttt{decomp} function]{An additive decomposition of dissolved oxygen into a trend, seasonal, and random component using the \texttt{decomp} function.\label{fig:decomp_ex1}}
+\caption[An additive decomposition of dissolved oxygen into a trend, seasonal, and random component using the \texttt{decomp} function]{An additive decomposition of dissolved oxygen into a trend, seasonal, and random component using the \texttt{decomp} function.}\label{fig:decomp_ex1}
 \end{figure}
 
 
@@ -704,14 +701,13 @@ An alternative approach to time series decomposition is provided by the \texttt{
 > # decomposition of chl
 > decomp_cj(dat, param = 'chla_n')
 \end{verbatim}
-\end{kframe}\begin{figure}[!ht]
+\end{kframe}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\maxwidth]{figure/decomp_ex2} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/decomp_ex2-1} 
 
 }
 
-\caption[Additive decomposition of a multi-year chlorophyll time series into the grandmean, annual, seasonal, and events components using the \texttt{decomp\_cj} function]{Additive decomposition of a multi-year chlorophyll time series into the grandmean, annual, seasonal, and events components using the \texttt{decomp\_cj} function.\label{fig:decomp_ex2}}
+\caption[Additive decomposition of a multi-year chlorophyll time series into the grandmean, annual, seasonal, and events components using the \texttt{decomp\_cj} function]{Additive decomposition of a multi-year chlorophyll time series into the grandmean, annual, seasonal, and events components using the \texttt{decomp\_cj} function.}\label{fig:decomp_ex2}
 \end{figure}
 
 
@@ -729,14 +725,13 @@ Detailed exploratory graphics are also useful for evaluating general trends in o
 > ## plot
 > plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
 \end{verbatim}
-\end{kframe}\begin{figure}[!ht]
+\end{kframe}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\maxwidth]{figure/summary_ex} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/summary_ex-1} 
 
 }
 
-\caption[Summaries of a multi-year chlorophyll time series using the \texttt{plot\_summary} function]{Summaries of a multi-year chlorophyll time series using the \texttt{plot\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)\label{fig:summary_ex}}
+\caption[Summaries of a multi-year chlorophyll time series using the \texttt{plot\_summary} function]{Summaries of a multi-year chlorophyll time series using the \texttt{plot\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)}\label{fig:summary_ex}
 \end{figure}
 
 
@@ -764,14 +759,13 @@ The following is an example that shows use of the function from a combined water
 > res <- ecometab(dat, trace = FALSE)
 > plot_metab(res)
 \end{verbatim}
-\end{kframe}\begin{figure}[!ht]
+\end{kframe}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\maxwidth]{figure/metab_ex} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/metab_ex-1} 
 
 }
 
-\caption[Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida]{Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.\label{fig:metab_ex}}
+\caption[Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida]{Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.}\label{fig:metab_ex}
 \end{figure}
 
 
@@ -785,14 +779,13 @@ Finally, the \texttt{map\_reserve} function can be used to create a map with all
 > # plot the stations at Jacques Cousteau reserve
 > map_reserve('jac')
 \end{verbatim}
-\end{kframe}\begin{figure}[!ht]
+\end{kframe}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\maxwidth]{figure/map_ex} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/map_ex-1} 
 
 }
 
-\caption[Locations of all sites at the Jacques Cousteau reserve using the \texttt{map\_reserve} function]{Locations of all sites at the Jacques Cousteau reserve using the \texttt{map\_reserve} function.\label{fig:map_ex}}
+\caption[Locations of all sites at the Jacques Cousteau reserve using the \texttt{map\_reserve} function]{Locations of all sites at the Jacques Cousteau reserve using the \texttt{map\_reserve} function.}\label{fig:map_ex}
 \end{figure}
 
 
@@ -803,7 +796,7 @@ Finally, the \texttt{map\_reserve} function can be used to create a map with all
 Several additional functions are provided that do not fit the above categories (\Cref{tab:misc}).  These functions are generally used within the main functions but may be useful for more customized evaluation of \ac{SWMP} data.  
 
 % table for misc functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Miscellaneous functions available from the SWMPr package.  Most are used within the main functions above but may be useful for customized evaluations of \\ac{SWMP} data.  Full documentation for each function is in the help file (e.g., execute \\texttt{?calckl} at the command line).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:misc",     table.env = FALSE)%
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Miscellaneous functions available from the SWMPr package.  Most are used within the main functions above but may be useful for customized evaluations of \\ac{SWMP} data.  Full documentation for each function is in the help file (e.g., execute \\texttt{?calckl} at the command line).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:misc",     table.env = FALSE, where = "!tbp")%
 \begin{table}[!tbp]
 \caption{Miscellaneous functions available from the SWMPr package.  Most are used within the main functions above but may be useful for customized evaluations of \ac{SWMP} data.  Full documentation for each function is in the help file (e.g., execute \texttt{?calckl} at the command line).\label{tab:misc}} 
 \begin{center}
@@ -832,21 +825,20 @@ Water quality and weather observations from January 1995 to December 2014 for al
 
 % metabolism figure
 \begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{figure}[!ht]
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{figure}[!h]
 
-
-{\centering \includegraphics[width=\textwidth]{figure/metab_plo} 
+{\centering \includegraphics[width=0.00\textwidth]{figure/metab_plo-1} 
 
 }
 
-\caption[Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \ac{NERRS} reserve]{Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \ac{NERRS} reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Sites were assigned to regions based on approximate geographic coordinates.\label{fig:metab_plo}}
+\caption[Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \ac{NERRS} reserve]{Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each \ac{NERRS} reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Sites were assigned to regions based on approximate geographic coordinates.}\label{fig:metab_plo}
 \end{figure}
 
 
 \end{knitrout}
 
 % table summary of trends
-%latex.default(metabs_tab[, !names(metabs_tab) %in% c("site",     "region")], file = "", caption = cap, cgroup = c("NEM\\textsuperscript{{\\it a}}",     "Pg", "Rt"), n.cgroup = c(2, 2, 2), colheads = rep(c("1995-2004",     "2005-2014"), 3), rowlabel = "Site", rowname = metabs_tab$site,     digits = 2, insert.bottom = foots, rgroup = unique(metabs_tab$region),     n.rgroup = nrgroups, label = "tab:metab_tab", size = "footnotesize")%
+%latex.default(metabs_tab[, !names(metabs_tab) %in% c("site",     "region")], file = "", caption = cap, cgroup = c("NEM\\textsuperscript{{\\it a}}",     "Pg", "Rt"), n.cgroup = c(2, 2, 2), colheads = rep(c("1995-2004",     "2005-2014"), 3), rowlabel = "Site", rowname = metabs_tab$site,     digits = 2, insert.bottom = foots, rgroup = unique(metabs_tab$region),     n.rgroup = nrgroups, label = "tab:metab_tab", size = "footnotesize",     where = "!tbp")%
 \begin{table}[!tbp]
 {\footnotesize
 \caption{Trends in metabolism for two sites at each of the \ac{NERRS} reserves.  Values are averages of mean annual estimates for each period of observation (1994-2004 and 2005-2014). Bold values indicate an increase from the first period, whereas italic values indicate a decrease. Sites were assigned to regions based on approximate geographic coordinates.\label{tab:metab_tab}} 
@@ -926,7 +918,7 @@ The second and third examples are two interactive web applications \cite{Chang15
 
 \begin{figure}
 \begin{center}
-\includegraphics[width = \textwidth]{figure/swmp_comp.pdf}
+\includegraphics[width = 0\textwidth]{figure/swmp_comp.pdf}
 \caption{Online application for comparing trends in \ac{SWMP} data parameters using an interactive map.  Link: \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}}
 \label{fig:swmp_comp}
 \end{center}
