@@ -116,6 +116,13 @@ Jassby AD, Cloern JE. wq: Exploring water quality monitoring data; 2014.
 \newblock R package version 0.4-1.
 \newblock Available from: \url{http://CRAN.R-project.org/package=wq}.
 
+\bibitem{Kahle13}
+Kahle D, Wickham H.
+\newblock ggmap: Spatial Visualization with ggplot2.
+\newblock The R Journal. 2013;5(1):144--161.
+\newblock Available from:
+  \url{http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf}.
+
 \bibitem{Cloern10}
 Cloern JE, Jassby AD.
 \newblock Patterns and scales of phytoplankton variability in estuarine-coastal
@@ -165,12 +172,5 @@ Needoba JA, Peterson TD, Johnson KS.
   ecosystem metabolism using in situ dissolved oxygen sensors.
 \newblock In: Tiquia-Arashiro SM, editor. Molecular Biological Technologies for
   Ocean Sensing. New York: Springer; 2012. p. 73--101.
-
-\bibitem{Kahle13}
-Kahle D, Wickham H.
-\newblock ggmap: Spatial Visualization with ggplot2.
-\newblock The R Journal. 2013;5(1):144--161.
-\newblock Available from:
-  \url{http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf}.
 
 \end{thebibliography}
