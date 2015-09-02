@@ -1,8 +1,206 @@
-\begin{thebibliography}{0}
+\begin{thebibliography}{28}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bulthius(1995)]{Bulthius95}
+D.~A. Bulthius.
+\newblock Distribution of seagrasses in a north {P}uget {S}ound estuary -
+  {P}adilla {B}ay, {W}ashington, {USA}.
+\newblock \emph{Aquatic Botany}, 50\penalty0 (1):\penalty0 99--105, 1995.
+
+\bibitem[Caffrey(2003)]{Caffrey03}
+J.~M. Caffrey.
+\newblock Production, respiration and net ecosystem metabolism in {U.S.}
+  estuaries.
+\newblock \emph{Environmental Monitoring and Assessment}, 81\penalty0
+  (1-3):\penalty0 207--219, 2003.
+
+\bibitem[Caffrey(2004)]{Caffrey04}
+J.~M. Caffrey.
+\newblock Factors controlling net ecosystem metabolism in {U.S.} estuaries.
+\newblock \emph{Estuaries}, 27\penalty0 (1):\penalty0 90--101, 2004.
+
+\bibitem[Caffrey et~al.(2013)Caffrey, Murrell, Amacker, Harper, Phipps, and
+  Woodrey]{Caffrey14}
+J.~M. Caffrey, M.~C. Murrell, K.~S. Amacker, J.~Harper, S.~Phipps, and
+  M.~Woodrey.
+\newblock Seasonal and inter-annual patterns in primary production, respiration
+  and net ecosystem metabolism in 3 estuaries in the northeast {G}ulf of
+  {M}exico.
+\newblock \emph{Estuaries and Coasts}, 37\penalty0 (1):\penalty0 222--241,
+  2013.
+
+\bibitem[Campbell et~al.(2013)Campbell, Rustad, Porter, Taylor, Dereszynski,
+  Shanley, Gries, Henshaw, Martin, Sheldon, and Boose]{Campbell13}
+J.~L. Campbell, L.~E. Rustad, J.~H. Porter, J.~R. Taylor, E.~W. Dereszynski,
+  J.~B. Shanley, C.~Gries, D.~L. Henshaw, M.~E. Martin, W.~M. Sheldon, and
+  E.~R. Boose.
+\newblock Quantity is nothing without quality: Automated {QA/QC} for streaming
+  environmental sensor data.
+\newblock \emph{BioScience}, 63\penalty0 (7):\penalty0 574--585, 2013.
+
+\bibitem[Chang et~al.(2015)Chang, Cheng, Allaire, Xie, and McPherson]{Chang15}
+W.~Chang, J.~Cheng, J.~Allaire, Y.~Xie, and J.~McPherson.
+\newblock \emph{shiny: Web Application Framework for R}, 2015.
+\newblock URL \url{http://CRAN.R-project.org/package=shiny}.
+\newblock R package version 0.11.1.
+
+\bibitem[Cloern and Jassby(2010)]{Cloern10}
+J.~E. Cloern and A.~D. Jassby.
+\newblock Patterns and scales of phytoplankton variability in estuarine-coastal
+  ecosystems.
+\newblock \emph{Estuaries and Coasts}, 33\penalty0 (2):\penalty0 230--241,
+  2010.
+
+\bibitem[Dix et~al.(2008)Dix, Phlips, and Gleeson]{Dix08}
+N.~G. Dix, E.~J. Phlips, and R.~A. Gleeson.
+\newblock Water quality changes in the {G}uana {T}olomato {M}atanzas {N}ational
+  {E}stuarine {R}esearch {R}eserve, {F}lorida, associated with four tropical
+  storms.
+\newblock \emph{Journal of Coastal Research}, 55\penalty0 (SI):\penalty0
+  26--37, 2008.
+
+\bibitem[Dowle et~al.(2014)Dowle, Short, Lianoglou, Srinivasan, Saporta, and
+  Antonyan]{Dowle14}
+M.~Dowle, T.~Short, S.~Lianoglou, A.~Srinivasan, R.~Saporta, and E.~Antonyan.
+\newblock \emph{data.table: Extension of data.frame}, 2014.
+\newblock URL \url{http://CRAN.R-project.org/package=data.table}.
+\newblock R package version 1.9.4.
+
+\bibitem[Fries et~al.(2008)Fries, Ivanov, Bhanushali, wilson, Broadbent, and
+  Sanderson]{Fries08}
+D.~P. Fries, S.~Z. Ivanov, P.~H. Bhanushali, J.~A. wilson, H.~A. Broadbent, and
+  A.~C. Sanderson.
+\newblock Broadband, low-cost, coastal sensor nets.
+\newblock \emph{Oceanography}, 20\penalty0 (4):\penalty0 150--155, 2008.
+
+\bibitem[Glasgow et~al.(2004)Glasgow, Burkholder, Reed, Lewitus, and
+  Kleinman]{Glasgow04}
+H.~B. Glasgow, J.~M. Burkholder, R.~E. Reed, A.~J. Lewitus, and J.~E. Kleinman.
+\newblock Real-time remote monitoring of water quality: a review of current
+  applications, and advancements in sensor, telemetry, and computing
+  technologies.
+\newblock \emph{Journal of Experimental Marine Biology and Ecology},
+  300\penalty0 (1-2):\penalty0 409--448, 2004.
+
+\bibitem[Jassby and Cloern(2014)]{Jassby14}
+A.~D. Jassby and J.~E. Cloern.
+\newblock \emph{wq: Exploring water quality monitoring data}, 2014.
+\newblock URL \url{http://CRAN.R-project.org/package=wq}.
+\newblock R package version 0.4-1.
+
+\bibitem[Kahle and Wickham(2013)]{Kahle13}
+D.~Kahle and H.~Wickham.
+\newblock ggmap: Spatial visualization with ggplot2.
+\newblock \emph{The R Journal}, 5\penalty0 (1):\penalty0 144--161, 2013.
+\newblock URL
+  \url{http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf}.
+
+\bibitem[Kemp and Testa(2012)]{Kemp12}
+W.~M. Kemp and J.~M. Testa.
+\newblock Metabolic balance between ecosystem production and consumption.
+\newblock In E.~Wolanski and D.~S. McLusky, editors, \emph{Treatise on
+  Estuarine and Coastal Science}, pages 83--118. Academic Press, New York,
+  2012.
+
+\bibitem[Kendall and Stuart(1983)]{Kendall83}
+M.~Kendall and A.~Stuart.
+\newblock \emph{The Advanced Theory of Statistics}, volume~3.
+\newblock MacMillan Publishing Company, New York, New York, 1983.
+
+\bibitem[Millie et~al.(2013)Millie, Weckman, Young, Ivey, Fries, Ardjmand, and
+  Fahnenstiel]{Millie13}
+D.~F. Millie, G.~R. Weckman, W.~A. Young, J.~E. Ivey, D.~P. Fries, E.~Ardjmand,
+  and G.~L. Fahnenstiel.
+\newblock Coastal `big data' and nature-inspired computation: prediction
+  potentials, uncertainties, and knowledge derivation of neural netowrks for an
+  algal metric.
+\newblock \emph{Estuarine, Coastal and Shelf Science}, 125:\penalty0 57--67,
+  2013.
+
+\bibitem[{National Weather Service, National Oceanic and Atmospheric
+  Administration}(2015)]{HADS15}
+{National Weather Service, National Oceanic and Atmospheric Administration}.
+\newblock Hydrometeorological automated data system website, 2015.
+\newblock \url{http://www.nws.noaa.gov/oh/hads/}. (Accessed March, 2015).
+
+\bibitem[{NDBC (National Data Buoy Center)}(2015)]{NDBC15}
+{NDBC (National Data Buoy Center)}.
+\newblock {National Oceanic and Atmospheric Administration's National Data Buoy
+  Center}, 2015.
+\newblock \url{http://www.ndbc.noaa.gov/}. (Accessed March, 2015).
+
+\bibitem[Needoba et~al.(2012)Needoba, Peterson, and Johnson]{Needoba12}
+J.~A. Needoba, T.~D. Peterson, and K.~S. Johnson.
+\newblock Method for the quantification of aquatic primary production and net
+  ecosystem metabolism using in situ dissolved oxygen sensors.
+\newblock In S.~M. Tiquia-Arashiro, editor, \emph{Molecular Biological
+  Technologies for Ocean Sensing}, pages 73--101. Springer, New York, 2012.
+
+\bibitem[Odum(1956)]{Odum56}
+H.~T. Odum.
+\newblock Primary production in flowing waters.
+\newblock \emph{Limnology and Oceanography}, 1\penalty0 (2):\penalty0 102--117,
+  1956.
+
+\bibitem[{RDCT (R Development Core Team)}(2014)]{RDCT14}
+{RDCT (R Development Core Team)}.
+\newblock {R: A language and environment for statistical computing, v3.1.2. R
+  Foundation for Statistical Computing, Vienna, Austria}, 2014.
+\newblock \url{http://www.R-project.org}.
+
+\bibitem[Reed et~al.(2010)Reed, Burkholder, and Allen]{Reed10}
+R.~E. Reed, J.~M. Burkholder, and E.~H. Allen.
+\newblock Current online monitoring technology for surveillance of algal
+  blooms, potential toxicity, and physicalechemical structure in rivers,
+  reservoirs, and lakes.
+\newblock In \emph{{American Water Works Association Manual M57, Algae}}, pages
+  1--24. American Water Works Association, Denver, Colorado, 2010.
+
+\bibitem[Ro and Hunt(2006)]{Ro06}
+K.~S. Ro and P.~G. Hunt.
+\newblock A new unified equation for wind-driven surficial oxygen transfer into
+  stationary water bodies.
+\newblock \emph{Transactions of the American Society of Agricultural and
+  Biological Engineers}, 49\penalty0 (5):\penalty0 1615--1622, 2006.
+
+\bibitem[Sanger et~al.(2002)Sanger, Arendt, Chen, Wenner, Holland, Edwards, and
+  Caffrey]{Sanger02}
+D.~M. Sanger, M.~D. Arendt, Y.~Chen, E.~L. Wenner, A.~F. Holland, D.~Edwards,
+  and J.~Caffrey.
+\newblock A synthesis of water quality data: National estuarine research
+  reserve system-wide monitoring program (1995-2000).
+\newblock Technical report, National Estuarine Research Reserve Technical
+  Report Series 2002:3. South Carolina Department of Natural Resources, Marine
+  Resources Division Contribution No. 500, Charleston, South Carolina, 2002.
+
+\bibitem[{System-Wide Monitoring Program Data Analysis Training}(2014)]{SWMP14}
+{System-Wide Monitoring Program Data Analysis Training}.
+\newblock Swmp data analysis training workshop provided at the 2014 nerrs/nerra
+  annual meeting, november 17, 2014, 2014.
+\newblock \url{http://copepod.org/nerrs-swmp-workshop/}.
+
+\bibitem[Th\'{e}bault et~al.(2008)Th\'{e}bault, Schraga, Cloern, and
+  Dunlavey]{Thebault08}
+J.~Th\'{e}bault, T.~S. Schraga, J.~E. Cloern, and E.~G. Dunlavey.
+\newblock Primary production and carrying capacity of former salt ponds after
+  reconnection to {S}an {F}rancisco {B}ay.
+\newblock \emph{Wetlands}, 28\penalty0 (3):\penalty0 841--851, 2008.
+
+\bibitem[Wenner et~al.(2004)Wenner, Sanger, Arendt, Holland, and
+  Chen]{Wenner04}
+E.~Wenner, D.~Sanger, M.~Arendt, A.~F. Holland, and Y.~Chen.
+\newblock Variability in dissolved oxygen and other water-quality variables
+  within the {N}ational {E}stuarine {R}esearch {R}eserve {S}ystem.
+\newblock \emph{Journal of Coastal Research}, 45\penalty0 (SI):\penalty0
+  17--38, 2004.
+
+\bibitem[Wickham(2014)]{Wickham14}
+H.~Wickham.
+\newblock \emph{Advanced R}.
+\newblock Chapman and Hall, CRC Press, Boca Raton, Florida, 2014.
 
 \end{thebibliography}
