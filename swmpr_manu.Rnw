@@ -25,7 +25,7 @@
 <<setup, cache = F, echo = F>>=
 library(knitr)
 # set global chunk options
-opts_chunk$set(fig.align = 'center', message = F, dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!h', warning = F, background = 'white', highlight = FALSE, prompt = TRUE, size = 'small', out.width = '0.8\\textwidth')
+opts_chunk$set(fig.align = 'center', message = F, dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!h', warning = F, background = 'white', highlight = FALSE, prompt = TRUE, size = 'small', out.width = '\\textwidth')
 options(replace.assign=TRUE,width=70,digits=1)
 knit_hooks$set(document = function(x) {sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)})
 @
@@ -41,37 +41,27 @@ The System-Wide Monitoring Program (SWMP) was implemented in 1995 by the US Nati
 
 \section{Introduction}
 
-The development of low-cost, automated sensors that collect data in near real-time has enabled a proliferation of standardized environmental monitoring programs \citep{Glasgow04,Fries08}.  These programs provide access to invaluable sources of data that can be used to address a variety of research and management objectives.  Applications from automated remote sensors are numerous for aquatic environments with notable examples including prediction of harmful algal blooms and toxicants in freshwater systems \citep{Reed10}, development of a hydrometeorological monitoring network to support flash flood warning programs \citep{HADS15}, and a national marine buoy network covering large portions of the open ocean and coastal zones of the United States \citep{NDBC15}.  Automated remote monitoring programs offer several advantages over traditional site-specific, field-based methods including streamlining of data acquisition, minimizing human error, and reducing the overall cost of the collection process \citep{Glasgow04}.  However, the increasing quantity of available information to address relevant questions has contributed to the growth of `big data' where analyses are limited by compututational requirements and identifying the signal from the noise rather than the availability of information. A greater focus on synthesis, exploratory-based analytical techniques, and interpretation have characterized the use of data from automated monitoring programs \citep{Campbell13,Millie13}.
+The development of low-cost, automated sensors that collect data in near real-time has enabled a proliferation of standardized environmental monitoring programs \citep{Glasgow04,Fries08}.  An invaluable source of monitoring data for coastal regions in the United States is provided by the National Estuarine Research Reserve System (NERRS, \url{http://www.nerrs.noaa.gov/}).  This network of 28 estuary reserves was created to address long-term research, monitoring, education, and stewardship goals in support of coastal management.  The System-Wide Monitoring Program (SWMP) was implemented in 1995 at over 140 stations across the reserves to provide a robust, long-term monitoring system for water quality, weather, and land-use/habitat change.  The SWMP network provides a continuous source of data collected at near real-time with the potential to evaluate causes of spatiotemporal variation in environmental condition and ecosystem function.  Environmental researchers have expressed a need for quantitative analysis tools to evaluate trends in water quality time series given the quantity and quality of data provided by SWMP \citep{SWMP14}.
 
-An invaluable source of monitoring data for coastal environments in the United States is provided by the National Estuarine Research Reserve System (NERRS, \url{http://www.nerrs.noaa.gov/}).  This network represents 28 estuarine reserves from different biogeographic regions that were chosen to address multiple goals for long-term research, monitoring, education, and stewardship in support of coastal management.  As part of this effort, the System-Wide Monitoring Program (SWMP) was implemented in 1995 at over 140 stations across the reserves to provide a robust, long-term monitoring system for water quality, weather, and land-use/habitat change.  The SWMP network has provided a continuous source of data collected at near real-time with the intent to evaluate natural and anthropogenic causes of spatiotemporal variation in environmental condition and ecosystem function.  These data have been applied both for evaluations of relevant characteristics at individual reserves (eg., \citet{Bulthius95,Dix08}) and differences between reserves (e.g., ecosystem metabolism \citet{Caffrey03,Caffrey04}, tidal characteristics \citet{Sanger02}, dissolved oxygen \citet{Wenner04}).  However, no cross-reserve comparisons have been conducted within the last decade despite the online availability of current SWMP data.  NERRS researchers and staff have also expressed a need for quantitative analysis tools to evaluate trends in water quality time series given the quantity and quality of data provided by SWMP \citep{SWMP14}.          
-
-This article describes a software package that was developed to address research needs of the NERRS program using the open-source statistical programming language R.  \CRANpkg{SWMPr} (pronounced `swamper') is an R package that contains functions for retrieving, organizing, and analyzing estuary monitoring data from the System-Wide monitoring program.  Functions provided by \pkg{SWMPr} address many of the common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify key parameters of interest.  Additionally, a cross-reserve comparison of water quality trends and current ecosystem metabolism estimates is provided to illustrate potential applications using the functions in this package.  The software is provided specifically for use with NERRS data, although many of the applications are relevant for addressing common challenges working with large datasets.
+This article describes the \CRANpkg{SWMPr} package that was developed for estuary monitoring data from the System-Wide Monitoring Program.  Functions provided by \pkg{SWMPr} address many common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify key parameters of interest.  Additionally, web applications derived from \pkg{SWMPr} and \CRANpkg{shiny} illustrate potential applications using the functions in this package.  The software is provided specifically for use with NERRS data, although many of the applications are relevant for addressing common challenges working with large environmental datasets.
 
 \section{SWMP overview and data retrieval}
 
-Four core data elements are collected through the SWMP monitoring network: abiotic monitoring data, biotic observations, habitat and land use mapping, and sentinel monitoring.  Only the abiotic data are monitored continuously with automated sensor networks, whereas the remaining elements involve field surveys or mapping products that differ between reserves given site-specific requirements.  As such, the \pkg{SWMPr} package is developed for the continuous abiotic monitoring network that represents a majority of the SWMP data and, consequently, the most challenging to evaluate.  Abiotic elements monitored at each reserve include water quality (water temperature, specific conductivity, salinity, dissolved oxygen concentration, dissolved oxygen saturation, depth, pH, turbidity, chlorophyll fluorescence), weather (air temperature, relative humidity, barometric pressure, wind speed, wind direction, photosynthetically active radiation, precipitation), and nutrient data (orthophosphate, ammonium, nitrite, nitrate, nitrite + nitrate, chlorophyll a).  Each reserve has no less than four water quality stations and one weather station at fixed locations.  Water quality and weather data are collected at 15 minute intervals, whereas nutrient data are collected monthly at each water quality station.  All data are made accessible through the Centralized Data Management Office (CDMO) web portal (\url{http://cdmo.baruch.sc.edu/}), where multiple quality assurance/quality control (QAQC) measures are used to screen the information for accuracy and reliability.  The final data include all timestamped observations including relevant QAQC flags with the appropriate qualifier.
+The \pkg{SWMPr} package is developed for the continuous abiotic monitoring network that represents a majority of SWMP data and, consequently, the most challenging to evaluate.  Abiotic elements monitored at each reserve include water quality (water temperature, specific conductivity, salinity, dissolved oxygen concentration, dissolved oxygen saturation, depth, pH, turbidity, chlorophyll fluorescence), weather (air temperature, relative humidity, barometric pressure, wind speed, wind direction, photosynthetically active radiation, precipitation), and nutrient data (orthophosphate, ammonium, nitrite, nitrate, nitrite + nitrate, chlorophyll a).  Each reserve has no less than four water quality stations and one weather station at fixed locations.  Water quality and weather data are collected at 15 minute intervals, whereas nutrient data are collected monthly at each water quality station.  All data are accessible through the Centralized Data Management Office (CDMO) web portal (\url{http://cdmo.baruch.sc.edu/}), where multiple quality assurance/quality control (QAQC) measures are used to screen the information for accuracy and reliability.  The final data include all timestamped observations including relevant QAQC flags with the appropriate qualifier.
 
-The CDMO web portal was established to support priority areas of SWMP that focus on the continuation and advancement of data management.  As such, CDMO provides access to over 58 million water quality, weather, and nutrient records that have been authenticated through systematic QAQC procedures.    Prior to any data request to the CDMO, the location, parameter type, and date ranges need to be identified based on the analysis needs. All stations in the SWMP network are identified by a 7 or 8 character name that specifies the reserve, station, and parameter type.  For example, `apaebwq' is the water quality identifier (`wq') for the East Bay station (`eb') at the Apalachicola reserve (`apa').  Similarly, a suffix of `met' or `nut' would specify the weather (meteorological) or nutrients station.  All reserve names, stations, and date ranges for each parameter type can be viewed on the CDMO website. Alternatively, the \code{site\_codes} (all sites) or \code{site\_codes\_ind} (single site) functions provided by the \pkg{SWMPr} package can be used to view the same information.  As noted below, the computer's IP address must be registered with CDMO before using the data retrieval functions in \pkg{SWMPr}.  Web services are provided by CDMO for direct access to SWMP data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in \pkg{SWMPr} are simple calls to the existing retrieval functions on CDMO web services.  For example, the \code{site\_codes} function in \pkg{SWMPr} uses the \code{exportStationCodesXMLNew} function from the web services to retrieve metadata for all the SWMP sites.  The text below describes the data retrieval functions in more detail, including all other functions available in \pkg{SWMPr}.
+At the time of writing, the CDMO web portal provides over 60 million water quality, weather, and nutrient records that have been authenticated through systematic QAQC procedures.   Records for each station are identified by a 7 or 8 character name that specifies the reserve, station, and parameter type.  For example, `apaebwq' is the water quality identifier (`wq') for the East Bay station (`eb') at the Apalachicola reserve (`apa').  Similarly, a suffix of `met' or `nut' specifies the weather (meteorological) or nutrient stations.  All reserve names, stations, and date ranges for each parameter type can be viewed on the CDMO website. Alternatively, the \code{site\_codes} (all sites) or \code{site\_codes\_ind} (single site) functions provided by \pkg{SWMPr} can be used.  As noted below, an IP address must be registered with CDMO before using the data retrieval functions in \pkg{SWMPr}.  Web services are provided by CDMO for direct access to SWMP data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in \pkg{SWMPr} are simple calls to the existing retrieval functions on CDMO web services.
 
 \section{Structure of the \pkg{SWMPr} package}
 
-\subsection{Installing the package}
-
-The \pkg{SWMPr} package was developed for use with the R ($\geq$ v3.0.0) statistical programming language. The \pkg{SWMPr} package can be downloaded from CRAN by executing the following commands at the R console prompt.  The package is loaded in the workspace using the \code{library} command.
-
-<<eval = F, message = F>>=
-install.packages('SWMPr')
-library(SWMPr)
-@
 <<eval = T, echo = F, message = F, cache = F>>=
 devtools::load_all('M:/docs/SWMPr')
 @
 
-The \pkg{SWMPr} package was developed by considering a common data workflow that categorizes the functions as one of three steps based on their intended use: \Bigtxt{retrieving}, \Bigtxt{organizing}, and \Bigtxt{analyzing}.  Functions for retrieving are used to import the data into R as a \code{"swmpr"} object class.  Functions for organizing and analyzing the data provide methods for working with a \code{"swmpr"} object.  An additional group of `miscellaneous' functions are included as helpers for the main functions.  The following describes the package structure, beginning with the retrieval functions, a description of the \code{"swmpr"} object returned after retrieval, and, finally, the organizing and analyzing functions.
+\pkg{SWMPr} functions are categorized by one of three steps in the data workflow: \Bigtxt{retrieving}, \Bigtxt{organizing}, and \Bigtxt{analyzing}.  Functions for retrieving are used to import the data into R as a \code{"swmpr"} object class.  Functions for organizing and analyzing the data provide methods for working with a \code{"swmpr"} object.  The following describes the package structure, beginning with the retrieval functions, a description of the \code{"swmpr"} object returned after retrieval, and, finally, the organizing and analyzing functions.
 
 \subsection{Data retrieval}
 
-Two basic approaches using \pkg{SWMPr} are available to import SWMP data into R, either through direct download or by importing local data (Table~\ref{tab:retrieve}). First, functions from the package can be used to import the data directly from the online server using CDMO web services. To do so, the IP address for the computer making the request must be registered by following instructions on the CDMO website.  The \code{site\_codes} or \code{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with CDMO. 
+\pkg{SWMPr} can import data into R through direct download from the CDMO or by importing local data that was previously downloaded (Table~\ref{tab:retrieve}). The IP address for the computer making the request must be registered if the first approach is used (see CDMO \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{website}).  The \code{site\_codes} or \code{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with CDMO. 
 
 % table for retrieval functions
 <<results = 'asis', echo = FALSE>>=
@@ -114,8 +104,7 @@ site_codes()
 site_codes_ind('apa')
 @
 
-Data retrieval functions to import data directly into R from the CDMO include \code{all\_params}, \code{all\_params\_dtrng}, and \code{single\_param}: \code{all\_params} returns the most recent records of all parameters at a station, \code{all\_params\_dtrng} returns all records within a date range for all parameters or a single parameter, and \code{single\_param} is identical to \code{all\_params} except that a single parameter is requested. Due to rate limitations on the CDMO server, the retrieval functions return a limited number of records with each request.  However, the \pkg{SWMPr} functions use the native CDMO web services iteratively (i.e., within a loop) to obtain all requested records.  Download time can be excessive for longer time series.     
-
+Retrieval functions to import data directly into R from the CDMO include \code{all\_params}, \code{all\_params\_dtrng}, and \code{single\_param}. Due to rate limitations on the CDMO server, the retrieval functions return a limited number of records with each request.  However, the \pkg{SWMPr} functions use the native CDMO web services iteratively (i.e., within a loop) to obtain all requested records.  Download time can be excessive for longer time series.     
 <<eval = F>>=
 # all parameters for a station, most recent
 all_params('hudscwq')
@@ -131,7 +120,7 @@ all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'),
 single_param('hudscwq', 'do_mgl')
 @
 
-The second approach for data retrieval is to use the \code{import\_local} function to import data into R that are locally available after downloading from CDMO.  This approach is most appropriate for large, specific data requests. The \code{import\_local} function is designed for data from the zip downloads feature in the advanced query section of the CDMO website. The zip downloads feature can be used to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \code{import\_local} function can be used to import files directly from the zipped folder or after the folder is decompressed.
+The second approach for data retrieval is to use the \code{import\_local} function to import data into R after downloading from CDMO.  This approach is most appropriate for large, specific data requests. The \code{import\_local} function is designed for data from the zip downloads feature in the advanced query section of the CDMO website. The zip downloads feature can be used to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \code{import\_local} function can be used to import files directly from the zipped folder or after the folder is decompressed.
 
 Occasionally, non-unique observations are present in the raw data.  These duplicates may be actual replicates with unique time stamps, such as replicate samples for monthly nutrient data, or erroneous duplicates with non-unique time stamps.  The \code{import\_local} function handles duplicate entries differently depending on the data type.  For water quality and nutrient data, duplicate time stamps are simply removed.  Nutrient data often contain replicate samples with similar but not identical time stamps within the span of a few minutes.  Nutrient data with replicates with unique time stamps are not removed but can be further processed using \code{rem\_reps}.  Weather data prior to 2007 may also contain duplicate time stamps at frequencies for hourly (denoted as `60') and daily (`144') averages, in addition to 15 minute frequencies.  Only duplicate values at 15 minutes are averaged for weather data during import.  
 
@@ -367,12 +356,12 @@ comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
 
 The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (Table~\ref{tab:analyze}).  The general purpose tools are \code{"swmpr"} methods that were developed for existing generic functions in the R base installation or relevant packages (\pkg{SWMPr} imports and dependencies are listed on \href{http://cran.r-project.org/web/packages/SWMPr/index.html}{CRAN}). These functions include \code{"swmpr"} methods for \code{aggreswmp}, \code{filter}, and \code{approx} to deal with missing or noisy data and more general functions for exploratory data analysis, such as \code{plot}, \code{lines}, and \code{hist} methods.  Decomposition functions, \code{decomp} and \code{decomp\_cj}, are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. Functions to estimate and plot ecosystem metabolism from combined water quality and weather data are provided by the \code{ecometab} and \code{plot\_metab} functions.  The analysis functions may or may not return a \code{"swmpr"} object depending on whether further processing with \code{"swmpr"} methods is possible from the output.    
 
-The \code{aggreswmp} function aggregates parameter data for a \code{"swmpr"} object by set units of time.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours by a user-defined function, which defaults to the mean.  A \code{"swmpr"} object is returned for the aggregated data, although the \code{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \code{round} method for IDate objects created in the \CRANpkg{data.table} package \citep{Dowle14}.  Additionally, the method of treating \code{NA} values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned, particularly for nutrient data (see the example below).
+The \code{aggreswmp} function aggregates parameter data for a \code{"swmpr"} object by set units of time.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours by a user-defined function, which defaults to the mean.  A \code{"swmpr"} object is returned for the aggregated data, although the \code{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \code{round} method for \code{"IDate"} objects created in the \CRANpkg{data.table} package \citep{Dowle14}.  Additionally, the method of treating \code{NA} values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned, particularly for nutrient data (see the example below).
 
 % table for analysis functions
 <<results = 'asis', echo = FALSE>>=
 
-funcs <- c('aggreswmp', 'aggremetab', 'ecometab', 'decomp', 'decomp\\_cj', 'hist', 'lines', 'map\\_reserve', 'na.approx', 'plot', 'plot\\_metab', 'plot\\_summary', 'smoother')
+funcs <- c('aggreswmp', 'aggremetab', 'ecometab', 'decomp', 'decomp\\_cj', 'hist', 'lines', 'map\\_reserve', 'na.approx', 'overplot', 'plot', 'plot\\_metab', 'plot\\_summary', 'smoother')
 funcs <- paste0('\\code{', funcs, '}')
 
 descrips <- c(
@@ -385,6 +374,7 @@ descrips <- c(
   'Add lines to an existing plot created with \\code{plot}.',
   'Create a map of all stations in a reserve using the \\CRANpkg{ggmap} package \\citep{Kahle13}.',
   'Linearly interpolate missing data (\\code{NA} values) in a \\code{"swmpr"} object. The maximum gap size that is interpolated is defined by the arguments.', 
+  'Plot multiple time series on the same y-axis.', 
   'Plot a univariate  time series for a \\code{"swmpr"} object.  The parameter name must be specified.',
   'Plot ecosystem metabolism estimates after running \\code{ecometab} on a combined \\code{"swmpr"} object.',  
   'Create summary plots of seasonal/annual trends and anomalies for a water a single paramter of interest.',
@@ -443,7 +433,7 @@ plot(dat)
 lines(dat_smooth, col = 'red', lwd = 2)
 @
 
-A common issue with any statistical analysis is the treatment of missing values.  Missing data can be excluded from the analysis, included but treated as true zeroes, or interpolated based on similar values.  In either case, an analyst should have a strong rationale for the chosen method.  A common approach implemented in the \pkg{SWMPr} package is linear interpolation using the \code{na.approx} function (Figure~\ref{fig:interp_ex}).  A simple curve fitting method is used to create a continuous set of records between observations separated by missing data.  However, the ability of the interpolated data to approximate actual trends is related to the maximum gap size between observations with missing data.  Interpolation between larger gaps are less likely to resemble patterns of an actual parameter, whereas interpolation between smaller gaps are often more accurate.  An upper limit on the maximum gap size to interpolate trends depends on the characteristics of the dataset such that a trial and error approach is appropriate for most applications.  The \code{maxgap} argument passed to \code{na.approx} defines the maximum gap size for interpolation and the following illustrates use of different maximum values to fill missing data.  
+A common issue with any statistical analysis is the treatment of missing values.  Missing data can be excluded from the analysis, included but treated as true zeroes, or interpolated based on similar values.  An approach implemented in \pkg{SWMPr} is linear interpolation using the \code{na.approx} function (Figure~\ref{fig:interp_ex}).  A simple curve fitting method is used to create a continuous set of records between observations separated by missing data.  However, the ability of the interpolated data to approximate actual trends is related to the maximum gap size between observations with missing data.  Interpolation between larger gaps are less likely to resemble patterns of an actual parameter, whereas interpolation between smaller gaps are often more accurate.  An upper limit on the maximum gap size to interpolate trends depends on the characteristics of the dataset such that a trial and error approach is appropriate for most applications.  The \code{maxgap} argument passed to \code{na.approx} defines the maximum gap size for interpolation and the following illustrates use of different maximum values to fill missing data.  
 
 <<interp_ex, eval = T, fig.height = 6, cache = T, fig.scap = "Examples illustrating use of the \\code{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.", fig.cap = "Examples illustrating use of the \\code{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.">>=
 # get data, qaqc and subset
@@ -467,7 +457,7 @@ plot(fill2, col = 'red', main = 'Interpolation - maximum gap of 30 records')
 lines(dat)
 @
 
-The disaggregation of time series into additive or multiplicative components that can be attributed to separate sources of variance is another common application for trend analysis.  The \code{decomp} function is a simple wrapper to \code{decompose} \citep{Kendall83} that separates a time series into components describing a trend, cyclical variation (e.g., daily or annual), and the remainder  (Figure~\ref{fig:decomp_ex1}).  An additive decomposition assumes that the cyclical component of the time series is stationary (i.e., the variance is constant), otherwise a multiplicative decomposition can be used.  The \code{frequency} argument describes the periodicity of the cyclical parameter in units of the native time step.  For example, the \code{frequency} for a parameter with daily periodicity would be 96 if the time step is 15 minutes (24 hours * 60 minutes / 15 minutes).  The frequency of a parameter with annual periodicity at a 15 minute time step would be 35040 (365 days * 24 hours * 60 minutes / 15 minutes).  For simplicity, character strings of \code{`daily'} or \code{`annual'} can be supplied in place of numeric values, although any number can be used to identify an arbitrary cyclical component.  A starting value of the time series must be supplied in the latter case that indicates the sequence in the cycle for the first observation.  For example, the starting value would be 1 if the first observation is at sunrise for a diurnal cycle (see the help file for the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html}{\code{ts}} function for details).  Use of the \code{setstep} function is also required to standardize the time step prior to decomposition.
+The disaggregation of time series into additive or multiplicative components that can be attributed to separate sources of variance is another common application for trend analysis.  The \code{decomp} function is a simple wrapper to \code{decompose} \citep{Kendall83} that separates a time series into components describing a trend, cyclical variation (e.g., daily or annual), and the remainder  (Figure~\ref{fig:decomp_ex1}).  An additive decomposition assumes that the cyclical component of the time series is stationary (i.e., the variance is constant), otherwise a multiplicative decomposition can be used.  The \code{frequency} argument describes the periodicity of the cyclical parameter in units of the native time step.  For example, the \code{frequency} for a parameter with daily periodicity would be 96 if the time step is 15 minutes (24 hours * 60 minutes / 15 minutes).  The frequency of a parameter with annual periodicity at a 15 minute time step would be 35040 (365 days * 24 hours * 60 minutes / 15 minutes).  For simplicity, character strings of \code{'daily'} or \code{'annual'} can be supplied in place of numeric values, although any number can be used to identify an arbitrary cyclical component.  A starting value of the time series must be supplied in the latter case that indicates the sequence in the cycle for the first observation.  For example, the starting value would be 1 if the first observation is at sunrise for a diurnal cycle (see the help file for the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html}{\code{ts}} function for details).  Use of the \code{setstep} function is also required to standardize the time step prior to decomposition.
 
 <<decomp_ex1, eval = T, fig.height = 6, cache = T, fig.cap = "An additive decomposition of dissolved oxygen into a trend, seasonal (daily), and random component using the \\code{decomp} function.">>=
 # get data
@@ -494,7 +484,7 @@ dat <- qaqc(dat, qaqc_keep = NULL)
 decomp_cj(dat, param = 'chla_n')
 @
 
-Detailed exploratory graphics are also useful for evaluating general trends in observed data.  Several graphics showing seasonal and annual trends for a single SWMP parameter can be obtained using the \code{plot\_summary} function (Figure~\ref{fig:summary_ex}).  The plots include monthly distributions, monthly anomalies, and annual anomalies in multiple formats.  Anomalies are defined as the difference between the monthly or annual averages from the grand mean for the parameter.  An interactive Shiny web application \citep{Chang15} that uses this function is available for viewing results of any parameter at all SWMP sites (see the \nameref{swmp_apps} section).
+Detailed exploratory graphics are also useful for evaluating general trends in observed data.  Several graphics showing seasonal and annual trends for a single SWMP parameter can be obtained using the \code{plot\_summary} function (Figure~\ref{fig:summary_ex}).  The plots include monthly distributions, monthly anomalies, and annual anomalies in multiple formats.  An interactive Shiny web application \citep{Chang15} that uses this function is available for viewing results of any parameter at all SWMP sites (see the \nameref{swmp_apps} section).
 
 <<summary_ex, fig.height = 7, fig.width = 13, message = F, cache = T, fig.cap = "Summaries of a multi-year chlorophyll time series using the \\code{plot\\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)">>=
 ## import data
@@ -505,11 +495,19 @@ dat <- qaqc(apacpnut)
 plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
 @
 
-Finally, estimates of ecosystem metabolism provide a measure of overall system productivity to evaluate whether an ecosystem is a net source or sink of organic material.  The open-water method \citep{Odum56} is a common approach to quantify metabolism using a mass balance equation that describes the change in dissolved oxygen over time from the balance between photosynthetic and respiration processes, corrected using an empirically constrained air-sea gas diffusion model \citep{Ro06,Thebault08}. The diffusion-corrected dissolved oxygen (DO) flux estimates are averaged separately over each day and night of the time series. The nighttime average DO flux is used to estimate respiration rates, while the daytime DO flux is used to estimate net primary production. To generate daily integrated rates, respiration rates are assumed constant such that hourly night time DO flux rates are multiplied by 24. Similarly, the daytime DO flux rates are multiplied by the number of daylight hours, which varies with location and time of year, to yield net daytime primary production. Respiration rates are subtracted from daily net production estimates to yield gross production rates. The metabolic day is considered the 24 hour period between sunsets on two adjacent calendar days  
+The \code{overplot} function provides an alternative approach to viewing observed data from the same station.  This function uses the base \pkg{graphics} package to plot multiple time series on the same y-axis.
 
-The \code{ecometab} function is used to implement the open-water method with a combined water quality and weather dataset \citep{Caffrey14}.  Several assumptions must be met for a valid interpretation of the results.  First, the DO time series is assumed to be a sample of the same water mass over time.  Tidal advection may have a significant influence on the time series, which can contribute to a substantial amount of noise in metabolic estimates.  The extent to which tidal advection influences the dissolved oxygen signal depends on various site-level characteristics and an intimate knowledge of the site may be required.  Second, areal rates for gross production and total respiration are based on volumetric rates normalized to the depth of the water column at the sampling location, which is assumed to be well-mixed, such that the water quality sensor is reflecting the integrated processes in the entire water column (including the benthos).  Water column depth is calculated as the mean value of the depth variable across the time series in the \code{"swmpr"} object. Depth values are floored at one meter for very shallow stations and 0.5 meters is also added to reflect the practice of placing sensors slightly off of the bottom.  Third, the air-sea gas exchange model is calibrated with wind data either collected at, or adjusted to, wind speed at 10 m above the surface.  The metadata should be consulted for exact height. Other assumptions may apply and relevant resources should be consulted to ensure appropriate application of the open-water method (see \citet{Kemp12,Needoba12}).
+<<overplot, fig.height = 4, fig.width = 9, message = F, cache = T, fig.cap = "The \\code{overplot} function plots multiple variables on the same y-axis.">>=
+## import data
+data(apacpwq)
+dat <- qaqc(apacpwq)
 
-The following is an example that shows use of the \code{ecometab} function from a combined water quality and weather data set.  Monthly aggregations of the raw, daily estimates are plotted using \code{plot\_metab} (Figure~\ref{fig:metab_ex}).
+## plot
+overplot(dat, select = c('depth', 'do_mgl', 'ph', 'turb'),
+  subset = c('2013-01-01 0:0', '2013-02-01 0:0'), lwd = 2)
+@
+
+Estimates of ecosystem metabolism provide a measure of overall system productivity to evaluate whether an ecosystem is a net source or sink of organic material.  The open-water method \citep{Odum56} is a common approach to quantify metabolism using a mass balance equation that describes the change in dissolved oxygen over time from the balance between photosynthetic and respiration processes, corrected using an empirically constrained air-sea gas diffusion model \citep{Ro06,Thebault08}. A detailed discussion of the method is beyond the scope of this article, although users are strongly encouraged to consult references herein for additional information (see \citet{Kemp12,Needoba12,Caffrey14}, also the package help files).  The following is an example that shows use of the \code{ecometab} function from a combined water quality and weather data set.  Monthly aggregations of the raw, daily estimates are plotted using \code{plot\_metab} (Figure~\ref{fig:metab_ex}).
 
 <<metab_ex, eval = TRUE, cache = T, fig.height = 4, fig.width = 8, warning = FALSE, fig.cap = "Monthly means (95\\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.">>=
 ## import water quality and weather data
@@ -533,334 +531,10 @@ Finally, the \code{map\_reserve} function can be used to create a map with all s
 map_reserve('jac')
 @
 
-\subsection{Miscellaneous functions}
-
-Several additional functions are provided that do not fit the above categories (Table~\ref{tab:misc}).  These functions are generally used within the main functions but may be useful for more customized evaluation of SWMP data.  
-
-% table for misc functions
-<<results = 'asis', echo = FALSE>>=
-
-funcs <- c('calckl', 'metab\\_day', 'param\\_names', 'parser', 'swmpr', 'time\\_vec')
-funcs <- paste0('\\code{', funcs, '}')
-
-descrips <- c(
-  'Estimate the reaeration coefficient for air-sea gas exchange.  Used in the \\code{ecometab} function.',
-  'Identify the metabolic day for each approximate 24 period in an hourly time series.  Used in the \\code{ecometab} function.',
-  'Returns column names as a list for the parameter types (nutrients, weather, or water quality).  Includes QAQC columns with \\code{f\\_} prefix. Used in the data retrieval functions.',
-  'Parses HTML returned from CDMO data requests.  Used in the retrieval functions.',
-  'Creates a \\code{"swmpr"} object class.  Used in the data retrieval functions.',
-  'Converts time vectors to \\code{POSIXct} objects with the appropriate time zone for a site.  Used in the data retrieval functions.'
-  )
-
-to_tab <- data.frame(Functions = funcs, Description = descrips, stringsAsFactors = F)
-
-library(Hmisc)
-
-latex(
-  to_tab[, 'Description', drop = F],
-  file = '',
-  caption = "Miscellaneous functions available from the \\pkg{SWMPr} package.  Most are used within the main functions above but may be useful for customized evaluations of SWMP data.  Full documentation for each function is in the help file (e.g., execute \\code{?calckl} at the command line).",
-  rowlabel = 'Function',
-  colheads = 'Description',
-  rowname = to_tab$Functions,
-  caption.loc = 'top',
-  col.just=c("p{3.5in}"), 
-  label = 'tab:misc', 
-  table.env = FALSE, 
-  where = '!tbp'
-  )
-
-@
-
 \section{Applications using the \pkg{SWMPr} package}
 \label{swmp_apps}
 
-This section describes three examples using the \pkg{SWMPr} package to illustrate the improved ability to synthesize and evaluate multi-year time series of estuarine data. First, the open-water method for estimating metabolism was applied to nearly all co-located water quality and weather sites at each NERRS reserve using all years of available data.  The results are provided primarily to illustrate ease of use of the functions and secondarily to provide an update on metabolism estimates using the most recent SWMP data.  \citet{Caffrey03} and \citet{Caffrey04} applied the open-water method to estimate ecosystem metabolism using five years of water quality observations at two sites at each of the NERRS reserves.  The air-sea gas exchange model also assumed a constant value for the reaeration coefficient, whereas the current \code{ecometab} function provides a more accurate estimate by including weather data in the calculation (see \citet{Caffrey14} for details).
-
-Water quality and weather observations from January 1995 to December 2014 for all NERRS sites were obtained through a bulk data request using the zip downloads feature of CDMO.  All csv files for each station were imported into R using the \code{import\_local} function, processed using the \code{setstep} and \code{qaqc} functions, then saved locally as binary RData files. This resulted in a single \code{"swmpr"} object for each parameter at each site.  All files were then uploaded to a remote server for online access.  An additional R script was executed that retrieved and processed water quality and weather data at each reserve to estimate metabolism.  Two water quality sites with the longest time series at each reserve were used.  Mean annual metabolism values at each site, organized by region, are shown in Figure~\ref{fig:metab_plo}, whereas decadal comparisons are shown in Table~\ref{tab:metab_tab}.  All sites were generally net heterotrophic across the range of observations (i.e., sink of organic matter, in agreement with \citet{Caffrey03}), although differences were observed in early (i.e., 1995-2004) as compared to recent (2005-2014) time periods. Overall, the results indicate that between-region and within-site differences in metabolism are apparent and varying by time period, such that a more comprehensive evaluation of factors that influence metabolic rates is needed.  More importantly, use of the data retrieval, synthesis, and analysis functions to create the results illustrates the utility provided by the \pkg{SWMPr} package.
-
-% metabolism figure
-<<metab_plo, eval = T, cache = T, echo = F, fig.cap = 'Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each NERRS reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Sites were assigned to regions based on approximate geographic coordinates.', fig.height = 6, fig.width = 8>>=
-# # packages to use
-# library(SWMPr)
-# library(httr)
-# library(XML)
-# library(foreach)
-# library(doParallel)
-# 
-# # names of files on server
-# files_s3 <- httr::GET('https://s3.amazonaws.com/swmpalldata/')$content
-# files_s3 <- rawToChar(files_s3)
-# files_s3 <- htmlTreeParse(files_s3, useInternalNodes = T)
-# files_s3 <- xpathSApply(files_s3, '//contents//key', xmlValue)
-# files_s3 <- gsub('\\.RData$', '', files_s3) 
-# 
-# # find only active water quality and weather sites
-# # IP address must be registed with CDMO 
-# meta <- site_codes()
-# sel <- meta$status %in% 'Active' & !grepl('nut$', meta$station_code)
-# meta <- meta[sel, ]
-# 
-# # get wq sites from meta, then filter by those on server
-# wq_sites <- grep('wq$', meta$station_code, value = T)
-# wq_sites <- files_s3[gsub('\\.RData$', '', files_s3) %in% wq_sites]
-# 
-# # setup parallel backend for processing
-# cl <- makeCluster(8)
-# registerDoParallel(cl)
-# strt <- Sys.time()
-# 
-# # process
-# metabs <- foreach(wq_site = wq_sites) %dopar% {
-#  
-#   library(SWMPr)
-#   
-#   # progress
-#   sink('log.txt')
-#   cat(wq_site, which(wq_site == wq_sites), 'of', length(wq_sites), '\n')
-#   print(Sys.time() - strt)
-#   sink()
-#   
-#   # find corresponding wx station
-#   met_site <- substr(wq_site, 1, 3)
-#   met_site <- grep(paste0('^', met_site, '.*met'), files_s3, value = T)
-#   met_site <- gsub('\\.RData$', '', met_site)
-# 
-#   # continue if wx data found
-#   if(length(met_site) > 0){
-#     
-#     # if > 1 wx site, pick the one with more obs
-#     if(length(met_site) > 1){
-# 
-#       met_list <- vector('list', length(met_site))
-#       names(met_list) <- met_site
-#       for(met in met_site){
-#       
-#         met_tmp <- import_remote(met)
-#         met_list[[met]] <- met_tmp
-#       
-#       }
-#     
-#       # pick the one with most obs
-#       met_most <- which.max(unlist(lapply(met_list, nrow)))
-#       met <- met_list[met_most][[1]]
-# 
-#     # otherwise load only one
-#     } else {
-#     
-#       # met
-#       met <- import_remote(met_site)
-#     
-#     }
-#     
-#     ##
-#     # load the wq file
-#     
-#     # wq
-#     wq <- import_remote(wq_site)
-#     
-#     ## 
-#     # combine, estimate metabolism, reduce data volume
-#     dat <- comb(wq, met, method = attr(met, 'station'))
-#     dat <- ecometab(dat)
-#     dat <- dat[1, ]
-#     
-#     dat
-#     
-#   }
-#   
-# }
-# names(metabs) <- wq_sites
-# save(metabs, file = 'metabs.RData')
-
-# # take all metab estimates and summarize by year
-# # done for two stations at each reserve with the longest time series
-# data(metabs)
-# 
-# metabs <- lapply(metabs, attr, 'metabolism')
-# metabs <- do.call('rbind', metabs)
-# metabs$site <- gsub('\\.[0-9]*$', '', as.character(row.names(metabs)))
-# row.names(metabs) <- 1:nrow(metabs)
-# 
-# library(dplyr)
-# library(tidyr)
-# metabs <- select(metabs, date, Pg, Rt, NEM, site) %>% 
-#   mutate(date = as.numeric(strftime(date, '%Y'))) %>% 
-#   gather('metab', 'value', 2:4) %>% 
-#   group_by(date, site, metab) %>% 
-#   summarize(value = mean(value, na.rm = T)) %>% 
-#   group_by(site, metab) %>% 
-#   na.omit %>% 
-#   mutate(reserve = substr(site, 1, 3)) %>% 
-#   spread(metab, value)
-# 
-# # select two sites from each reserve, those with longest records
-# metabs <- split(metabs, metabs$reserve)
-# metabs <- lapply(metabs, 
-#   function(x){
-#     
-#     num_yrs <- aggregate(date ~ site, x, length)
-#     num_yrs <- num_yrs[order(num_yrs$date, decreasing = T), ]
-#     
-#     if(nrow(num_yrs) >1){
-#       site_sel <- num_yrs$site[c(1, 2)]
-#     } else {
-#       site_sel <- num_yrs$site[1]
-#     }
-#     
-#     out <- x[x$site %in% site_sel, ]
-#     return(out)
-#     
-#   }
-#   
-# )
-# metabs <- do.call('rbind', metabs)
-# 
-# metabs_sum <- metabs
-# save(metabs_sum, file = 'data/metabs_sum.RData')
-
-data(metabs_sum)
-
-library(dplyr)
-library(tidyr)
-
-# summarize for annual means, get conf ints
-metabs_plo <- gather(metabs_sum, 'metab', 'value', 4:6) %>% 
-  group_by(site, metab) %>% 
-  summarize(
-    margs = qt(1 - 0.05/2, length(value) - 1) * sd(value)/sqrt(length(value)),
-    value = mean(value)
-    ) %>% 
-  mutate(
-    value = 0.032 * value,
-    margs = 0.032 * margs,
-    upper = value + margs, 
-    lower = value - margs
-    )
-
-# get region
-data(stat_locs)
-names(stat_locs)[names(stat_locs) %in% 'station_code'] <- 'site'
-metabs_plo$site <- gsub('wq$', '', metabs_plo$site)
-metabs_plo <- left_join(metabs_plo, stat_locs, by = 'site')
-region <- rep('Pacific', nrow(metabs_plo))
-region[metabs_plo$longitude > -110] <- 'Gulf'
-region[metabs_plo$latitude > 28 & metabs_plo$longitude > -84] <- 'Atlantic'
-
-# combine, select, sort
-metabs_plo <- select(metabs_plo, -c(latitude, longitude, gmt_off))
-metabs_plo$region <- region
-metabs_plo <- arrange(metabs_plo, region, site)
-
-# plot prep
-to_plo <- data.frame(metabs_plo)
-
-#reassign factors for ranking in plot
-sort_val <- to_plo[to_plo$metab == 'Pg', c('region', 'value', 'site')]
-sort_val <- order(sort_val$region, sort_val$value)
-to_plo$site <- factor(to_plo$site)
-to_plo$site <- factor(
-  to_plo$site,
-  levels = levels(to_plo$site)[sort_val],
-  labels = levels(to_plo$site)[sort_val]
-  )
-new_labs <- c('Mean net metabolism', 'Mean gross production', 'Mean total respiration')
-to_plo$metab <- factor(to_plo$metab, levels = c('NEM', 'Pg', 'Rt'), labels = new_labs)
-
-ylabs <- expression(paste('g ', O[2],' ', m^-2,' ', d^-1))
-library(ggplot2)
-p <- ggplot(to_plo, 
-    aes(x = site, y = value, group = metab, fill = metab)
-  ) + 
-  geom_bar(stat = 'identity', width = 1, colour = 'black') + 
-  scale_y_continuous(ylabs) + 
-  facet_grid(metab ~ region, scales = 'free') + 
-  scale_x_discrete(name = element_blank()) + 
-  theme_bw() + 
-  theme(
-    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, 
-      size = 7),
-    legend.position = 'none'
-    ) +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0)
-print(p)
-
-@
-
-% table summary of trends
-<<eval = T, results = 'asis', cache = T, echo = F>>=
-
-data(metabs_sum)
-
-library(dplyr)
-library(tidyr)
-
-# summarize by time periods
-metabs_tab <- gather(metabs_sum, 'metab', 'value', 4:6)
-metabs_tab$yr_grp <- '1995-2004'
-metabs_tab$yr_grp[metabs_tab$date > 2004] <- '2005-2014'
-metabs_tab <- mutate(metabs_tab, value = 0.032 * value) %>% 
-  group_by(site, metab, yr_grp) %>% 
-  arrange(yr_grp, date, metab) %>% 
-  summarize(ave = round(mean(value, na.rm = TRUE), 2)) %>% 
-  spread(yr_grp, ave) 
-trends <- apply(metabs_tab, 1, function(x){
-  
-  val <- as.numeric(x[['2005-2014']])
-  trnd <- val > as.numeric(x[['1995-2004']])
-  
-  if(is.na(trnd)) return(val)
-  if(trnd) return(paste0('{\\bf ', val, '}'))
-  if(!trnd) return(paste0('{\\it ', val, '}'))
-  
-})
-metabs_tab[, '2005-2014'] <- trends
-metabs_tab <- gather(metabs_tab, 'period', 'value', 3:4) %>% 
-  unite('var', metab, period, sep = ' ') %>% 
-  spread(var, value) %>% 
-  mutate(site = gsub('wq$', '', site))
-
-# get region
-data(stat_locs)
-names(stat_locs)[names(stat_locs) %in% 'station_code'] <- 'site'
-metabs_tab <- left_join(metabs_tab, stat_locs, by = 'site')
-region <- rep('Pacific', nrow(metabs_tab))
-region[metabs_tab$longitude > -110] <- 'Gulf'
-region[metabs_tab$latitude > 28 & metabs_tab$longitude > -84] <- 'Atlantic'
-
-# combine, select, sort
-metabs_tab <- select(metabs_tab, -c(latitude, longitude, gmt_off)) %>% 
-  mutate(region = region) %>% 
-  arrange(region, site)
-
-nrgroups <- as.numeric(table(metabs_tab$region))
-# table
-
-cap <- 'Trends in metabolism for two sites at each of the NERRS reserves.  Values are averages of mean annual estimates for each period of observation (1994-2004 and 2005-2014). Bold values indicate an increase from the first period, whereas italic values indicate a decrease. Sites were assigned to regions based on approximate geographic coordinates.' 
-foots <- '\\footnotesize{\\textsuperscript{a}NEM: net ecosystem metabolism, Pg: gross production, Rt: total respiration, all values in g O$_2$ m$^{-2}$ d$^{-1}$ as annual averages.}' 
-
-library(Hmisc)
-latex(
-  metabs_tab[, !names(metabs_tab) %in% c('site', 'region')], 
-  file = '', 
-  caption = cap, 
-  cgroup = c('NEM\\textsuperscript{a}', 'Pg', 'Rt'), 
-  n.cgroup = c(2, 2, 2), 
-  colheads = rep(c('1995-2004', '2005-2014'), 3),
-  rowlabel = 'Site', 
-  rowname = metabs_tab$site,
-  digits = 2,
-  insert.bottom = foots,
-  rgroup = unique(metabs_tab$region),
-  n.rgroup = nrgroups,
-  label = 'tab:metab_tab',
-  size = 'footnotesize', 
-  where = '!tbp'
-  )
-  
-@
-
-The second and third examples are two interactive web applications \citep{Chang15} created using the \pkg{SWMPr} package that illustrate summaries and comparisons of SWMP data.  The first web application evaluates trends in SWMP data within and between sites using an interactive map (Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time.  Trends on the map at each station are plotted as circles that identify the direction and significance of the trend, such that larger points with darker colors indicate a strong trend.  The trend over time is blue for decreasing and red for increasing.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting. Both of the apps provide previously unavailable utilities to interact with SWMP data using an intuitive online interface.  This format may be more appealing for individuals with limited experience using R, while simultaneously illustrating what is possible using functions from the package. The applications have been used extensively with over 300 hours noted in a single month.   
+Two \CRANpkg{shiny} web applications hav been created that illustrate the improved ability to synthesize and evaluate multi-year time series using \pkg{SWMPr}.  The first application evaluates trends in SWMP data within and between sites using an interactive \pkg{leaflet} map (\citet{Cheng15}, Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time, whereas trends between sites are shown on the map for each station as circles that identify the direction and significance of the trend.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting.
 
 \begin{figure}
 \begin{center}
@@ -872,13 +546,11 @@ The second and third examples are two interactive web applications \citep{Chang1
 
 \section{Conclusions}
 
-The ability of management and research programs to address critical environmental issues is highly dependent on the quality of data used to inform decision making.  Standardized monitoring programs have vastly improved the ability to evaluate factors that influence a range of conditions, leading to more comprehensive assessments of site-specific characteristics and more informed decisions to manage environmental resources.  The System-Wide Monitoring Program has provided twenty years of continuous monitoring of environmental characteristics at over over 140 stations within the 28 estuaries of the National Estuarine Research Reserve System.  This monitoring network establishes a foundation  for more effective coastal management by providing standardized data to address spatiotemporal variation in natural and anthropogenic characteristics that influence environmental condition.  Although the data provided by SWMP are unique among coastal observing systems and have been used in a variety of applications \citep{Bulthius95,Caffrey03,Sanger02,Wenner04,Dix08}, the capacity of NERRS researchers and staff to more effectively evaluate SWMP data could be greatly improved using the \pkg{SWMPr} package.
-
-The \pkg{SWMPr} package provides several functions to retrieve, organize, and analyze SWMP data to more effectively address common challenges working with large datasets.  The package is designed to augment, rather than replace, existing data retrieval programs by providing a bridge betwen the raw data and the analysis software through its numerous data retrieval functions (Table~\ref{tab:retrieve}).  Established QAQC methods and data processing techniques are also enhanced with \pkg{SWMPr} by functions that filter observations for different QAQC flags (\code{qaqc}) and subset by selected dates or variables (\code{subset}).  Additionally, cumbersome challenges comparing differents datasets are addressed by the \code{setstep} and \code{comb} functions that standardize and combine time series.  Finally, the analysis functions provide numerous tools to implement common analyses for time series and more specific methods for water quality data.  In particular, the \code{ecometab} function can be used to estimate daily integrated rates of ecosystem metabolism using the open-water method \citep{Odum56,Caffrey14}.  The above analysis (see \nameref{swmp_apps}) provided a cursory update of metabolism estimates for each the NERRS estuaries using recent data to evaluate trends over time.  Although further evaluation of the data are needed, particularly regarding assumptions of the open-water method and tidal effects, the results could be used in a more comprehensive evaluation of factors that influence estuary metabolism. Further development of the \pkg{SWMPr} package will consider modifying existing and including additional functions to more effectively integrate data analysis with the quality of information provided by CDMO, SWMP, and NERRS. 
+\pkg{SWMPr} was developed to augment existing data management programs (i.e., CDMO) by providing a bridge betwen the raw data and the analysis software through its numerous data retrieval functions (Table~\ref{tab:retrieve}).  Established QAQC methods and data processing techniques are also enhanced with \pkg{SWMPr} by functions that filter observations for different QAQC flags (\code{qaqc}) and subset by selected dates or variables (\code{subset}).  Additionally, challenges comparing differents datasets are addressed by the \code{setstep} and \code{comb} functions that standardize and combine time series.  Finally, the analysis functions provide numerous tools to implement common analyses for time series and more specific methods for water quality data.  Further development of the package will include modifications and additional functions to better integrate data analysis with the quality of information provided by SWMP.  For example, several functions include default methods to extend use beyond the \code{"swmpr"} object and additional development will continue to focus on modifying the package to handle arbitrary data structures.   
 
 \section{Acknowledgments}
 
-I acknowledge the significant work of NERRS researchers and staff that has allowed access to high-quality monitoring data.  Thanks to Todd O'Brien for the inspiration for the online widgets. Thanks to Mike Murrell and Jim Hagy III for assistance with the ecosystem metabolism functions. Thanks to Jeffrey Hollister for providing useful comments on an earlier draft.  The views expressed in this article are those of the author and do not necessarily reflect the views or policies of the U.S. Environmental Protection Agency.  The use of trade names or products does not constitute endorsement by the US Government.   
+I acknowledge the significant work of NERRS researchers and staff that has allowed access to high-quality monitoring data.  Thanks to Todd O'Brien for the inspiration for the online widgets. Thanks to Mike Murrell and Jim Hagy III for assistance with the ecosystem metabolism functions. Thanks to Jeffrey Hollister for providing useful comments on an earlier draft.
 
 \bibliography{beck}
 
