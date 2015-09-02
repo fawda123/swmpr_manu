@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  2 SEP 2015 11:42
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  2 SEP 2015 15:44
 entering extended mode
 **swmpr_manu.tex
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.tex
@@ -1353,27 +1353,132 @@ Underfull \hbox (badness 10000) in paragraph at lines 134--135
  []
 
 [3]
-LaTeX Font Info:    Font shape `T1/zi4/bx/n' in size <10> not available
-(Font)              Font shape `T1/zi4/b/n' tried instead on input line 196.
-LaTeX Font Info:    Font shape `T1/zi4/b/n' will be
-(Font)              scaled to size 10.20004pt on input line 196.
-Package microtype Info: Character `textendash ' is missing
-(microtype)             in font `T1/zi4/b/n/10'.
-(microtype)             Ignoring protrusion settings for this character.
-Package microtype Info: Character `textemdash ' is missing
-(microtype)             in font `T1/zi4/b/n/10'.
-(microtype)             Ignoring protrusion settings for this character.
- [4]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\do' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\catcode' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\`' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\>' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\,' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\'' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\-' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\active' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\begingroup' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\lccode' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\`' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\>' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\,' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\'' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\-' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\lowercase' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\endgroup' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<def>-command' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\csname\endcsname' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\csname\endcsname' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 196.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\csname\endcsname' on input line 196.
+
+
+Package hyperref Warning: Composite letter `\texttilde+`'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\texttilde' on input line 196.
+
+
+Package hyperref Warning: Glyph not defined in PD1 encoding,
+(hyperref)                removing `\textquotesingle' on input line 196.
+
+[4]
 Underfull \hbox (badness 1371) in paragraph at lines 251--252
 []|\T1/ppl/m/n/10 (+20) Row names of the data set, in-her-ited from the
  []
 
 
-Underfull \hbox (badness 3965) in paragraph at lines 252--253
+Underfull \hbox (badness 1448) in paragraph at lines 252--253
 []|\T1/ppl/m/n/10 (+20) Class of the data ob-ject in-di-cat-ing \T1/zi4/m/n/10 
-swmpr \T1/ppl/m/n/10 (+20) and
+"swmpr" \T1/ppl/m/n/10 (+20) and
  []
 
+LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
+(Font)              scaled to size 10.20004pt on input line 254.
 
 Underfull \hbox (badness 2261) in paragraph at lines 257--258
 []|\T1/ppl/m/n/10 (+20) Timezone of the sta-tion us-ing the city/country
@@ -1392,63 +1497,73 @@ Underfull \hbox (badness 3138) in paragraph at lines 452--453
 []|\T1/ppl/m/n/10 (+20) Plot ecosys-tem metabolism es-ti-mates af-ter run-ning
  []
 
-[8] [9] <figure/smooth_ex-1.pdf, id=186, 505.89pt x 216.81pt>
+[8] [9] <figure/smooth_ex-1.pdf, id=182, 505.89pt x 216.81pt>
 File: figure/smooth_ex-1.pdf Graphic file (type pdf)
 
 <use figure/smooth_ex-1.pdf>
 Package pdftex.def Info: figure/smooth_ex-1.pdf used on input line 502.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
+(pdftex.def)             Requested size: 318.67207pt x 136.57448pt.
  [10 <M:/docs/manuscripts/swmpr_manu/figure/smooth_ex-1.pdf>] <figure/interp_ex
--1.pdf, id=199, 505.89pt x 433.62pt>
+-1.pdf, id=195, 505.89pt x 433.62pt>
 File: figure/interp_ex-1.pdf Graphic file (type pdf)
 
 <use figure/interp_ex-1.pdf>
 Package pdftex.def Info: figure/interp_ex-1.pdf used on input line 539.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
-
-<figure/decomp_ex1-1.pdf, id=204, 505.89pt x 433.62pt>
+(pdftex.def)             Requested size: 318.67207pt x 273.14896pt.
+ [11 <M:/docs/manuscripts/swmpr_manu/figure/interp_ex-1.pdf>] <figure/decomp_ex
+1-1.pdf, id=211, 505.89pt x 433.62pt>
 File: figure/decomp_ex1-1.pdf Graphic file (type pdf)
 
 <use figure/decomp_ex1-1.pdf>
 Package pdftex.def Info: figure/decomp_ex1-1.pdf used on input line 567.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
- [11 <M:/docs/manuscripts/swmpr_manu/figure/interp_ex-1.pdf> <M:/docs/manuscrip
-ts/swmpr_manu/figure/decomp_ex1-1.pdf>]
-<figure/decomp_ex2-1.pdf, id=229, 505.89pt x 433.62pt>
+(pdftex.def)             Requested size: 318.67207pt x 273.14896pt.
+
+<figure/decomp_ex2-1.pdf, id=218, 505.89pt x 433.62pt>
 File: figure/decomp_ex2-1.pdf Graphic file (type pdf)
 
 <use figure/decomp_ex2-1.pdf>
 Package pdftex.def Info: figure/decomp_ex2-1.pdf used on input line 592.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
+(pdftex.def)             Requested size: 318.67207pt x 273.14896pt.
 
-<figure/summary_ex-1.pdf, id=234, 939.51pt x 505.89pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[12 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex1-1.pdf>]
+<figure/summary_ex-1.pdf, id=235, 939.51pt x 505.89pt>
 File: figure/summary_ex-1.pdf Graphic file (type pdf)
 
 <use figure/summary_ex-1.pdf>
 Package pdftex.def Info: figure/summary_ex-1.pdf used on input line 616.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
- [12 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex2-1.pdf> <M:/docs/manuscri
+(pdftex.def)             Requested size: 318.67207pt x 171.59119pt.
+ [13 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex2-1.pdf> <M:/docs/manuscri
 pts/swmpr_manu/figure/summary_ex-1.pdf>]
-<figure/metab_ex-1.pdf, id=278, 578.16pt x 289.08pt>
+<figure/metab_ex-1.pdf, id=272, 578.16pt x 289.08pt>
 File: figure/metab_ex-1.pdf Graphic file (type pdf)
 
 <use figure/metab_ex-1.pdf>
 Package pdftex.def Info: figure/metab_ex-1.pdf used on input line 650.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
- <figure/map_ex-1.pdf, id=281, 505.89pt x 361.35pt>
-File: figure/map_ex-1.pdf Graphic file (type pdf)
+(pdftex.def)             Requested size: 318.67207pt x 159.33412pt.
 
-<use figure/map_ex-1.pdf>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figure/map_ex-1.pdf, id=276, 505.89pt x 361.35pt>
+File: figure/map_ex-1.pdf Graphic file (type pdf)
+ <use figure/map_ex-1.pdf>
 Package pdftex.def Info: figure/map_ex-1.pdf used on input line 670.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
- [13 <M:/docs/manuscripts/swmpr_manu/figure/metab_ex-1.pdf> <M:/docs/manuscript
-s/swmpr_manu/figure/map_ex-1.pdf>]
-<figure/metab_plo-1.pdf, id=315, 578.16pt x 433.62pt>
+(pdftex.def)             Requested size: 318.67207pt x 227.62413pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[14] [15 <M:/docs/manuscripts/swmpr_manu/figure/metab_ex-1.pdf> <M:/docs/manusc
+ripts/swmpr_manu/figure/map_ex-1.pdf>]
+<figure/metab_plo-1.pdf, id=320, 578.16pt x 433.62pt>
 File: figure/metab_plo-1.pdf Graphic file (type pdf)
 
 <use figure/metab_plo-1.pdf>
 Package pdftex.def Info: figure/metab_plo-1.pdf used on input line 716.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
+(pdftex.def)             Requested size: 318.67207pt x 239.0012pt.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
 (Font)              scaled to size 8.33606pt on input line 732.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
@@ -1457,53 +1572,51 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <8> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 734.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <6> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 734.
-
-<figure/swmp_comp.pdf, id=322, 718.8797pt x 517.02162pt>
+ [16 <M:/docs/manuscripts/swmpr_manu/figure/metab_plo-1.pdf>] [17] <figure/swmp
+_comp.pdf, id=343, 718.8797pt x 517.02162pt>
 File: figure/swmp_comp.pdf Graphic file (type pdf)
 
 <use figure/swmp_comp.pdf>
 Package pdftex.def Info: figure/swmp_comp.pdf used on input line 807.
-(pdftex.def)             Requested size: 0.0pt x 0.0pt.
- [14 <M:/docs/manuscripts/swmpr_manu/figure/metab_plo-1.pdf> <M:/docs/manuscrip
-ts/swmpr_manu/figure/swmp_comp.pdf>] [15]
-(M:\docs\manuscripts\swmpr_manu\swmpr_manu.bbl
+(pdftex.def)             Requested size: 318.67207pt x 229.18637pt.
+ [18 <M:/docs/manuscripts/swmpr_manu/figure/swmp_comp.pdf>] (M:\docs\manuscript
+s\swmpr_manu\swmpr_manu.bbl
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.brf)
 \tf@brf=\write6
- [16] [17])
+ [19])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 834.
- [18]
+ [20]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 834.
 
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 834.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 834.
 Package rerunfilecheck Info: File `swmpr_manu.out' has not changed.
-(rerunfilecheck)             Checksum: 5CC9373AC7C0B225A09F912A741B14CA;992.
+(rerunfilecheck)             Checksum: 70E11C01405EC09655F968DF38A5B548;1001.
 Package rerunfilecheck Info: File `swmpr_manu.brf' has not changed.
-(rerunfilecheck)             Checksum: 17015AAFF603CC021B192F5F7FFAD4C3;2152.
+(rerunfilecheck)             Checksum: 62DA0F354809BAC7574AD07E00008E32;2007.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 834.
  ) 
 Here is how much of TeX's memory you used:
- 20403 strings out of 493921
- 348815 string characters out of 3147282
- 474150 words of memory out of 3000000
- 22931 multiletter control sequences out of 15000+200000
- 62172 words of font info for 268 fonts, out of 3000000 for 9000
+ 20402 strings out of 493921
+ 348799 string characters out of 3147282
+ 472090 words of memory out of 3000000
+ 22925 multiletter control sequences out of 15000+200000
+ 62475 words of font info for 272 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 63i,14n,57p,1825b,634s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/mbeck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-t1-
-0.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}{C:/Users/mb
-eck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-ts1.enc}<C:/Users
+ 63i,14n,57p,1847b,610s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}{C:/Users/mbeck/
+AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-ts1.enc}{C:/Users/mbe
+ck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}<C:/Users
 /mbeck/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/inconsolata/Inconsolata-zi
-4b.pfb><C:/Users/mbeck/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/inconsolat
-a/Inconsolata-zi4r.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb
-><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program 
-Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2
-.9/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on swmpr_manu.pdf (18 pages, 1177973 bytes).
+4r.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Fil
+es/MiKTeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/u
+rw/palatino/uplri8a.pfb>
+Output written on swmpr_manu.pdf (20 pages, 1183954 bytes).
 PDF statistics:
- 476 PDF objects out of 1000 (max. 8388607)
+ 477 PDF objects out of 1000 (max. 8388607)
  77 named destinations out of 1000 (max. 500000)
  48290 words of extra memory for PDF output out of 51595 (max. 10000000)
 

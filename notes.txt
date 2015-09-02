@@ -1,0 +1,7 @@
+for R journal, follow instructions on website, particularly use the wrapper and template files
+
+RJournal.sty must be in working directory
+
+do not use acronym or cleverref packages
+
+code cunk environments from knitr in the tex file must be replaced with \begin{example}\end{example}
