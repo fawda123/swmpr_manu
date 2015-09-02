@@ -1,4 +1,53 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper]{report}\usepackage[]{graphicx}\usepackage{xcolor}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{RJournal}
@@ -9,7 +58,7 @@
 
 % bold/italic text
 \newcommand{\Bigtxt}[1]{\textbf{\textit{#1}}}
-
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
 %% do not edit, for illustration only
@@ -22,13 +71,7 @@
 \begin{article}
 
 %knitr options
-<<setup, cache = F, echo = F>>=
-library(knitr)
-# set global chunk options
-opts_chunk$set(fig.align = 'center', message = F, dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!h', warning = F, background = 'white', highlight = FALSE, prompt = TRUE, size = 'small', out.width = '0.00\\textwidth')
-options(replace.assign=TRUE,width=70,digits=1)
-knit_hooks$set(document = function(x) {sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)})
-@
+
 
 \title{SWMPr: An R Package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries}
 \author{by Marcus W Beck}
@@ -59,13 +102,15 @@ The CDMO web portal was established to support priority areas of SWMP that focus
 
 The SWMPr package was developed for use with the R ($\geq$ v3.0.0) statistical programming language \cite{RDCT14}. The SWMPr package can be downloaded from CRAN by executing the following commands at the R console prompt.  The package is loaded in the workspace using the \texttt{library} command.
 
-<<eval = F, message = F>>=
-install.packages('SWMPr')
-library(SWMPr)
-@
-<<eval = T, echo = F, message = F, cache = F>>=
-devtools::load_all('M:/docs/SWMPr')
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> install.packages('SWMPr')
+> library(SWMPr)
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 The SWMPr package was developed by considering a common data workflow that categorizes the functions as one of three steps based on their intended use: \Bigtxt{retrieving}, \Bigtxt{organizing}, and \Bigtxt{analyzing}.  Functions for retrieving are used to import the data into R as a \texttt{swmpr} object class.  Functions for organizing and analyzing the data provide methods for working with a \texttt{swmpr} object.  An additional group of `miscellaneous' functions are included as helpers for the main functions.  The following describes the package structure, beginning with the retrieval functions, a description of the \texttt{swmpr} object returned after retrieval, and, finally, the organizing and analyzing functions.
 
@@ -74,154 +119,159 @@ The SWMPr package was developed by considering a common data workflow that categ
 Two basic approaches using SWMPr are available to import SWMP data into R, either through direct download or by importing local data (Table~\ref{tab:retrieve}). First, functions from the package can be used to import the data directly from the online server using CDMO web services. To do so, the IP address for the computer making the request must be registered by following instructions on the CDMO website.  The \texttt{site\_codes} or \texttt{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with CDMO. 
 
 % table for retrieval functions
-<<results = 'asis', echo = FALSE>>=
-funcs <- c('all\\_params', 'all\\_params\\_dtrng', 'import\\_local', 'single\\_param', 'site\\_codes', 'site\\_codes\\_ind')
-funcs <- paste0('\\texttt{', funcs, '}')
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?all\\_params} for individual functions or \\texttt{help.search(`retrieve', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:retrieve",     table.env = FALSE, where = "!tbp")%
+\begin{table}[!tbp]
+\caption{Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \texttt{?all\_params} for individual functions or \texttt{help.search(`retrieve', package = `SWMPr')} for all).\label{tab:retrieve}} 
+\begin{center}
+\begin{tabular}{lp{3.5in}}
+\hline\hline
+\multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
+\hline
+\texttt{all\_params}&Retrieve records starting with the most recent at a given station, all parameters.  Wrapper to \texttt{exportAllParamsXMLNew} function on web services.\tabularnewline
+\texttt{all\_params\_dtrng}&Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter. Wrapper to \texttt{exportAllParamsDateRangeXMLNew}.\tabularnewline
+\texttt{import\_local}&Import files from a local path.  The files must be in a specific format, such as those returned from the CDMO using the zip downloads option.\tabularnewline
+\texttt{single\_param}&Retrieve records for a single parameter starting with the most recent at a given station.  Wrapper to \texttt{exportSingleParamXMLNew} function on web services.\tabularnewline
+\texttt{site\_codes}&Metadata for all stations, wrapper to \texttt{exportStationCodesXMLNew} function on web services.\tabularnewline
+\texttt{site\_codes\_ind}&Metadata for all stations at a single site, wrapper  to \texttt{NERRFilterStationCodesXMLNew} function on web services.\tabularnewline
+\hline
+\end{tabular}\end{center}
 
-descrips <- c(
-  'Retrieve records starting with the most recent at a given station, all parameters.  Wrapper to \\texttt{exportAllParamsXMLNew} function on web services.',
-  'Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter. Wrapper to \\texttt{exportAllParamsDateRangeXMLNew}.', 
-  'Import files from a local path.  The files must be in a specific format, such as those returned from the CDMO using the zip downloads option.',
-  'Retrieve records for a single parameter starting with the most recent at a given station.  Wrapper to \\texttt{exportSingleParamXMLNew} function on web services.', 
-  'Metadata for all stations, wrapper to \\texttt{exportStationCodesXMLNew} function on web services.',
-  'Metadata for all stations at a single site, wrapper  to \\texttt{NERRFilterStationCodesXMLNew} function on web services.'
-  )
+\end{table}
 
-to_tab <- data.frame(Functions = funcs, Description = descrips, stringsAsFactors = F)
 
-library(Hmisc)
-
-latex(
-  to_tab[, 'Description', drop = F],
-  file = '',
-  caption = "Retrieval functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?all\\_params} for individual functions or \\texttt{help.search(`retrieve', package = `SWMPr')} for all).",
-  rowlabel = 'Function',
-  colheads = 'Description',
-  rowname = to_tab$Functions,
-  caption.loc = 'top',
-  col.just=c("p{3.5in}"), 
-  label = 'tab:retrieve', 
-  table.env = FALSE, 
-  where = '!tbp'
-  )
-@
-
-<<eval = F>>=
-# retrieve metadata for all sites
-site_codes()
-
-# retrieve metadata for a single site
-site_codes_ind('apa')
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # retrieve metadata for all sites
+> site_codes()
+> 
+> # retrieve metadata for a single site
+> site_codes_ind('apa')
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 Data retrieval functions to import data directly into R from the CDMO include \texttt{all\_params}, \texttt{all\_params\_dtrng}, and \texttt{single\_param}: \texttt{all\_params} returns the most recent records of all parameters at a station, \texttt{all\_params\_dtrng} returns all records within a date range for all parameters or a single parameter, and \texttt{single\_param} is identical to \texttt{all\_params} except that a single parameter is requested. Due to rate limitations on the CDMO server, the retrieval functions return a limited number of records with each request.  However, the SWMPr functions use the native CDMO web services iteratively (i.e., within a loop) to obtain all requested records.  Download time can be excessive for longer time series.     
 
-<<eval = F>>=
-# all parameters for a station, most recent
-all_params('hudscwq')
-
-# get all parameters within a date range
-all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'))
-
-# get single parameter within a date range
-all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'), 
-  param = 'do_mgl')
-
-# single parameter for a station, most recent
-single_param('hudscwq', 'do_mgl')
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # all parameters for a station, most recent
+> all_params('hudscwq')
+> 
+> # get all parameters within a date range
+> all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'))
+> 
+> # get single parameter within a date range
+> all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'), 
++   param = 'do_mgl')
+> 
+> # single parameter for a station, most recent
+> single_param('hudscwq', 'do_mgl')
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 The second approach for data retrieval is to use the \texttt{import\_local} function to import data into R that are locally available after downloading from CDMO.  This approach is most appropriate for large, specific data requests. The \texttt{import\_local} function is designed for data from the zip downloads feature in the advanced query section of the CDMO website. The zip downloads feature can be used to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \texttt{import\_local} function can be used to import files directly from the zipped folder or after the folder is decompressed.
 
 Occasionally, non-unique observations are present in the raw data.  These duplicates may be actual replicates with unique time stamps, such as replicate samples for monthly nutrient data, or erroneous duplicates with non-unique time stamps.  The \texttt{import\_local} function handles duplicate entries differently depending on the data type.  For water quality and nutrient data, duplicate time stamps are simply removed.  Nutrient data often contain replicate samples with similar but not identical time stamps within the span of a few minutes.  Nutrient data with replicates with unique time stamps are not removed but can be further processed using \texttt{rem\_reps}.  Weather data prior to 2007 may also contain duplicate time stamps at frequencies for hourly (denoted as `60') and daily (`144') averages, in addition to 15 minute frequencies.  Only duplicate values at 15 minutes are averaged for weather data during import.  
 
-<<eval = F>>=
-# import local data for apaebmet
-
-# this is an example path with the decompressed csv files
-path <- 'C:/my_path'
-
-# this is an example path for zipped csv files
-path <- 'C:/my_path.zip'
-
-# import, do not include file extension
-import_local(path, 'apadbwq') 
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import local data for apaebmet
+> 
+> # this is an example path with the decompressed csv files
+> path <- 'C:/my_path'
+> 
+> # this is an example path for zipped csv files
+> path <- 'C:/my_path.zip'
+> 
+> # import, do not include file extension
+> import_local(path, 'apadbwq') 
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 \subsection{The \texttt{swmpr} object class}
 
 All data retrieval functions return a \texttt{swmpr} object that includes relevant data and several attributes describing the dataset.  The data include a \texttt{datetimestamp} column in the appropriate timezone for a station and additional parameters for a given data type (weather, nutrients, or water quality).  Corresponding QAQC columns for each parameter are also returned if provided by the initial data request.  The following shows an example of the raw data imported using \texttt{all\_params}.
 
-<<>>=
-# import all paramaters for the station
-# three most recent records
-exdat <- all_params('apadbwq', Max = 3, trace = F)
-exdat
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import all paramaters for the station
+> # three most recent records
+> exdat <- all_params('apadbwq', Max = 3, trace = F)
+> exdat
+##         datetimestamp temp f_temp spcond f_spcond sal f_sal do_pct
+## 1 2015-08-18 07:00:00   28      0     34        0  21     0     77
+## 2 2015-08-18 07:15:00   28      0     34        0  21     0     75
+## 3 2015-08-18 07:30:00   28      0     33        0  21     0     82
+##   f_do_pct do_mgl f_do_mgl depth f_depth ph f_ph turb f_turb chlfluor
+## 1        0      5        0     2       0  8    0   13      0       NA
+## 2        0      5        0     2       0  8    0    9      0       NA
+## 3        0      6        0     2       0  8    0   11      0       NA
+##   f_chlfluor level f_level cdepth clevel f_cdepth f_clevel
+## 1         -2    NA      -1     NA     NA       -1         
+## 2         -2    NA      -1     NA     NA       -1         
+## 3         -2    NA      -1     NA     NA       -1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 The attributes for a \texttt{swmpr} object are descriptors that are appended to the raw data (Table~\ref{tab:attributes}).  These act as metadata that are used internally by many of the package functions and are updated as the data are processed. The attributes are not visible with the raw data but can be viewed as follows.
 
-<<eval = F, cache = F>>=
-# import sample data from package
-data(apadbwq)
-dat <- apadbwq
-
-# view all attributes of dat
-attributes(dat)
- 
-# view a single attribute of dat
-attr(dat, 'station')
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import sample data from package
+> data(apadbwq)
+> dat <- apadbwq
+> 
+> # view all attributes of dat
+> attributes(dat)
+>  
+> # view a single attribute of dat
+> attr(dat, 'station')
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
  
 % attributes table
-<<results = 'asis', echo = FALSE>>=
-# create the attributes table
-data(apadbwq)
-dat <- apadbwq
+%latex.default(to_tab[, -1, drop = F], file = "", caption = "Attributes of a \\texttt{swmpr} object that describe characteristics of the data.",     rowlabel = "Attributes", colheads = c("Class", "Description"),     rowname = to_tab$Attributes, caption.loc = "top", insert.bottom = foot,     col.just = c("p{0.75in}", "p{3.25in}"), label = "tab:attributes",     table.env = FALSE, where = "!tbp")%
+\begin{table}[!tbp]
+\caption{Attributes of a \texttt{swmpr} object that describe characteristics of the data.\label{tab:attributes}} 
+\begin{center}
+\begin{tabular}{lp{0.75in}p{3.25in}}
+\hline\hline
+\multicolumn{1}{l}{Attributes}&\multicolumn{1}{c}{Class}&\multicolumn{1}{c}{Description}\tabularnewline
+\hline
+\texttt{names}&character&Column names of the entire data set, inherited from the \texttt{data.frame} object class.\tabularnewline
+\texttt{row.names}&integer&Row names of the data set, inherited from the \texttt{data.frame} object class.\tabularnewline
+\texttt{class}&character&Class of the data object indicating \texttt{swmpr} and \texttt{data.frame}.\tabularnewline
+\texttt{station}&character&Station identifier used by NERRS as a string with 7 or 8 characters.\tabularnewline
+\texttt{parameters}&character&Character vector of column names for data parameters, e.g., \texttt{`do\_mgl'}, \texttt{`turb'}, etc.\tabularnewline
+\texttt{qaqc\_cols}&logical&Indicates if QAQC columns are present in the raw data.\tabularnewline
+\texttt{date\_rng}&POSIXct&Start and end dates for the data.\tabularnewline
+\texttt{timezone}&character&Timezone of the station using the city/country format\textsuperscript{a}.\tabularnewline
+\texttt{stamp\_class}&character&Class of the \texttt{datetimestamp} column, usually POSIXct unless data have been aggregated.\tabularnewline
+\hline
+\end{tabular}\end{center}
 
-# view all attributes of dat
-atts <- paste0('\\texttt{', names(attributes(dat)), '}')
-atts <- gsub('_', '\\_', atts, fixed = T)
-atts_class <- c('character', 'integer', 'character', 'character', 'character', 'logical', 'POSIXct', 'character', 'character')
-atts_desc <- c(
-  'Column names of the entire data set, inherited from the \\texttt{data.frame} object class.',
-  'Row names of the data set, inherited from the \\texttt{data.frame} object class.',
-  'Class of the data object indicating \\texttt{swmpr} and \\texttt{data.frame}.',
-  'Station identifier used by NERRS as a string with 7 or 8 characters.',
-  "Character vector of column names for data parameters, e.g., \\texttt{`do\\_mgl'}, \\texttt{`turb'}, etc.",
-  'Indicates if QAQC columns are present in the raw data.',
-  'Start and end dates for the data.',
-'Timezone of the station using the city/country format\\textsuperscript{a}.',
-  'Class of the \\texttt{datetimestamp} column, usually POSIXct unless data have been aggregated.'
-)
+\textsuperscript{a}\footnotesize Time zones that do not observe daylight savings are used for \texttt{swmpr} objects and may not be cities in the United States.  For example, ``America/Jamaica" is used for Eastern Standard Time.\end{table}
 
-to_tab <- data.frame(Attributes = atts, Class = atts_class, Description = atts_desc, stringsAsFactors = F)
-foot <- c('\\textsuperscript{a}\\footnotesize Time zones that do not observe daylight savings are used for \\texttt{swmpr} objects and may not be cities in the United States.  For example, ``America/Jamaica" is used for Eastern Standard Time.')
-
-library(Hmisc)
-
-latex(
-  to_tab[, -1, drop = F],
-  file = '',
-  caption = "Attributes of a \\texttt{swmpr} object that describe characteristics of the data.",
-  rowlabel = 'Attributes',
-  colheads = c('Class', 'Description'),
-  rowname = to_tab$Attributes,
-  caption.loc = 'top',
-  insert.bottom = foot,
-  col.just=c("p{0.75in}", "p{3.25in}"), 
-  label = 'tab:attributes', 
-  table.env = FALSE, 
-  where = '!tbp'
-  )
-@
 
 The \texttt{swmpr} object class was created for use with the organizing and analyzing functions.  This object-oriented approach is standard for R (i.e., the S3 object  system, \cite{Wickham14}), such that specific methods for generic functions are developed for the object class.  A \texttt{swmpr} object also secondarily inherits methods from the \texttt{data.frame} class, such that common \texttt{data.frame} methods available in R also apply to \texttt{swmpr} objects.  Available methods for the \texttt{swmpr} class are described below and can also be viewed:
  
-<<eval = F, cache = F>>=
-# view available methods for swmpr class
-methods(class = 'swmpr')
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # view available methods for swmpr class
+> methods(class = 'swmpr')
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 A sample dataset can be downloaded for use with the examples below.  This dataset has an identical format as the data returned from the zip downloads feature of the CDMO.  These data are also included with the package as binary data files (RData) that can be loaded using the \texttt{data} function, as shown above.  These include \texttt{swmpr} objects for four stations at Apalachicola Bay: apacpnut, apacpwq, apadbwq, and apaebmet.  Information for each file can be viewed in the help documentation (e.g., \texttt{?apacpnut}).
 
@@ -232,136 +282,147 @@ The organize functions are used to clean or prepare the imported data for analys
 The \texttt{qaqc} function is a simple screen to retain observations from the data with specified QAQC flags (see \url{http://cdmo.baruch.sc.edu/data/qaqc.cfm}). Each parameter in the imported \texttt{swmpr} object will have a corresponding QAQC column of the same name with the added prefix \texttt{f\_} (e.g., \texttt{do\_mgl}, \texttt{f\_do\_mgl}).  Values in the QAQC column range from -5 to 5 to indicate the QAQC flag that was assigned by CDMO during initial processing.  The \texttt{qaqc} function is used to remove observations in the raw data with given flags, with the default option to retain only values with the \texttt{0} QAQC flag (i.e., passed initial CDMO checks).     Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. The function returns the original data with the QAQC columns removed and \texttt{NA} (not available) values for observations that do not meet the criteria specified in the function call.
 
 % table for organize functions
-<<results = 'asis', echo = FALSE>>=
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?comb} for individual functions or \\texttt{help.search(`organize', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:organize",     table.env = FALSE, where = "!tbp")%
+\begin{table}[!tbp]
+\caption{Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \texttt{?comb} for individual functions or \texttt{help.search(`organize', package = `SWMPr')} for all).\label{tab:organize}} 
+\begin{center}
+\begin{tabular}{lp{3.5in}}
+\hline\hline
+\multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
+\hline
+\texttt{comb}&Combines \texttt{swmpr} objects to a common time series using setstep, such as combining the weather, nutrients, and water quality data for a single station. Only different data types can be combined.\tabularnewline
+\texttt{qaqc}&Remove QAQC columns and remove data based on QAQC flag values for a \texttt{swmpr} object.  Only applies if QAQC columns are present. \tabularnewline
+\texttt{qaqcchk}&View a summary of the number of observations in a \texttt{swmpr} object that are assigned to each QAQC flag used by CDMO.  The output can be used to inform further processing.\tabularnewline
+\texttt{rem\_reps}&Remove replicate nutrient data that occur on the same day.  The default is to average replicates.\tabularnewline
+\texttt{setstep}&Format data from a \texttt{swmpr} object to a continuous time series at a given timestep.  The function is also used in \texttt{comb}.\tabularnewline
+\texttt{subset}&Subset by dates and/or columns for a \texttt{swmpr} object.  This is a method passed to the generic \texttt{subset} function provided in the base package.\tabularnewline
+\hline
+\end{tabular}\end{center}
 
-funcs <- c('comb', 'qaqc', 'qaqcchk', 'rem\\_reps', 'setstep', 'subset')
-funcs <- paste0('\\texttt{', funcs, '}')
+\end{table}
 
-descrips <- c(
-  'Combines \\texttt{swmpr} objects to a common time series using setstep, such as combining the weather, nutrients, and water quality data for a single station. Only different data types can be combined.',
-  'Remove QAQC columns and remove data based on QAQC flag values for a \\texttt{swmpr} object.  Only applies if QAQC columns are present. ', 
-  'View a summary of the number of observations in a \\texttt{swmpr} object that are assigned to each QAQC flag used by CDMO.  The output can be used to inform further processing.', 
-  'Remove replicate nutrient data that occur on the same day.  The default is to average replicates.', 
-  'Format data from a \\texttt{swmpr} object to a continuous time series at a given timestep.  The function is also used in \\texttt{comb}.',
-  'Subset by dates and/or columns for a \\texttt{swmpr} object.  This is a method passed to the generic \\texttt{subset} function provided in the base package.'
-  )
 
-to_tab <- data.frame(Functions = funcs, Description = descrips, stringsAsFactors = F)
-
-library(Hmisc)
-
-latex(
-  to_tab[, 'Description', drop = F],
-  file = '',
-  caption = "Organizing functions available from the SWMPr package. Full documentation for each function is in the help file (e.g., execute \\texttt{?comb} for individual functions or \\texttt{help.search(`organize', package = `SWMPr')} for all).",
-  rowlabel = 'Function',
-  colheads = 'Description',
-  rowname = to_tab$Functions,
-  caption.loc = 'top',
-  col.just=c("p{3.5in}"), 
-  label = 'tab:organize', 
-  table.env = FALSE, 
-  where = '!tbp'
-  )
-@
-
-<<eval = F, cache = F>>=
-# qaqc screen for a swmpr object, retain only '0'
-qaqc(dat)
-
-# retain all data regardless of flag
-qaqc(dat, qaqc_keep = NULL)
-
-# retain only '0' and '-1' flags
-qaqc(dat, qaqc_keep = c(0, -1))
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # qaqc screen for a swmpr object, retain only '0'
+> qaqc(dat)
+> 
+> # retain all data regardless of flag
+> qaqc(dat, qaqc_keep = NULL)
+> 
+> # retain only '0' and '-1' flags
+> qaqc(dat, qaqc_keep = c(0, -1))
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 Viewing the number of observations for each parameter that are assigned to a QAQC flag may be useful for deciding how to process the data with \texttt{qaqc}.  The \texttt{qaqcchk} function can be used to view this information.
 
-<<eval = F, cache = F>>=
-# view the number of observations in each QAQC flag
-qaqcchk(dat)
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # view the number of observations in each QAQC flag
+> qaqcchk(dat)
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 Raw nutrient data obtained from the CDMO will usually include replicate samples that were taken within a few minutes of each other.  The \texttt{rem\_reps} function combines nutrient data that occur on the same day to preserve an approximate monthly time step.  The \texttt{datetimestamp} column will always be averaged for replicates, but the actual observations will be combined based on the user-supplied function which defaults to the mean.  Other suggested functions include the \texttt{median}, \texttt{min}, or \texttt{max}.  The entire function call, including treatment of \texttt{NA} values, should be passed to the \texttt{FUN} argument (see the examples).  The function is meant to be used after \texttt{qaqc} processing, although it works with a warning if QAQC columns are present.
 
-<<eval = F, cache = F>>=
-# get nutrient data, filter qaqc flags
-data(apacpnut)
-dat <- apacpnut
-dat <- qaqc(dat)
-
-# remove replicate nutrient data
-rem_reps(dat)
-
-# use different function to aggregate replicates
-func <- function(x) max(x, na.rm = T)
-rem_reps(dat, FUN = func)
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # get nutrient data, filter qaqc flags
+> data(apacpnut)
+> dat <- apacpnut
+> dat <- qaqc(dat)
+> 
+> # remove replicate nutrient data
+> rem_reps(dat)
+> 
+> # use different function to aggregate replicates
+> func <- function(x) max(x, na.rm = T)
+> rem_reps(dat, FUN = func)
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 A subset method added to the existing generic \texttt{subset} function in R is available for \texttt{swmpr} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator as a character string passed to the \texttt{operator} argument, such as \texttt{`>'} or \texttt{`<='}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (e.g., `2007-01-01 06:30').  Be aware that an error may be returned using this function if the subset argument is in the correct format but the calendar date does not exist, e.g. \texttt{`2012-11-31 12:00'}.  Finally, the function can be used to remove rows and columns that do not contain data. 
 
-<<eval = F, cache = F>>=
-# import data
-data(apaebmet)
-dat <- apaebmet
-
-# select two parameters from dat
-subset(dat, select = c('rh', 'bp'))
-
-# subset records greater than or equal to a date
-subset(dat, subset = '2013-01-01 0:00', operator = '>=')
-
-# subset records within a date range
-subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'))
-
-# subset records within a date range, select two parameters
-subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'),
-  select = c('atemp', 'totsorad'))
-
-# remove rows/columns that do not contain data
-subset(dat, rem_rows = T, rem_cols = T)
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import data
+> data(apaebmet)
+> dat <- apaebmet
+> 
+> # select two parameters from dat
+> subset(dat, select = c('rh', 'bp'))
+> 
+> # subset records greater than or equal to a date
+> subset(dat, subset = '2013-01-01 0:00', operator = '>=')
+> 
+> # subset records within a date range
+> subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'))
+> 
+> # subset records within a date range, select two parameters
+> subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'),
++   select = c('atemp', 'totsorad'))
+> 
+> # remove rows/columns that do not contain data
+> subset(dat, rem_rows = T, rem_cols = T)
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 The \texttt{setstep} function formats a \texttt{swmpr} object to a continuous time series at a given time step.  This function is usually not necessary because most stations collect data at 15 minute intervals, but it can be used to combine data or convert an existing time series to a different interval.  The first argument of the function, \texttt{timestep}, specifies the desired time step in minutes starting from the nearest hour of the first observation.  The second argument, \texttt{differ}, specifies the allowable tolerance in minutes for matching existing observations to the defined time steps in cases where the two are dissimilar.  Values for \texttt{differ} that are greater than one half the value of \texttt{timestep} are not allowed to prevent duplication of existing data.  Likewise, the default value for \texttt{differ} is one half the time step.  Time steps that do not match any existing data within the limits of the \texttt{differ} argument are not discarded, although a corresponding data value will not be assigned.
 
-<<eval = F, cache = F>>=
-# import, qaqc removal
-data(apadbwq)
-dat <- qaqc(apadbwq)
-
-# convert time series to two hour invervals
-# tolerance of +/- 30 minutes for matching existing data
-setstep(dat, timestep = 120, differ = 30)
-
-# convert a nutrient time series to a continuous time series
-# then remove empty rows and columns
-data(apacpnut)
-dat_nut <- apacpnut
-dat_nut <- setstep(dat_nut, timestep = 60)
-subset(dat_nut, rem_rows = T, rem_cols = T)
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import, qaqc removal
+> data(apadbwq)
+> dat <- qaqc(apadbwq)
+> 
+> # convert time series to two hour invervals
+> # tolerance of +/- 30 minutes for matching existing data
+> setstep(dat, timestep = 120, differ = 30)
+> 
+> # convert a nutrient time series to a continuous time series
+> # then remove empty rows and columns
+> data(apacpnut)
+> dat_nut <- apacpnut
+> dat_nut <- setstep(dat_nut, timestep = 60)
+> subset(dat_nut, rem_rows = T, rem_cols = T)
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 The \texttt{comb} function is used to combine multiple \texttt{swmpr} objects into a single object with a continuous time series at a given step.  The \texttt{setstep} function is used internally such that \texttt{timestep} and \texttt{differ} are accepted arguments for \texttt{comb}.  All arguments must be called explicitly since an arbitrary number of \texttt{swmpr} objects can be used as input to \texttt{comb}.  The function combines data by creating a master time series that is used to iteratively merge all \texttt{swmpr} objects.  The time series for merging depends on the value passed to the \texttt{method} argument.  Passing \texttt{`union'} to \texttt{method} will create a time series that is continuous from the earliest and latest dates for all input objects.  Passing \texttt{`intersect'} to \texttt{method} will create a continuous time series from the set of dates that are shared between all input objects.  Finally, a seven or eight character station name passed to \texttt{method} will merge all data based on a continuous time series for the specified station, which must be present in the input data.  Currently, combining identical data types from different stations is not possible (e.g., two water quality stations from the same reserve).  
 
-<<eval = F, cache = F>>=
-# get nut, wq, and met data as separate objects
-data(apacpnut)
-data(apacpwq)
-data(apaebmet)
-swmp1 <- apacpnut
-swmp2 <- apacpwq
-swmp3 <- apaebmet
-
-# combine nut and wq data by union
-comb(swmp1, swmp2, method = 'union')
-
-# combine nut and wq data by intersect
-comb(swmp1, swmp3, method = 'intersect')
-
-# combine nut, wq, and met data by nut time series, two hour time step
-comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # get nut, wq, and met data as separate objects
+> data(apacpnut)
+> data(apacpwq)
+> data(apaebmet)
+> swmp1 <- apacpnut
+> swmp2 <- apacpwq
+> swmp3 <- apaebmet
+> 
+> # combine nut and wq data by union
+> comb(swmp1, swmp2, method = 'union')
+> 
+> # combine nut and wq data by intersect
+> comb(swmp1, swmp3, method = 'intersect')
+> 
+> # combine nut, wq, and met data by nut time series, two hour time step
+> comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 \subsection{Data analysis}
 
@@ -370,140 +431,197 @@ The analysis functions range from general purpose tools for time series analysis
 The \texttt{aggreswmp} function aggregates parameter data for a \texttt{swmpr} object by set units of time.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours by a user-defined function, which defaults to the mean.  A \texttt{swmpr} object is returned for the aggregated data, although the \texttt{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \texttt{round} method for IDate objects created in the data.table package \cite{Dowle14}.  Additionally, the method of treating \texttt{NA} values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned, particularly for nutrient data (see the example below).
 
 % table for analysis functions
-<<results = 'asis', echo = FALSE>>=
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \\texttt{?aggreswmp} for individual functions or \\texttt{help.search(`analyze', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:analyze",     table.env = FALSE, where = "!tbp")%
+\begin{table}[!tbp]
+\caption{Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \texttt{?aggreswmp} for individual functions or \texttt{help.search(`analyze', package = `SWMPr')} for all).\label{tab:analyze}} 
+\begin{center}
+\begin{tabular}{lp{3.5in}}
+\hline\hline
+\multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
+\hline
+\texttt{aggreswmp}&Aggregate \texttt{swmpr} objects for different time periods - years, quarters, months,  weeks, days, or hours.  The aggregation function defaults to the mean.\tabularnewline
+\texttt{aggremetab}&Aggregate metabolism data from a \texttt{swmpr} object.  This is primarly used within \texttt{plot\_metab} but may be useful for simple summaries of daily metabolism data.\tabularnewline
+\texttt{ecometab}&Estimate ecosystem metabolism for a combined water quality and weather dataset using the open-water method.\tabularnewline
+\texttt{decomp}&Decompose a \texttt{swmpr} time series into trend, seasonal, and residual components.  This is a simple wrapper to \texttt{decompose} \cite{Kendall83}.  Decomposition of monthly or daily trends is possible.\tabularnewline
+\texttt{decomp\_cj}&Decompose a \texttt{swmpr} time series into grandmean, annual, seasonal, and events components.  This is a simple wrapper to \texttt{decompTs} in the wq package \cite{Jassby14}.  Only monthly decomposition is possible.\tabularnewline
+\texttt{hist}&Plot a histogram for a \texttt{swmpr} object.\tabularnewline
+\texttt{lines}&Add lines to an existing plot created with \texttt{plot}.\tabularnewline
+\texttt{map\_reserve}&Create a map of all stations in a reserve using the ggmap package \cite{Kahle13}.\tabularnewline
+\texttt{na.approx}&Linearly interpolate missing data (\texttt{NA} values) in a \texttt{swmpr} object. The maximum gap size that is interpolated is defined by the arguments.\tabularnewline
+\texttt{plot}&Plot a univariate  time series for a \texttt{swmpr} object.  The parameter name must be specified.\tabularnewline
+\texttt{plot\_metab}&Plot ecosystem metabolism estimates after running \texttt{ecometab} on a combined \texttt{swmpr} object.\tabularnewline
+\texttt{plot\_summary}&Create summary plots of seasonal/annual trends and anomalies for a water a single paramter of interest.\tabularnewline
+\texttt{smoother}&Smooth \texttt{swmpr} objects with a moving window average.  Window size and sides (e.g., centered) can be specified, passed to \texttt{filter}.\tabularnewline
+\hline
+\end{tabular}\end{center}
 
-funcs <- c('aggreswmp', 'aggremetab', 'ecometab', 'decomp', 'decomp\\_cj', 'hist', 'lines', 'map\\_reserve', 'na.approx', 'plot', 'plot\\_metab', 'plot\\_summary', 'smoother')
-funcs <- paste0('\\texttt{', funcs, '}')
+\end{table}
 
-descrips <- c(
-  'Aggregate \\texttt{swmpr} objects for different time periods - years, quarters, months,  weeks, days, or hours.  The aggregation function defaults to the mean.',
-  'Aggregate metabolism data from a \\texttt{swmpr} object.  This is primarly used within \\texttt{plot\\_metab} but may be useful for simple summaries of daily metabolism data.',
-  'Estimate ecosystem metabolism for a combined water quality and weather dataset using the open-water method.',
-  'Decompose a \\texttt{swmpr} time series into trend, seasonal, and residual components.  This is a simple wrapper to \\texttt{decompose} \\cite{Kendall83}.  Decomposition of monthly or daily trends is possible.',
-  'Decompose a \\texttt{swmpr} time series into grandmean, annual, seasonal, and events components.  This is a simple wrapper to \\texttt{decompTs} in the wq package \\cite{Jassby14}.  Only monthly decomposition is possible.',
-  'Plot a histogram for a \\texttt{swmpr} object.',
-  'Add lines to an existing plot created with \\texttt{plot}.',
-  'Create a map of all stations in a reserve using the ggmap package \\cite{Kahle13}.',
-  'Linearly interpolate missing data (\\texttt{NA} values) in a \\texttt{swmpr} object. The maximum gap size that is interpolated is defined by the arguments.', 
-  'Plot a univariate  time series for a \\texttt{swmpr} object.  The parameter name must be specified.',
-  'Plot ecosystem metabolism estimates after running \\texttt{ecometab} on a combined \\texttt{swmpr} object.',  
-  'Create summary plots of seasonal/annual trends and anomalies for a water a single paramter of interest.',
-  'Smooth \\texttt{swmpr} objects with a moving window average.  Window size and sides (e.g., centered) can be specified, passed to \\texttt{filter}.'
-  )
 
-to_tab <- data.frame(Functions = funcs, Description = descrips, stringsAsFactors = F)
-
-library(Hmisc)
-
-latex(
-  to_tab[, 'Description', drop = F],
-  file = '',
-  caption = "Analysis functions available from the SWMPr package.  Full documentation for each function is in the help file (e.g., execute \\texttt{?aggreswmp} for individual functions or \\texttt{help.search(`analyze', package = `SWMPr')} for all).",
-  rowlabel = 'Function',
-  colheads = 'Description',
-  rowname = to_tab$Functions,
-  caption.loc = 'top',
-  col.just=c("p{3.5in}"), 
-  label = 'tab:analyze', 
-  table.env = FALSE, 
-  where = '!tbp'
-  )
-@
-
-<<eval = T, cache = F>>=
-# get data, keep all observations
-data(apacpnut)
-dat <- qaqc(apacpnut, qaqc_keep = NULL)
-
-# aggregate by quarters
-agg_dat <- aggreswmp(dat, by = 'quarters')
-nrow(agg_dat)
-
-# aggregate by quarters, remove rows with NA values
-# note the reduction in the number of rows
-agg_dat2 <- aggreswmp(dat, by = 'quarters', na.action = na.omit)
-nrow(agg_dat2)
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # get data, keep all observations
+> data(apacpnut)
+> dat <- qaqc(apacpnut, qaqc_keep = NULL)
+> 
+> # aggregate by quarters
+> agg_dat <- aggreswmp(dat, by = 'quarters')
+> nrow(agg_dat)
+## [1] 47
+> # aggregate by quarters, remove rows with NA values
+> # note the reduction in the number of rows
+> agg_dat2 <- aggreswmp(dat, by = 'quarters', na.action = na.omit)
+> nrow(agg_dat2)
+## [1] 16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 Time series can be smoothed to better characterize a signal from noisy data (Figure~\ref{fig:smooth_ex}).  Although there are many approaches to smoothing, a moving window average is intuitive and commonly used.  The \texttt{smoother} function can be used to smooth parameters in a \texttt{swmpr} object using a specified window size.  The \texttt{window} argument specifies the number of observations included in the moving average where larger windows result in greater smoothing.  The \texttt{sides} argument specifies how the average is calculated for each observation.  Setting \texttt{sides = 1} will filter observations within the window that are previous to the current observation, whereas \texttt{sides = 2} will filter observations within the window centered at zero lag from the current observation. As before, the \texttt{params} argument specifies which parameters to smooth.
 
-<<smooth_ex, eval = T, fig.height = 3, cache = T, fig.cap = "Raw and smoothed dissolved oxygen data for a two-week period after using the \\texttt{smoother} function.">>=
-# import data, qaqc and subset
-data(apadbwq)
-dat <- qaqc(apadbwq)
-dat <- subset(dat, select = 'do_mgl', 
-  subset = c('2012-07-09 00:00', '2012-07-24 00:00')
-  )
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # import data, qaqc and subset
+> data(apadbwq)
+> dat <- qaqc(apadbwq)
+> dat <- subset(dat, select = 'do_mgl', 
++   subset = c('2012-07-09 00:00', '2012-07-24 00:00')
++   )
+> 
+> # smooth using a window of 50 observations
+> dat_smooth <- smoother(dat, window = 50, params = 'do_mgl')
+> 
+> # plot raw and smoothed
+> plot(dat)
+> lines(dat_smooth, col = 'red', lwd = 2)
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
 
-# smooth using a window of 50 observations
-dat_smooth <- smoother(dat, window = 50, params = 'do_mgl')
+{\centering \includegraphics[width=0.00\textwidth]{figure/smooth_ex-1} 
 
-# plot raw and smoothed
-plot(dat)
-lines(dat_smooth, col = 'red', lwd = 2)
-@
+}
+
+\caption[Raw and smoothed dissolved oxygen data for a two-week period after using the \texttt{smoother} function]{Raw and smoothed dissolved oxygen data for a two-week period after using the \texttt{smoother} function.}\label{fig:smooth_ex}
+\end{figure}
+
+
+\end{knitrout}
 
 A common issue with any statistical analysis is the treatment of missing values.  Missing data can be excluded from the analysis, included but treated as true zeroes, or interpolated based on similar values.  In either case, an analyst should have a strong rationale for the chosen method.  A common approach implemented in the SWMPr package is linear interpolation using the \texttt{na.approx} function (Figure~\ref{fig:interp_ex}).  A simple curve fitting method is used to create a continuous set of records between observations separated by missing data.  However, the ability of the interpolated data to approximate actual trends is related to the maximum gap size between observations with missing data.  Interpolation between larger gaps are less likely to resemble patterns of an actual parameter, whereas interpolation between smaller gaps are often more accurate.  An upper limit on the maximum gap size to interpolate trends depends on the characteristics of the dataset such that a trial and error approach is appropriate for most applications.  The \texttt{maxgap} argument passed to \texttt{na.approx} defines the maximum gap size for interpolation and the following illustrates use of different maximum values to fill missing data.  
 
-<<interp_ex, eval = T, fig.height = 6, cache = T, fig.scap = "Examples illustrating use of the \\texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.", fig.cap = "Examples illustrating use of the \\texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.">>=
-# get data, qaqc and subset
-data(apadbwq)
-dat <- qaqc(apadbwq)
-dat <- subset(dat, select = 'do_mgl', 
-  subset = c('2013-01-22 00:00', '2013-01-26 00:00'))
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # get data, qaqc and subset
+> data(apadbwq)
+> dat <- qaqc(apadbwq)
+> dat <- subset(dat, select = 'do_mgl', 
++   subset = c('2013-01-22 00:00', '2013-01-26 00:00'))
+> 
+> # interpolate, maxgap of 10 records
+> fill1 <- na.approx(dat, params = 'do_mgl', maxgap = 10)
+> 
+> # interpolate maxgap of 30 records
+> fill2 <- na.approx(dat, params = 'do_mgl', maxgap = 30)
+> 
+> # plot for comparison
+> par(mfrow = c(3, 1))
+> plot(dat, main = 'Raw')
+> plot(fill1, col = 'red', main = 'Interpolation - maximum gap of 10 records')
+> lines(dat)
+> plot(fill2, col = 'red', main = 'Interpolation - maximum gap of 30 records')
+> lines(dat)
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
 
-# interpolate, maxgap of 10 records
-fill1 <- na.approx(dat, params = 'do_mgl', maxgap = 10)
+{\centering \includegraphics[width=0.00\textwidth]{figure/interp_ex-1} 
 
-# interpolate maxgap of 30 records
-fill2 <- na.approx(dat, params = 'do_mgl', maxgap = 30)
+}
 
-# plot for comparison
-par(mfrow = c(3, 1))
-plot(dat, main = 'Raw')
-plot(fill1, col = 'red', main = 'Interpolation - maximum gap of 10 records')
-lines(dat)
-plot(fill2, col = 'red', main = 'Interpolation - maximum gap of 30 records')
-lines(dat)
-@
+\caption[Examples illustrating use of the \texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.]{Examples illustrating use of the \texttt{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.}\label{fig:interp_ex}
+\end{figure}
+
+
+\end{knitrout}
 
 The disaggregation of time series into additive or multiplicative components that can be attributed to separate sources of variance is another common application for trend analysis.  The \texttt{decomp} function is a simple wrapper to \texttt{decompose} \cite{Kendall83} that separates a time series into components describing a trend, cyclical variation (e.g., daily or annual), and the remainder  (Figure~\ref{fig:decomp_ex1}).  An additive decomposition assumes that the cyclical component of the time series is stationary (i.e., the variance is constant), otherwise a multiplicative decomposition can be used.  The \texttt{frequency} argument describes the periodicity of the cyclical parameter in units of the native time step.  For example, the \texttt{frequency} for a parameter with daily periodicity would be 96 if the time step is 15 minutes (24 hours * 60 minutes / 15 minutes).  The frequency of a parameter with annual periodicity at a 15 minute time step would be 35040 (365 days * 24 hours * 60 minutes / 15 minutes).  For simplicity, character strings of \texttt{`daily'} or \texttt{`annual'} can be supplied in place of numeric values, although any number can be used to identify an arbitrary cyclical component.  A starting value of the time series must be supplied in the latter case that indicates the sequence in the cycle for the first observation.  For example, the starting value would be 1 if the first observation is at sunrise for a diurnal cycle (see the help file for the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html}{\texttt{ts}} function for details).  Use of the \texttt{setstep} function is also required to standardize the time step prior to decomposition.
 
-<<decomp_ex1, eval = T, fig.height = 6, cache = T, fig.cap = "An additive decomposition of dissolved oxygen into a trend, seasonal (daily), and random component using the \\texttt{decomp} function.">>=
-# get data
-data(apadbwq)
-dat <- apadbwq
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # get data
+> data(apadbwq)
+> dat <- apadbwq
+> 
+> # subset for daily decomposition
+> dat <- subset(dat, subset = c('2013-07-01 00:00', '2013-07-31 00:00'))
+> 
+> # daily decomposition of DO and plot
+> dc_dat <- decomp(dat, param = 'do_mgl', frequency = 'daily')
+> plot(dc_dat)
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
 
-# subset for daily decomposition
-dat <- subset(dat, subset = c('2013-07-01 00:00', '2013-07-31 00:00'))
+{\centering \includegraphics[width=0.00\textwidth]{figure/decomp_ex1-1} 
 
-# daily decomposition of DO and plot
-dc_dat <- decomp(dat, param = 'do_mgl', frequency = 'daily')
-plot(dc_dat)
-@
+}
+
+\caption[An additive decomposition of dissolved oxygen into a trend, seasonal (daily), and random component using the \texttt{decomp} function]{An additive decomposition of dissolved oxygen into a trend, seasonal (daily), and random component using the \texttt{decomp} function.}\label{fig:decomp_ex1}
+\end{figure}
+
+
+\end{knitrout}
 
 An alternative approach to time series decomposition is provided by the \texttt{decomp\_cj} function, which is a simple wrapper to the \texttt{decompTs} function in the wq package \cite{Cloern10,Jassby14}.  The \texttt{decomp\_cj} function provides only a monthly decomposition, which is appropriate for characterizing relatively long-term trends.  This approach works best for nutrient data that are typically obtained on a monthly cycle.  The function will also work with continuous water quality or weather data but note that the data must first be aggregated on the monthly scale before decomposition.  The time series is decomposed into the grandmean, annual, seasonal, and events components, as compared to trend, seasonal, and random components for the \texttt{decomp} function described above.  For both, the random or events components can be considered anomalies that do not follow the trends in the remaining categories.  Additional arguments passed to \texttt{decompTs} can be used with \texttt{decomp\_cj}, such as \texttt{startyr}, \texttt{endyr}, and \texttt{type}.  Values passed to \texttt{type} are \texttt{mult} (default) or \texttt{add}, referring to multiplicative or additive decomposition.  Figure~\ref{fig:decomp_ex2} shows the results from the \texttt{decomp\_cj} function applied to a multi-year chlorophyll time series.
 
-<<decomp_ex2, eval = T, fig.height = 6, warning = F, cache = T, fig.cap = "Additive decomposition of a multi-year chlorophyll time series into the grandmean, annual, seasonal, and events components using the \\texttt{decomp\\_cj} function.">>=
-# get data
-data(apacpnut)
-dat <- apacpnut
-dat <- qaqc(dat, qaqc_keep = NULL)
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # get data
+> data(apacpnut)
+> dat <- apacpnut
+> dat <- qaqc(dat, qaqc_keep = NULL)
+> 
+> # decomposition of chl
+> decomp_cj(dat, param = 'chla_n')
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
 
-# decomposition of chl
-decomp_cj(dat, param = 'chla_n')
-@
+{\centering \includegraphics[width=0.00\textwidth]{figure/decomp_ex2-1} 
+
+}
+
+\caption[Additive decomposition of a multi-year chlorophyll time series into the grandmean, annual, seasonal, and events components using the \texttt{decomp\_cj} function]{Additive decomposition of a multi-year chlorophyll time series into the grandmean, annual, seasonal, and events components using the \texttt{decomp\_cj} function.}\label{fig:decomp_ex2}
+\end{figure}
+
+
+\end{knitrout}
 
 Detailed exploratory graphics are also useful for evaluating general trends in observed data.  Several graphics showing seasonal and annual trends for a single SWMP parameter can be obtained using the \texttt{plot\_summary} function (Figure~\ref{fig:summary_ex}).  The plots include monthly distributions, monthly anomalies, and annual anomalies in multiple formats.  Anomalies are defined as the difference between the monthly or annual averages from the grand mean for the parameter.  An interactive web application \cite{Chang15} that uses this function is available for viewing results of any parameter at all SWMP sites (see the \nameref{swmp_apps} section).
 
-<<summary_ex, fig.height = 7, fig.width = 13, message = F, cache = T, fig.cap = "Summaries of a multi-year chlorophyll time series using the \\texttt{plot\\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)">>=
-## import data
-data(apacpnut)
-dat <- qaqc(apacpnut)
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> ## import data
+> data(apacpnut)
+> dat <- qaqc(apacpnut)
+> 
+> ## plot
+> plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
 
-## plot
-plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
-@
+{\centering \includegraphics[width=0.00\textwidth]{figure/summary_ex-1} 
+
+}
+
+\caption[Summaries of a multi-year chlorophyll time series using the \texttt{plot\_summary} function]{Summaries of a multi-year chlorophyll time series using the \texttt{plot\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)}\label{fig:summary_ex}
+\end{figure}
+
+
+\end{knitrout}
 
 Finally, estimates of ecosystem metabolism provide a measure of overall system productivity to evaluate whether an ecosystem is a net source or sink of organic material.  The open-water method \cite{Odum56} is a common approach to quantify metabolism using a mass balance equation that describes the change in dissolved oxygen over time from the balance between photosynthetic and respiration processes, corrected using an empirically constrained air-sea gas diffusion model \cite{Ro06,Thebault08}. The diffusion-corrected dissolved oxygen (DO) flux estimates are averaged separately over each day and night of the time series. The nighttime average DO flux is used to estimate respiration rates, while the daytime DO flux is used to estimate net primary production. To generate daily integrated rates, respiration rates are assumed constant such that hourly night time DO flux rates are multiplied by 24. Similarly, the daytime DO flux rates are multiplied by the number of daylight hours, which varies with location and time of year, to yield net daytime primary production. Respiration rates are subtracted from daily net production estimates to yield gross production rates. The metabolic day is considered the 24 hour period between sunsets on two adjacent calendar days  
 
@@ -511,66 +629,78 @@ The \texttt{ecometab} function is used to implement the open-water method with a
 
 The following is an example that shows use of the \texttt{ecometab} function from a combined water quality and weather data set.  Monthly aggregations of the raw, daily estimates are plotted using \texttt{plot\_metab} (Figure~\ref{fig:metab_ex}).
 
-<<metab_ex, eval = TRUE, cache = T, fig.height = 4, fig.width = 8, warning = FALSE, fig.cap = "Monthly means (95\\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.">>=
-## import water quality and weather data
-data(apadbwq)
-data(apaebmet)
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> ## import water quality and weather data
+> data(apadbwq)
+> data(apaebmet)
+> 
+> ## qaqc, combine
+> wq <- qaqc(apadbwq)
+> met <- qaqc(apaebmet)
+> dat <- comb(wq, met)
+> 
+> ## estimate metabolism
+> res <- ecometab(dat, trace = FALSE)
+> plot_metab(res)
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
 
-## qaqc, combine
-wq <- qaqc(apadbwq)
-met <- qaqc(apaebmet)
-dat <- comb(wq, met)
+{\centering \includegraphics[width=0.00\textwidth]{figure/metab_ex-1} 
 
-## estimate metabolism
-res <- ecometab(dat, trace = FALSE)
-plot_metab(res)
-@
+}
+
+\caption[Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida]{Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.}\label{fig:metab_ex}
+\end{figure}
+
+
+\end{knitrout}
 
 Finally, the \texttt{map\_reserve} function can be used to create a map with all stations at a reserve using functions in the ggmap package \cite{Kahle13}. This map may be useful for aiding the interpretation of spatial trends in water quality parameters given the relative locations in a reserve.  The current function is limited to Google maps of four types that can be set with the \texttt{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \texttt{zoom} argument can be chosen through trial and error depending on the spatial extent of the reserve.  See the help documentation for the \texttt{ggmap} function for more info on \texttt{zoom}.
 
-<<map_ex, fig.height = 5, message = F, cache = T, fig.cap = "Locations of all sites at the Jacques Cousteau reserve using the \\texttt{map\\_reserve} function.">>=
-# plot the stations at Jacques Cousteau reserve
-map_reserve('jac')
-@
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+> # plot the stations at Jacques Cousteau reserve
+> map_reserve('jac')
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
+
+{\centering \includegraphics[width=0.00\textwidth]{figure/map_ex-1} 
+
+}
+
+\caption[Locations of all sites at the Jacques Cousteau reserve using the \texttt{map\_reserve} function]{Locations of all sites at the Jacques Cousteau reserve using the \texttt{map\_reserve} function.}\label{fig:map_ex}
+\end{figure}
+
+
+\end{knitrout}
 
 \subsection{Miscellaneous functions}
 
 Several additional functions are provided that do not fit the above categories (Table~\ref{tab:misc}).  These functions are generally used within the main functions but may be useful for more customized evaluation of SWMP data.  
 
 % table for misc functions
-<<results = 'asis', echo = FALSE>>=
+%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Miscellaneous functions available from the SWMPr package.  Most are used within the main functions above but may be useful for customized evaluations of SWMP data.  Full documentation for each function is in the help file (e.g., execute \\texttt{?calckl} at the command line).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:misc",     table.env = FALSE, where = "!tbp")%
+\begin{table}[!tbp]
+\caption{Miscellaneous functions available from the SWMPr package.  Most are used within the main functions above but may be useful for customized evaluations of SWMP data.  Full documentation for each function is in the help file (e.g., execute \texttt{?calckl} at the command line).\label{tab:misc}} 
+\begin{center}
+\begin{tabular}{lp{3.5in}}
+\hline\hline
+\multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
+\hline
+\texttt{calckl}&Estimate the reaeration coefficient for air-sea gas exchange.  Used in the \texttt{ecometab} function.\tabularnewline
+\texttt{metab\_day}&Identify the metabolic day for each approximate 24 period in an hourly time series.  Used in the \texttt{ecometab} function.\tabularnewline
+\texttt{param\_names}&Returns column names as a list for the parameter types (nutrients, weather, or water quality).  Includes QAQC columns with \texttt{f\_} prefix. Used in the data retrieval functions.\tabularnewline
+\texttt{parser}&Parses HTML returned from CDMO data requests.  Used in the retrieval functions.\tabularnewline
+\texttt{swmpr}&Creates a \texttt{swmpr} object class.  Used in the data retrieval functions.\tabularnewline
+\texttt{time\_vec}&Converts time vectors to \texttt{POSIXct} objects with the appropriate time zone for a site.  Used in the data retrieval functions.\tabularnewline
+\hline
+\end{tabular}\end{center}
 
-funcs <- c('calckl', 'metab\\_day', 'param\\_names', 'parser', 'swmpr', 'time\\_vec')
-funcs <- paste0('\\texttt{', funcs, '}')
+\end{table}
 
-descrips <- c(
-  'Estimate the reaeration coefficient for air-sea gas exchange.  Used in the \\texttt{ecometab} function.',
-  'Identify the metabolic day for each approximate 24 period in an hourly time series.  Used in the \\texttt{ecometab} function.',
-  'Returns column names as a list for the parameter types (nutrients, weather, or water quality).  Includes QAQC columns with \\texttt{f\\_} prefix. Used in the data retrieval functions.',
-  'Parses HTML returned from CDMO data requests.  Used in the retrieval functions.',
-  'Creates a \\texttt{swmpr} object class.  Used in the data retrieval functions.',
-  'Converts time vectors to \\texttt{POSIXct} objects with the appropriate time zone for a site.  Used in the data retrieval functions.'
-  )
-
-to_tab <- data.frame(Functions = funcs, Description = descrips, stringsAsFactors = F)
-
-library(Hmisc)
-
-latex(
-  to_tab[, 'Description', drop = F],
-  file = '',
-  caption = "Miscellaneous functions available from the SWMPr package.  Most are used within the main functions above but may be useful for customized evaluations of SWMP data.  Full documentation for each function is in the help file (e.g., execute \\texttt{?calckl} at the command line).",
-  rowlabel = 'Function',
-  colheads = 'Description',
-  rowname = to_tab$Functions,
-  caption.loc = 'top',
-  col.just=c("p{3.5in}"), 
-  label = 'tab:misc', 
-  table.env = FALSE, 
-  where = '!tbp'
-  )
-
-@
 
 \section{Applications using the SWMPr package}
 \label{swmp_apps}
@@ -580,285 +710,95 @@ This section describes three examples using the SWMPr package to illustrate the 
 Water quality and weather observations from January 1995 to December 2014 for all NERRS sites were obtained through a bulk data request using the zip downloads feature of CDMO.  All csv files for each station were imported into R using the \texttt{import\_local} function, processed using the \texttt{setstep} and \texttt{qaqc} functions, then saved locally as binary RData files. This resulted in a single \texttt{swmpr} object for each parameter at each site.  All files were then uploaded to a remote server for online access.  An additional R script was executed that retrieved and processed water quality and weather data at each reserve to estimate metabolism.  Two water quality sites with the longest time series at each reserve were used.  Mean annual metabolism values at each site, organized by region, are shown in Figure~\ref{fig:metab_plo}, whereas decadal comparisons are shown in Table~\ref{tab:metab_tab}.  All sites were generally net heterotrophic across the range of observations (i.e., sink of organic matter, in agreement with Caffrey \cite{Caffrey03}), although differences were observed in early (i.e., 1995-2004) as compared to recent (2005-2014) time periods. Overall, the results indicate that between-region and within-site differences in metabolism are apparent and varying by time period, such that a more comprehensive evaluation of factors that influence metabolic rates is needed.  More importantly, use of the data retrieval, synthesis, and analysis functions to create the results illustrates the utility provided by the SWMPr package.
 
 % metabolism figure
-<<metab_plo, eval = T, cache = T, echo = F, fig.cap = 'Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each NERRS reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Sites were assigned to regions based on approximate geographic coordinates.', fig.height = 6, fig.width = 8>>=
-# # packages to use
-# library(SWMPr)
-# library(httr)
-# library(XML)
-# library(foreach)
-# library(doParallel)
-# 
-# # names of files on server
-# files_s3 <- httr::GET('https://s3.amazonaws.com/swmpalldata/')$content
-# files_s3 <- rawToChar(files_s3)
-# files_s3 <- htmlTreeParse(files_s3, useInternalNodes = T)
-# files_s3 <- xpathSApply(files_s3, '//contents//key', xmlValue)
-# files_s3 <- gsub('\\.RData$', '', files_s3) 
-# 
-# # find only active water quality and weather sites
-# # IP address must be registed with CDMO 
-# meta <- site_codes()
-# sel <- meta$status %in% 'Active' & !grepl('nut$', meta$station_code)
-# meta <- meta[sel, ]
-# 
-# # get wq sites from meta, then filter by those on server
-# wq_sites <- grep('wq$', meta$station_code, value = T)
-# wq_sites <- files_s3[gsub('\\.RData$', '', files_s3) %in% wq_sites]
-# 
-# # setup parallel backend for processing
-# cl <- makeCluster(8)
-# registerDoParallel(cl)
-# strt <- Sys.time()
-# 
-# # process
-# metabs <- foreach(wq_site = wq_sites) %dopar% {
-#  
-#   library(SWMPr)
-#   
-#   # progress
-#   sink('log.txt')
-#   cat(wq_site, which(wq_site == wq_sites), 'of', length(wq_sites), '\n')
-#   print(Sys.time() - strt)
-#   sink()
-#   
-#   # find corresponding wx station
-#   met_site <- substr(wq_site, 1, 3)
-#   met_site <- grep(paste0('^', met_site, '.*met'), files_s3, value = T)
-#   met_site <- gsub('\\.RData$', '', met_site)
-# 
-#   # continue if wx data found
-#   if(length(met_site) > 0){
-#     
-#     # if > 1 wx site, pick the one with more obs
-#     if(length(met_site) > 1){
-# 
-#       met_list <- vector('list', length(met_site))
-#       names(met_list) <- met_site
-#       for(met in met_site){
-#       
-#         met_tmp <- import_remote(met)
-#         met_list[[met]] <- met_tmp
-#       
-#       }
-#     
-#       # pick the one with most obs
-#       met_most <- which.max(unlist(lapply(met_list, nrow)))
-#       met <- met_list[met_most][[1]]
-# 
-#     # otherwise load only one
-#     } else {
-#     
-#       # met
-#       met <- import_remote(met_site)
-#     
-#     }
-#     
-#     ##
-#     # load the wq file
-#     
-#     # wq
-#     wq <- import_remote(wq_site)
-#     
-#     ## 
-#     # combine, estimate metabolism, reduce data volume
-#     dat <- comb(wq, met, method = attr(met, 'station'))
-#     dat <- ecometab(dat)
-#     dat <- dat[1, ]
-#     
-#     dat
-#     
-#   }
-#   
-# }
-# names(metabs) <- wq_sites
-# save(metabs, file = 'metabs.RData')
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{figure}[!h]
 
-# # take all metab estimates and summarize by year
-# # done for two stations at each reserve with the longest time series
-# data(metabs)
-# 
-# metabs <- lapply(metabs, attr, 'metabolism')
-# metabs <- do.call('rbind', metabs)
-# metabs$site <- gsub('\\.[0-9]*$', '', as.character(row.names(metabs)))
-# row.names(metabs) <- 1:nrow(metabs)
-# 
-# library(dplyr)
-# library(tidyr)
-# metabs <- select(metabs, date, Pg, Rt, NEM, site) %>% 
-#   mutate(date = as.numeric(strftime(date, '%Y'))) %>% 
-#   gather('metab', 'value', 2:4) %>% 
-#   group_by(date, site, metab) %>% 
-#   summarize(value = mean(value, na.rm = T)) %>% 
-#   group_by(site, metab) %>% 
-#   na.omit %>% 
-#   mutate(reserve = substr(site, 1, 3)) %>% 
-#   spread(metab, value)
-# 
-# # select two sites from each reserve, those with longest records
-# metabs <- split(metabs, metabs$reserve)
-# metabs <- lapply(metabs, 
-#   function(x){
-#     
-#     num_yrs <- aggregate(date ~ site, x, length)
-#     num_yrs <- num_yrs[order(num_yrs$date, decreasing = T), ]
-#     
-#     if(nrow(num_yrs) >1){
-#       site_sel <- num_yrs$site[c(1, 2)]
-#     } else {
-#       site_sel <- num_yrs$site[1]
-#     }
-#     
-#     out <- x[x$site %in% site_sel, ]
-#     return(out)
-#     
-#   }
-#   
-# )
-# metabs <- do.call('rbind', metabs)
-# 
-# metabs_sum <- metabs
-# save(metabs_sum, file = 'data/metabs_sum.RData')
+{\centering \includegraphics[width=0.00\textwidth]{figure/metab_plo-1} 
 
-data(metabs_sum)
+}
 
-library(dplyr)
-library(tidyr)
+\caption[Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each NERRS reserve]{Aggregated estimates of net metabolism, gross production, and total respiration for two sites at each NERRS reserve.  Values are daily integrated estimates as mean annual values averaged across all years with 95\% confidence intervals.  Two sites were chosen from each reserve that had the longest available time series. Sites were assigned to regions based on approximate geographic coordinates.}\label{fig:metab_plo}
+\end{figure}
 
-# summarize for annual means, get conf ints
-metabs_plo <- gather(metabs_sum, 'metab', 'value', 4:6) %>% 
-  group_by(site, metab) %>% 
-  summarize(
-    margs = qt(1 - 0.05/2, length(value) - 1) * sd(value)/sqrt(length(value)),
-    value = mean(value)
-    ) %>% 
-  mutate(
-    value = 0.032 * value,
-    margs = 0.032 * margs,
-    upper = value + margs, 
-    lower = value - margs
-    )
 
-# get region
-data(stat_locs)
-names(stat_locs)[names(stat_locs) %in% 'station_code'] <- 'site'
-metabs_plo$site <- gsub('wq$', '', metabs_plo$site)
-metabs_plo <- left_join(metabs_plo, stat_locs, by = 'site')
-region <- rep('Pacific', nrow(metabs_plo))
-region[metabs_plo$longitude > -110] <- 'Gulf'
-region[metabs_plo$latitude > 28 & metabs_plo$longitude > -84] <- 'Atlantic'
-
-# combine, select, sort
-metabs_plo <- select(metabs_plo, -c(latitude, longitude, gmt_off))
-metabs_plo$region <- region
-metabs_plo <- arrange(metabs_plo, region, site)
-
-# plot prep
-to_plo <- data.frame(metabs_plo)
-
-#reassign factors for ranking in plot
-sort_val <- to_plo[to_plo$metab == 'Pg', c('region', 'value', 'site')]
-sort_val <- order(sort_val$region, sort_val$value)
-to_plo$site <- factor(to_plo$site)
-to_plo$site <- factor(
-  to_plo$site,
-  levels = levels(to_plo$site)[sort_val],
-  labels = levels(to_plo$site)[sort_val]
-  )
-new_labs <- c('Mean net metabolism', 'Mean gross production', 'Mean total respiration')
-to_plo$metab <- factor(to_plo$metab, levels = c('NEM', 'Pg', 'Rt'), labels = new_labs)
-
-ylabs <- expression(paste('g ', O[2],' ', m^-2,' ', d^-1))
-library(ggplot2)
-p <- ggplot(to_plo, 
-    aes(x = site, y = value, group = metab, fill = metab)
-  ) + 
-  geom_bar(stat = 'identity', width = 1, colour = 'black') + 
-  scale_y_continuous(ylabs) + 
-  facet_grid(metab ~ region, scales = 'free') + 
-  scale_x_discrete(name = element_blank()) + 
-  theme_bw() + 
-  theme(
-    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, 
-      size = 7),
-    legend.position = 'none'
-    ) +
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0)
-print(p)
-
-@
+\end{knitrout}
 
 % table summary of trends
-<<eval = T, results = 'asis', cache = T, echo = F>>=
+%latex.default(metabs_tab[, !names(metabs_tab) %in% c("site",     "region")], file = "", caption = cap, cgroup = c("NEM\\textsuperscript{a}",     "Pg", "Rt"), n.cgroup = c(2, 2, 2), colheads = rep(c("1995-2004",     "2005-2014"), 3), rowlabel = "Site", rowname = metabs_tab$site,     digits = 2, insert.bottom = foots, rgroup = unique(metabs_tab$region),     n.rgroup = nrgroups, label = "tab:metab_tab", size = "footnotesize",     where = "!tbp")%
+\begin{table}[!tbp]
+{\footnotesize
+\caption{Trends in metabolism for two sites at each of the NERRS reserves.  Values are averages of mean annual estimates for each period of observation (1994-2004 and 2005-2014). Bold values indicate an increase from the first period, whereas italic values indicate a decrease. Sites were assigned to regions based on approximate geographic coordinates.\label{tab:metab_tab}} 
+\begin{center}
+\begin{tabular}{lllcllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Site}&\multicolumn{2}{c}{\bfseries NEM\textsuperscript{a}}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Pg}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Rt}\tabularnewline
+\cline{2-3} \cline{5-6} \cline{8-9}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{1995-2004}&\multicolumn{1}{c}{2005-2014}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{1995-2004}&\multicolumn{1}{c}{2005-2014}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{1995-2004}&\multicolumn{1}{c}{2005-2014}\tabularnewline
+\hline
+{\bfseries Atlantic}&&&&&&&&\tabularnewline
+~~acebb&-0.04&{\bf -0.03}&&5.11&{\it 3.81}&&-5.15&{\bf -3.82}\tabularnewline
+~~acesp&-0.26&{\bf -0.1}&&4.68&{\bf 4.93}&&-4.94&{\it -5.03}\tabularnewline
+~~cbmip&-0.14&{\it -0.17}&&1.02&{\bf 1.91}&&-1.16&{\it -2.08}\tabularnewline
+~~cbmmc&-0.43&{\bf -0.24}&&6.06&{\bf 10.13}&&-6.48&{\it -10.38}\tabularnewline
+~~cbvgi&0.13&{\it 0}&&6.56&{\it 4.47}&&-6.43&{\bf -4.46}\tabularnewline
+~~cbvtc&-0.15&{\bf -0.07}&&5.58&{\bf 6.07}&&-5.73&{\it -6.14}\tabularnewline
+~~delbl&-0.59&{\bf -0.16}&&6.68&{\it 6.51}&&-7.27&{\bf -6.67}\tabularnewline
+~~delsl&-0.37&{\bf -0.33}&&2.84&{\bf 3.22}&&-3.21&{\it -3.55}\tabularnewline
+~~grblr&&-0.02&&&1.28&&&-1.31\tabularnewline
+~~grbor&&-0.04&&&3.16&&&-3.2\tabularnewline
+~~gtmfm&-0.09&{\bf -0.04}&&3.36&{\bf 4.19}&&-3.45&{\it -4.23}\tabularnewline
+~~gtmpc&-0.48&{\bf -0.45}&&1.95&{\bf 2.91}&&-2.43&{\it -3.37}\tabularnewline
+~~hudsk&0.02&{\it 0.02}&&-0.36&{\it -0.39}&&0.38&{\bf 0.41}\tabularnewline
+~~hudtn&-0.03&{\it -0.03}&&3.75&{\it 3.43}&&-3.78&{\bf -3.46}\tabularnewline
+~~jacb6&0.05&{\it 0.03}&&3.41&{\bf 3.93}&&-3.36&{\it -3.89}\tabularnewline
+~~jacb9&0.01&{\it -0.02}&&1.8&{\bf 3.1}&&-1.79&{\it -3.12}\tabularnewline
+~~narnc&-0.64&{\bf -0.53}&&12.64&{\it 11.33}&&-13.25&{\bf -11.86}\tabularnewline
+~~narpc&-0.14&{\bf -0.03}&&7.36&{\it 6.3}&&-7.5&{\bf -6.32}\tabularnewline
+~~niwcb&-0.46&{\bf -0.28}&&5.5&{\bf 6.1}&&-5.95&{\it -6.38}\tabularnewline
+~~niwdc&-0.13&{\it -0.2}&&7.28&{\bf 8.02}&&-7.41&{\it -8.23}\tabularnewline
+~~nocec&-0.05&{\it -0.06}&&4.86&{\bf 4.88}&&-4.92&{\it -4.94}\tabularnewline
+~~nocrc&-0.19&{\it -0.19}&&5.93&{\it 5.31}&&-6.12&{\bf -5.5}\tabularnewline
+~~owcbr&-0.17&{\bf -0.09}&&1.45&{\bf 1.9}&&-1.62&{\it -1.99}\tabularnewline
+~~owcwm&-0.36&{\bf -0.19}&&7.02&{\it 5.36}&&-7.38&{\bf -5.54}\tabularnewline
+~~saphd&-1.28&{\bf -1}&&1.89&{\bf 3.77}&&-3.17&{\it -4.77}\tabularnewline
+~~sapld&-0.16&{\it -0.43}&&2.32&{\bf 3.56}&&-2.49&{\it -3.99}\tabularnewline
+~~welht&-0.07&{\bf -0.04}&&0.36&{\bf 0.63}&&-0.43&{\it -0.67}\tabularnewline
+~~welin&-1.87&{\it -2.49}&&3.61&{\it 2.68}&&-5.48&{\bf -5.18}\tabularnewline
+~~wqbcr&-0.01&{\bf 0.01}&&8.13&{\it 7.41}&&-8.14&{\bf -7.4}\tabularnewline
+~~wqbmh&0.02&{\it 0}&&2.82&{\it 2.76}&&-2.79&{\bf -2.75}\tabularnewline
+\hline
+{\bfseries Gulf}&&&&&&&&\tabularnewline
+~~apaeb&-0.35&{\it -0.35}&&4.19&{\bf 4.31}&&-4.54&{\it -4.67}\tabularnewline
+~~apaes&-0.71&{\bf -0.67}&&3.35&{\it 3.05}&&-4.06&{\bf -3.73}\tabularnewline
+~~gndbc&-1.02&{\bf -0.88}&&3.5&{\bf 4.3}&&-4.51&{\it -5.18}\tabularnewline
+~~gndbh&-1.81&{\it -2}&&2.19&{\it 1.77}&&-4&{\bf -3.77}\tabularnewline
+~~job09&-0.34&{\bf -0.25}&&5.32&{\bf 5.95}&&-5.66&{\it -6.2}\tabularnewline
+~~job10&-0.15&{\it -0.15}&&3.58&{\bf 4.03}&&-3.72&{\it -4.2}\tabularnewline
+~~marab&&-0.02&&&3.38&&&-3.4\tabularnewline
+~~marce&&-0.01&&&3.62&&&-3.63\tabularnewline
+~~rkbfb&-0.28&{\it -0.37}&&5.28&{\bf 6.25}&&-5.56&{\it -6.62}\tabularnewline
+~~rkbfu&-0.33&{\it -0.41}&&2.95&{\bf 3.24}&&-3.28&{\it -3.64}\tabularnewline
+~~wkbfr&-0.29&{\bf -0.14}&&6.27&{\bf 6.35}&&-6.57&{\bf -6.49}\tabularnewline
+~~wkbwb&-0.29&{\bf -0.16}&&6.81&{\it 6.54}&&-7.1&{\bf -6.69}\tabularnewline
+\hline
+{\bfseries Pacific}&&&&&&&&\tabularnewline
+~~elkap&0.03&{\bf 0.11}&&14.7&{\bf 19.84}&&-14.67&{\it -19.74}\tabularnewline
+~~elknm&-0.24&{\bf -0.08}&&11.95&{\bf 16.37}&&-12.18&{\it -16.45}\tabularnewline
+~~kachd&0.2&{\it -0.66}&&7.31&{\it 3.2}&&-7.12&{\bf -3.86}\tabularnewline
+~~kacsd&-0.06&{\it -0.26}&&5.15&{\it 4.2}&&-5.21&{\bf -4.45}\tabularnewline
+~~pdbbp&0.01&{\bf 0.08}&&6.29&{\bf 7.31}&&-6.27&{\it -7.23}\tabularnewline
+~~pdbby&-0.07&{\bf -0.01}&&8.39&{\it 5.92}&&-8.47&{\bf -5.93}\tabularnewline
+~~sfbcc&&-0.24&&&3.56&&&-3.79\tabularnewline
+~~sfbgc&&-0.55&&&7.32&&&-7.87\tabularnewline
+~~sosva&-0.2&{\bf -0.05}&&6.98&{\bf 7.83}&&-7.18&{\it -7.87}\tabularnewline
+~~soswi&-0.28&{\bf -0.08}&&4.41&{\bf 4.74}&&-4.69&{\it -4.82}\tabularnewline
+~~tjrbr&-1.33&{\bf -0.17}&&7.72&{\it 7.06}&&-9.05&{\bf -7.22}\tabularnewline
+~~tjros&-0.26&{\it -0.34}&&10.18&{\bf 11.61}&&-10.44&{\it -11.96}\tabularnewline
+\hline
+\end{tabular}\end{center}}
 
-data(metabs_sum)
+\footnotesize{\textsuperscript{a}NEM: net ecosystem metabolism, Pg: gross production, Rt: total respiration, all values in g O$_2$ m$^{-2}$ d$^{-1}$ as annual averages.}\end{table}
 
-library(dplyr)
-library(tidyr)
-
-# summarize by time periods
-metabs_tab <- gather(metabs_sum, 'metab', 'value', 4:6)
-metabs_tab$yr_grp <- '1995-2004'
-metabs_tab$yr_grp[metabs_tab$date > 2004] <- '2005-2014'
-metabs_tab <- mutate(metabs_tab, value = 0.032 * value) %>% 
-  group_by(site, metab, yr_grp) %>% 
-  arrange(yr_grp, date, metab) %>% 
-  summarize(ave = round(mean(value, na.rm = TRUE), 2)) %>% 
-  spread(yr_grp, ave) 
-trends <- apply(metabs_tab, 1, function(x){
-  
-  val <- as.numeric(x[['2005-2014']])
-  trnd <- val > as.numeric(x[['1995-2004']])
-  
-  if(is.na(trnd)) return(val)
-  if(trnd) return(paste0('{\\bf ', val, '}'))
-  if(!trnd) return(paste0('{\\it ', val, '}'))
-  
-})
-metabs_tab[, '2005-2014'] <- trends
-metabs_tab <- gather(metabs_tab, 'period', 'value', 3:4) %>% 
-  unite('var', metab, period, sep = ' ') %>% 
-  spread(var, value) %>% 
-  mutate(site = gsub('wq$', '', site))
-
-# get region
-data(stat_locs)
-names(stat_locs)[names(stat_locs) %in% 'station_code'] <- 'site'
-metabs_tab <- left_join(metabs_tab, stat_locs, by = 'site')
-region <- rep('Pacific', nrow(metabs_tab))
-region[metabs_tab$longitude > -110] <- 'Gulf'
-region[metabs_tab$latitude > 28 & metabs_tab$longitude > -84] <- 'Atlantic'
-
-# combine, select, sort
-metabs_tab <- select(metabs_tab, -c(latitude, longitude, gmt_off)) %>% 
-  mutate(region = region) %>% 
-  arrange(region, site)
-
-nrgroups <- as.numeric(table(metabs_tab$region))
-# table
-
-cap <- 'Trends in metabolism for two sites at each of the NERRS reserves.  Values are averages of mean annual estimates for each period of observation (1994-2004 and 2005-2014). Bold values indicate an increase from the first period, whereas italic values indicate a decrease. Sites were assigned to regions based on approximate geographic coordinates.' 
-foots <- '\\footnotesize{\\textsuperscript{a}NEM: net ecosystem metabolism, Pg: gross production, Rt: total respiration, all values in g O$_2$ m$^{-2}$ d$^{-1}$ as annual averages.}' 
-
-library(Hmisc)
-latex(
-  metabs_tab[, !names(metabs_tab) %in% c('site', 'region')], 
-  file = '', 
-  caption = cap, 
-  cgroup = c('NEM\\textsuperscript{a}', 'Pg', 'Rt'), 
-  n.cgroup = c(2, 2, 2), 
-  colheads = rep(c('1995-2004', '2005-2014'), 3),
-  rowlabel = 'Site', 
-  rowname = metabs_tab$site,
-  digits = 2,
-  insert.bottom = foots,
-  rgroup = unique(metabs_tab$region),
-  n.rgroup = nrgroups,
-  label = 'tab:metab_tab',
-  size = 'footnotesize', 
-  where = '!tbp'
-  )
-  
-@
 
 The second and third examples are two interactive web applications \cite{Chang15} created using the SWMPr package that illustrate summaries and comparisons of SWMP data.  The first web application evaluates trends in SWMP data within and between sites using an interactive map (Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time.  Trends on the map at each station are plotted as circles that identify the direction and significance of the trend, such that larger points with darker colors indicate a strong trend.  The trend over time is blue for decreasing and red for increasing.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \texttt{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting. Both of the apps provide previously unavailable utilities to interact with SWMP data using an intuitive online interface.  This format may be more appealing for individuals with limited experience using R, while simultaneously illustrating what is possible using functions from the package. The applications have been used extensively with over 300 hours noted in a single month.   
 
