@@ -1,6 +1,6 @@
 \BOOKMARK [0][-]{section*.1}{SWMPr: An R Package for Retrieving, Organizing, and Analyzing Environmental Data for Estuaries}{}% 1
 \BOOKMARK [1][-]{section.2.1}{Introduction}{section*.1}% 2
-\BOOKMARK [1][-]{section.2.2}{SWMP overview and data retrieval}{section*.1}% 3
+\BOOKMARK [1][-]{section.2.2}{Overview of the SWMP network}{section*.1}% 3
 \BOOKMARK [1][-]{section.2.3}{Structure of the SWMPr package}{section*.1}% 4
 \BOOKMARK [2][-]{subsection.2.3.1}{Data retrieval}{section.2.3}% 5
 \BOOKMARK [2][-]{subsection.2.3.2}{The ```\140"swmpr" object class}{section.2.3}% 6

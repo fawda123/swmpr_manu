@@ -79,20 +79,20 @@
 \maketitle
 
 \abstract{
-The System-Wide Monitoring Program (SWMP) was implemented in 1995 by the US National Estuarine Research Reserve System. This program has provided two decades of continuous monitoring data at over 140 fixed stations in 28 estuaries. Simple tools for processing and evaluating the increasing quantity of data provided by the monitoring network have prevented broad-scale comparisons between systems and, in some cases, simple trend analysis of water quality parameters at individual sites.  This article describes the \CRANpkg{SWMPr} package that provides several functions to facilitate data retrieval, organization, and analysis of time series data in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  The \CRANpkg{SWMPr} package has facilitated a cross-reserve comparison of water quality trends and provides an effective approach to link quantitative information with analysis tools that will inform coastal protection and restoration.
+The System-Wide Monitoring Program (SWMP) was implemented in 1995 by the US National Estuarine Research Reserve System. This program has provided two decades of continuous monitoring data at over 140 fixed stations in 28 estuaries. Simple tools for processing and evaluating the increasing quantity of data provided by the monitoring network have prevented broad-scale comparisons between systems and, in some cases, simple trend analysis of water quality parameters at individual sites.  This article describes the \CRANpkg{SWMPr} package that provides several functions to facilitate data retrieval, organization, and analysis of time series data in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  The \CRANpkg{SWMPr} package has facilitated a cross-reserve comparison of water quality trends and links quantitative information with analysis tools that has use for more generic applications to environmental time series.
 }
 
 \section{Introduction}
 
-The development of low-cost, automated sensors that collect data in near real-time has enabled a proliferation of standardized environmental monitoring programs \citep{Glasgow04,Fries08}.  An invaluable source of monitoring data for coastal regions in the United States is provided by the National Estuarine Research Reserve System (NERRS, \url{http://www.nerrs.noaa.gov/}).  This network of 28 estuary reserves was created to address long-term research, monitoring, education, and stewardship goals in support of coastal management.  The System-Wide Monitoring Program (SWMP) was implemented in 1995 at over 140 stations across the reserves to provide a robust, long-term monitoring system for water quality, weather, and land-use/habitat change.  The SWMP network provides a continuous source of data collected at near real-time with the potential to evaluate causes of spatiotemporal variation in environmental condition and ecosystem function.  Environmental researchers have expressed a need for quantitative analysis tools to evaluate trends in water quality time series given the quantity and quality of data provided by SWMP \citep{SWMP14}.
+The development of low-cost, automated sensors that collect data in near real-time has enabled a proliferation of standardized environmental monitoring programs \citep{Glasgow04,Fries08}.  An invaluable source of monitoring data for coastal regions in the United States is provided by the National Estuarine Research Reserve System (NERRS, \url{http://www.nerrs.noaa.gov/}).  This network of 28 estuary reserves was created to address long-term research, monitoring, education, and stewardship goals in support of coastal management.  The System-Wide Monitoring Program (SWMP) was implemented in 1995 at over 140 stations across the reserves to provide a robust, long-term monitoring system for water quality, weather, and land-use/habitat change.  Environmental researchers have expressed a need for quantitative analysis tools to evaluate trends in water quality time series given the quantity and quality of data provided by SWMP \citep{SWMP14}.
 
-This article describes the \CRANpkg{SWMPr} package that was developed for estuary monitoring data from the System-Wide Monitoring Program.  Functions provided by \pkg{SWMPr} address many common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify key parameters of interest.  Additionally, web applications derived from \pkg{SWMPr} and \CRANpkg{shiny} illustrate potential applications using the functions in this package.  The software is provided specifically for use with NERRS data, although many of the applications are relevant for addressing common challenges working with large environmental datasets.
+This article describes the \CRANpkg{SWMPr} package that was developed for estuary monitoring data from the System-Wide Monitoring Program.  Functions provided by \CRANpkg{SWMPr} address many common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify parameters of interest.  Additionally, web applications derived from \CRANpkg{SWMPr} and \CRANpkg{shiny} illustrate potential applications using the functions in this package.  The software is provided specifically for use with NERRS data, although many of the applications are relevant for addressing common challenges working with large environmental datasets.
 
-\section{SWMP overview and data retrieval}
+\section{Overview of the SWMP network}
 
-The \pkg{SWMPr} package is developed for the continuous abiotic monitoring network that represents a majority of SWMP data and, consequently, the most challenging to evaluate.  Abiotic elements monitored at each reserve include water quality (water temperature, specific conductivity, salinity, dissolved oxygen concentration, dissolved oxygen saturation, depth, pH, turbidity, chlorophyll fluorescence), weather (air temperature, relative humidity, barometric pressure, wind speed, wind direction, photosynthetically active radiation, precipitation), and nutrient data (orthophosphate, ammonium, nitrite, nitrate, nitrite + nitrate, chlorophyll a).  Each reserve has no less than four water quality stations and one weather station at fixed locations.  Water quality and weather data are collected at 15 minute intervals, whereas nutrient data are collected monthly at each water quality station.  All data are accessible through the Centralized Data Management Office (CDMO) web portal (\url{http://cdmo.baruch.sc.edu/}), where multiple quality assurance/quality control (QAQC) measures are used to screen the information for accuracy and reliability.  The final data include all timestamped observations including relevant QAQC flags with the appropriate qualifier.
+The \pkg{SWMPr} package was developed for the continuous abiotic monitoring network that represents a majority of SWMP data and, consequently, the most challenging to evaluate.  Abiotic elements monitored at each reserve include water quality (water temperature, specific conductivity, salinity, dissolved oxygen concentration, dissolved oxygen saturation, depth, pH, turbidity, chlorophyll fluorescence), weather (air temperature, relative humidity, barometric pressure, wind speed, wind direction, photosynthetically active radiation, precipitation), and nutrient data (orthophosphate, ammonium, nitrite, nitrate, nitrite + nitrate, chlorophyll a).  Each of the 28 estuary reserves has no less than four water quality stations and one weather station at fixed locations.  Water quality and weather data are collected at 15 minute intervals, whereas nutrient data are collected monthly at each water quality station.  Data are made available through the Centralized Data Management Office (CDMO) web portal (\url{http://cdmo.baruch.sc.edu/}), where quality assurance/quality control (QAQC) measures are used to screen the information for accuracy and reliability.  The final data include timestamped observations with relevant QAQC flags.
 
-At the time of writing, the CDMO web portal provides over 60 million water quality, weather, and nutrient records that have been authenticated through systematic QAQC procedures.   Records for each station are identified by a 7 or 8 character name that specifies the reserve, station, and parameter type.  For example, `apaebwq' is the water quality identifier (`wq') for the East Bay station (`eb') at the Apalachicola reserve (`apa').  Similarly, a suffix of `met' or `nut' specifies the weather (meteorological) or nutrient stations.  All reserve names, stations, and date ranges for each parameter type can be viewed on the CDMO website. Alternatively, the \code{site\_codes} (all sites) or \code{site\_codes\_ind} (single site) functions provided by \pkg{SWMPr} can be used.  As noted below, an IP address must be registered with CDMO before using the data retrieval functions in \pkg{SWMPr}.  Web services are provided by CDMO for direct access to SWMP data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in \pkg{SWMPr} are simple calls to the existing retrieval functions on CDMO web services.
+At the time of writing, the CDMO web portal provides over 60 million water quality, weather, and nutrient records that have been authenticated through systematic QAQC procedures.  Records for each station are identified by a 7 or 8 character name that specifies the reserve, station, and parameter type.  For example, `apaebwq' is the water quality identifier (`wq') for the East Bay station (`eb') at the Apalachicola reserve (`apa').  Similarly, a suffix of `met' or `nut' specifies the weather (meteorological) or nutrient stations.  All reserve names, stations, and date ranges for each parameter type can be viewed on the CDMO website. Alternatively, the \code{site\_codes} (all sites) or \code{site\_codes\_ind} (single site) functions provided by \pkg{SWMPr} can be used.  As noted below, an IP address must be registered with CDMO before using the data retrieval functions in \pkg{SWMPr}.  Web services are provided by CDMO for direct access to SWMP data through http requests, in addition to standard graphical user interface options for selecting data.  The data retrieval functions in \pkg{SWMPr} are simple calls to the existing retrieval functions on CDMO web services, as explained below.
 
 \section{Structure of the \pkg{SWMPr} package}
 
@@ -102,7 +102,7 @@ At the time of writing, the CDMO web portal provides over 60 million water quali
 
 \subsection{Data retrieval}
 
-\pkg{SWMPr} can import data into R through direct download from the CDMO or by importing local data that was previously downloaded (Table~\ref{tab:retrieve}). The IP address for the computer making the request must be registered if the first approach is used (see CDMO \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{website}).  The \code{site\_codes} or \code{site\_codes\_ind} functions can be used to view the available metadata after a computer is registered with CDMO. 
+\pkg{SWMPr} can import data into R through direct download from the CDMO or by importing local data that was previously downloaded (Table~\ref{tab:retrieve}). The IP address for the computer making the request must be registered if the first approach is used (see CDMO \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{website}).  The \code{site\_codes} or \code{site\_codes\_ind} functions can be used to view site metadata. 
 
 % table for retrieval functions
 %latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the \\pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \\code{?all\\_params} for individual functions or \\code{help.search(`retrieve', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:retrieve",     table.env = FALSE, where = "!tbp")%
@@ -117,8 +117,8 @@ At the time of writing, the CDMO web portal provides over 60 million water quali
 \code{all\_params\_dtrng}&Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter. Wrapper to \code{exportAllParamsDateRangeXMLNew}.\tabularnewline
 \code{import\_local}&Import files from a local path.  The files must be in a specific format, such as those returned from the CDMO using the zip downloads option.\tabularnewline
 \code{single\_param}&Retrieve records for a single parameter starting with the most recent at a given station.  Wrapper to \code{exportSingleParamXMLNew} function on web services.\tabularnewline
-\code{site\_codes}&Metadata for all stations, wrapper to \code{exportStationCodesXMLNew} function on web services.\tabularnewline
-\code{site\_codes\_ind}&Metadata for all stations at a single site, wrapper  to \code{NERRFilterStationCodesXMLNew} function on web services.\tabularnewline
+\code{site\_codes}&Get metadata for all stations, wrapper to \code{exportStationCodesXMLNew} function on web services.\tabularnewline
+\code{site\_codes\_ind}&Get metadata for all stations at a single site, wrapper to \code{NERRFilterStationCodesXMLNew} function on web services.\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -128,11 +128,11 @@ At the time of writing, the CDMO web portal provides over 60 million water quali
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # retrieve metadata for all sites
-> site_codes()
-> 
-> # retrieve metadata for a single site
-> site_codes_ind('apa')
+# retrieve metadata for all sites
+site_codes()
+
+# retrieve metadata for a single site
+site_codes_ind('apa')
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -141,54 +141,35 @@ Retrieval functions to import data directly into R from the CDMO include \code{a
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # all parameters for a station, most recent
-> all_params('hudscwq')
-> 
-> # get all parameters within a date range
-> all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'))
-> 
-> # get single parameter within a date range
-> all_params_dtrng('hudscwq', c('09/10/2012', '02/8/2013'), 
-+   param = 'do_mgl')
-> 
-> # single parameter for a station, most recent
-> single_param('hudscwq', 'do_mgl')
+# all parameters for a station, most recent
+all_params('hudscwq')
+
+# get all parameters within a date range
+all_params_dtrng('hudscwq', dtrng = c('09/01/2013', '10/01/2013'))
+
+# get single parameter within a date range
+all_params_dtrng('hudscwq', dtrng = c('09/01/2013', '10/01/2013'), 
+  param = 'do_mgl')
+
+# single parameter for a station, most recent
+single_param('hudscwq', param = 'do_mgl')
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-The second approach for data retrieval is to use the \code{import\_local} function to import data into R after downloading from CDMO.  This approach is most appropriate for large, specific data requests. The \code{import\_local} function is designed for data from the zip downloads feature in the advanced query section of the CDMO website. The zip downloads feature can be used to obtain data from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \code{import\_local} function can be used to import files directly from the zipped folder or after the folder is decompressed.
-
-Occasionally, non-unique observations are present in the raw data.  These duplicates may be actual replicates with unique time stamps, such as replicate samples for monthly nutrient data, or erroneous duplicates with non-unique time stamps.  The \code{import\_local} function handles duplicate entries differently depending on the data type.  For water quality and nutrient data, duplicate time stamps are simply removed.  Nutrient data often contain replicate samples with similar but not identical time stamps within the span of a few minutes.  Nutrient data with replicates with unique time stamps are not removed but can be further processed using \code{rem\_reps}.  Weather data prior to 2007 may also contain duplicate time stamps at frequencies for hourly (denoted as `60') and daily (`144') averages, in addition to 15 minute frequencies.  Only duplicate values at 15 minutes are averaged for weather data during import.  
-
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> # import local data for apaebmet
-> 
-> # this is an example path with the decompressed csv files
-> path <- 'C:/my_path'
-> 
-> # this is an example path for zipped csv files
-> path <- 'C:/my_path.zip'
-> 
-> # import, do not include file extension
-> import_local(path, 'apadbwq') 
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+The second approach for data retrieval is to use the \code{import\_local} function to import data into R after downloading from CDMO.  This approach is most appropriate for large data requests. The \code{import\_local} function is designed for data from the \href{http://cdmo.baruch.sc.edu/aqs/zips.cfm}{zip downloads} feature in the advanced query section of the CDMO website. The zip downloads feature can be used to obtain a large number of records from multiple stations in one request.  The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.).  The \code{import\_local} function can be used to import files directly from the zipped folder.
 
 \subsection{The \code{"swmpr"} object class}
 
-All data retrieval functions return a \code{"swmpr"} object that includes relevant data and several attributes describing the dataset.  The data include a \code{datetimestamp} column in the appropriate timezone for a station and additional parameters for a given data type (weather, nutrients, or water quality).  Corresponding QAQC columns for each parameter are also returned if provided by the initial data request.  The following shows an example of the raw data imported using \code{all\_params}.
+All data retrieval functions return a \code{"swmpr"} object that includes relevant data and several attributes describing the dataset.  The data include a \code{datetimestamp} column in the timezone for a station and additional parameters for the data type (weather, nutrients, or water quality).  Corresponding QAQC columns for each parameter are also returned if provided by the initial data request.  The following shows an example of the raw data imported using \code{all\_params}.
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # import all paramaters for the station
-> # three most recent records
-> exdat <- all_params('apadbwq', Max = 3, trace = F)
-> exdat
+# import all paramaters for the station
+# three most recent records
+exdat <- all_params('apadbwq', Max = 3, trace = F)
+exdat
 ##         datetimestamp temp f_temp spcond f_spcond sal f_sal do_pct
 ## 1 2015-08-18 07:00:00   28      0     34        0  21     0     77
 ## 2 2015-08-18 07:15:00   28      0     34        0  21     0     75
@@ -205,20 +186,20 @@ All data retrieval functions return a \code{"swmpr"} object that includes releva
 \end{kframe}
 \end{knitrout}
 
-The attributes for a \code{"swmpr"} object are descriptors that are appended to the raw data (Table~\ref{tab:attributes}).  These act as metadata that are used internally by many of the package functions and are updated as the data are processed. The attributes are not visible with the raw data but can be viewed as follows.
+The attributes of a \code{"swmpr"} object are descriptors that are appended to the raw data (Table~\ref{tab:attributes}).  These act as metadata that are used internally by many of the package functions and are updated as the data are processed. The attributes are not visible with the raw data but can be viewed as follows.
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # import sample data from package
-> data(apadbwq)
-> dat <- apadbwq
-> 
-> # view all attributes of dat
-> attributes(dat)
->  
-> # view a single attribute of dat
-> attr(dat, 'station')
+# import sample data from package
+data(apadbwq)
+dat <- apadbwq
+
+# view all attributes of dat
+attributes(dat)
+ 
+# view a single attribute of dat
+attr(dat, 'station')
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -234,37 +215,35 @@ The attributes for a \code{"swmpr"} object are descriptors that are appended to 
 \hline
 \code{names}&character&Column names of the entire data set, inherited from the \code{data.frame} object class.\tabularnewline
 \code{row.names}&integer&Row names of the data set, inherited from the \code{data.frame} object class.\tabularnewline
-\code{class}&character&Class of the data object indicating \code{"swmpr"} and \code{data.frame}.\tabularnewline
+\code{class}&character&Class of the data object indicating \code{"swmpr"} and \code{"data.frame"}.\tabularnewline
 \code{station}&character&Station identifier used by NERRS as a string with 7 or 8 characters.\tabularnewline
-\code{parameters}&character&Character vector of column names for data parameters, e.g., \code{`do\_mgl'}, \code{`turb'}, etc.\tabularnewline
+\code{parameters}&character&Character vector of column names for data parameters, e.g., \code{'do\_mgl'}, \code{'turb'}, etc.\tabularnewline
 \code{qaqc\_cols}&logical&Indicates if QAQC columns are present in the raw data.\tabularnewline
 \code{date\_rng}&POSIXct&Start and end dates for the data.\tabularnewline
 \code{timezone}&character&Timezone of the station using the city/country format\textsuperscript{a}.\tabularnewline
-\code{stamp\_class}&character&Class of the \code{datetimestamp} column, usually POSIXct unless data have been aggregated.\tabularnewline
+\code{stamp\_class}&character&Class of the \code{datetimestamp} column, usually \code{"POSIXct"} unless data have been aggregated.\tabularnewline
 \hline
 \end{tabular}\end{center}
 
-\textsuperscript{a}\footnotesize Time zones that do not observe daylight savings are used for \code{"swmpr"} objects and may not be cities in the United States.  For example, ``America/Jamaica" is used for Eastern Standard Time.\end{table}
+\textsuperscript{a}\footnotesize Time zones that do not observe daylight savings are used for \code{"swmpr"} objects and may not be cities in the United States.  For example, \code{America/Jamaica} is used for Eastern Standard Time.\end{table}
 
 
-The \code{"swmpr"} object class was created for use with the organizing and analyzing functions.  This object-oriented approach is standard for R (i.e., the S3 object  system), such that specific methods for generic functions are developed for the object class.  A \code{"swmpr"} object also secondarily inherits methods from the \code{data.frame} class, such that common \code{data.frame} methods available in R also apply to \code{"swmpr"} objects.  Available methods for the \code{"swmpr"} class are described below and can also be viewed:
+The \code{"swmpr"} object class was created for use with the organizing and analyzing functions.  This uses the standard S3 object class system for R, such that specific methods for generic functions are developed for the object class.  A \code{"swmpr"} object also secondarily inherits methods from the \code{"data.frame"} class. Available methods for the \code{"swmpr"} class are described below and can also be viewed:
  
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # view available methods for swmpr class
-> methods(class = 'swmpr')
+# view available methods for swmpr class
+methods(class = 'swmpr')
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-A sample dataset can be downloaded for use with the examples below.  This dataset has an identical format as the data returned from the zip downloads feature of the CDMO.  These data are also included with the package as binary data files (RData) that can be loaded using the \code{data} function, as shown above.  These include \code{"swmpr"} objects for four stations at Apalachicola Bay: apacpnut, apacpwq, apadbwq, and apaebmet.  Information for each file can be viewed in the help documentation (e.g., \code{?apacpnut}).
-
 \subsection{Data organizing}
 
-The organize functions are used to clean or prepare the imported data for analysis, including viewing and removal of QAQC flags, subsetting, combining replicate nutrient observations, creating a standardized time series, and combining data of different types (Table~\ref{tab:organize}).
+The organize functions are used to `clean' or prepare the imported data for analysis, including viewing and removal of QAQC flags, subsetting, combining replicate nutrient observations, creating a standardized time series, and combining data of different types (Table~\ref{tab:organize}).
 
-The \code{qaqc} function is a simple screen to retain observations from the data with specified QAQC flags (see \url{http://cdmo.baruch.sc.edu/data/qaqc.cfm}). Each parameter in the imported \code{"swmpr"} object will have a corresponding QAQC column of the same name with the added prefix \code{f\_} (e.g., \code{do\_mgl}, \code{f\_do\_mgl}).  Values in the QAQC column range from -5 to 5 to indicate the QAQC flag that was assigned by CDMO during initial processing.  The \code{qaqc} function is used to remove observations in the raw data with given flags, with the default option to retain only values with the \code{0} QAQC flag (i.e., passed initial CDMO checks).     Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. The function returns the original data with the QAQC columns removed and \code{NA} (not available) values for observations that do not meet the criteria specified in the function call.
+The \code{qaqc} function is a simple screen to retain observations from the data with specified QAQC flags (see \url{http://cdmo.baruch.sc.edu/data/qaqc.cfm}). Each parameter in the imported \code{"swmpr"} object will have a corresponding QAQC column of the same name with the added prefix \code{f\_} (e.g., \code{f\_do\_mgl} for \code{do\_mgl}).  Values in the QAQC column range from -5 to 5 to indicate the QAQC flag that was assigned by CDMO during initial processing.  The \code{qaqc} function is used to remove observations in the raw data with given flags, with the default option to retain only values with the \code{0} QAQC flag (i.e., passed initial CDMO checks).     Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. The function returns the original data with the QAQC columns removed and \code{NA} (not available) values for observations that do not meet the criteria specified in the function call.
 
 % table for organize functions
 %latex.default(to_tab[, "Description", drop = F], file = "", caption = "Organizing functions available from the \\pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \\code{?comb} for individual functions or \\code{help.search(`organize', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:organize",     table.env = FALSE, where = "!tbp")%
@@ -275,12 +254,12 @@ The \code{qaqc} function is a simple screen to retain observations from the data
 \hline\hline
 \multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
 \hline
-\code{comb}&Combines \code{"swmpr"} objects to a common time series using setstep, such as combining the weather, nutrients, and water quality data for a single station. Only different data types can be combined.\tabularnewline
-\code{qaqc}&Remove QAQC columns and remove data based on QAQC flag values for a \code{"swmpr"} object.  Only applies if QAQC columns are present. \tabularnewline
-\code{qaqcchk}&View a summary of the number of observations in a \code{"swmpr"} object that are assigned to each QAQC flag used by CDMO.  The output can be used to inform further processing.\tabularnewline
+\code{comb}&Combines \code{"swmpr"} objects to a common time series using setstep, such as combining the weather, nutrients, and water quality data for a single station.\tabularnewline
+\code{qaqc}&Remove QAQC columns and remove data based on QAQC flag values for a \code{"swmpr"} object.\tabularnewline
+\code{qaqcchk}&View a summary of the number of observations in a \code{"swmpr"} object that are assigned to each QAQC flag used by CDMO.\tabularnewline
 \code{rem\_reps}&Remove replicate nutrient data that occur on the same day.  The default is to average replicates.\tabularnewline
-\code{setstep}&Format data from a \code{"swmpr"} object to a continuous time series at a given timestep.  The function is also used in \code{comb}.\tabularnewline
-\code{subset}&Subset by dates and/or columns for a \code{"swmpr"} object.  This is a method passed to the generic \code{subset} function provided in the base installation.\tabularnewline
+\code{setstep}&Format data from a \code{"swmpr"} object to a continuous time series at a given timestep.\tabularnewline
+\code{subset}&Subset by dates and/or columns for a \code{"swmpr"} object.  This is a method passed to the generic \code{subset} function in the base installation.\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -290,14 +269,14 @@ The \code{qaqc} function is a simple screen to retain observations from the data
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # qaqc screen for a swmpr object, retain only '0'
-> qaqc(dat)
-> 
-> # retain all data regardless of flag
-> qaqc(dat, qaqc_keep = NULL)
-> 
-> # retain only '0' and '-1' flags
-> qaqc(dat, qaqc_keep = c(0, -1))
+# qaqc screen for a swmpr object, retain only '0'
+qaqc(dat)
+
+# retain all data regardless of flag
+qaqc(dat, qaqc_keep = NULL)
+
+# retain only '0' and '-1' flags
+qaqc(dat, qaqc_keep = c(0, -1))
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -307,113 +286,78 @@ Viewing the number of observations for each parameter that are assigned to a QAQ
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # view the number of observations in each QAQC flag
-> qaqcchk(dat)
+# view the number of observations in each QAQC flag
+qaqcchk(dat)
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-Raw nutrient data obtained from the CDMO will usually include replicate samples that were taken within a few minutes of each other.  The \code{rem\_reps} function combines nutrient data that occur on the same day to preserve an approximate monthly time step.  The \code{datetimestamp} column will always be averaged for replicates, but the actual observations will be combined based on the user-supplied function which defaults to the mean.  Other suggested functions include the \code{median}, \code{min}, or \code{max}.  The entire function call, including treatment of \code{NA} values, should be passed to the \code{FUN} argument (see the examples).  The function is meant to be used after \code{qaqc} processing, although it works with a warning if QAQC columns are present.
+A subset method added to the existing generic \code{subset} function in R is available for \code{"swmpr"} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator as a character string passed to the \code{operator} argument, such as \code{'>'} or \code{'<='}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (e.g., \code{'2007-01-01 06:30'}). 
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # get nutrient data, filter qaqc flags
-> data(apacpnut)
-> dat <- apacpnut
-> dat <- qaqc(dat)
-> 
-> # remove replicate nutrient data
-> rem_reps(dat)
-> 
-> # use different function to aggregate replicates
-> func <- function(x) max(x, na.rm = T)
-> rem_reps(dat, FUN = func)
+# import data
+data(apaebmet)
+dat <- apaebmet
+
+# select two parameters from dat
+subset(dat, select = c('rh', 'bp'))
+
+# subset records greater than or equal to a date
+subset(dat, subset = '2013-01-01 0:00', operator = '>=')
+
+# subset records within a date range, select two parameters
+subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'),
+  select = c('atemp', 'totsorad'))
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-A subset method added to the existing generic \code{subset} function in R is available for \code{"swmpr"} objects.  This function is used to subset the data by date and/or a selected parameter.  The date can be a single value or as two dates to select records within the range. The former case requires a binary operator as a character string passed to the \code{operator} argument, such as \code{`>'} or \code{`<='}.  The subset argument for the date(s) must also be a character string of the format YYYY-mm-dd HH:MM for each element (e.g., `2007-01-01 06:30').  Be aware that an error may be returned using this function if the subset argument is in the correct format but the calendar date does not exist, e.g. \code{`2012-11-31 12:00'}.  Finally, the function can be used to remove rows and columns that do not contain data. 
+The \code{setstep} function formats a \code{"swmpr"} object to a continuous time series at a given time step.  The function also has a default method making it useful for standardizing arbitrary time series to a given interval.  The first argument of the function, \code{timestep}, specifies the desired time step in minutes starting from the nearest hour of the first observation.  The second argument, \code{differ}, specifies the allowable tolerance in minutes for matching existing observations to the defined time steps in cases where the two are dissimilar.  Values for \code{differ} that are greater than one half the value of \code{timestep} are not allowed to prevent duplication of existing data.  Likewise, the default value for \code{differ} is one half the time step.
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # import data
-> data(apaebmet)
-> dat <- apaebmet
-> 
-> # select two parameters from dat
-> subset(dat, select = c('rh', 'bp'))
-> 
-> # subset records greater than or equal to a date
-> subset(dat, subset = '2013-01-01 0:00', operator = '>=')
-> 
-> # subset records within a date range
-> subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'))
-> 
-> # subset records within a date range, select two parameters
-> subset(dat, subset = c('2012-07-01 6:00', '2012-08-01 18:15'),
-+   select = c('atemp', 'totsorad'))
-> 
-> # remove rows/columns that do not contain data
-> subset(dat, rem_rows = T, rem_cols = T)
+# import, qaqc removal
+data(apadbwq)
+dat <- qaqc(apadbwq)
+
+# convert time series to two hour invervals
+# tolerance of +/- 30 minutes for matching existing data
+setstep(dat, timestep = 120, differ = 30)
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-The \code{setstep} function formats a \code{"swmpr"} object to a continuous time series at a given time step.  This function is usually not necessary because most stations collect data at 15 minute intervals, but it can be used to combine data or convert an existing time series to a different interval.  The first argument of the function, \code{timestep}, specifies the desired time step in minutes starting from the nearest hour of the first observation.  The second argument, \code{differ}, specifies the allowable tolerance in minutes for matching existing observations to the defined time steps in cases where the two are dissimilar.  Values for \code{differ} that are greater than one half the value of \code{timestep} are not allowed to prevent duplication of existing data.  Likewise, the default value for \code{differ} is one half the time step.  Time steps that do not match any existing data within the limits of the \code{differ} argument are not discarded, although a corresponding data value will not be assigned.
+The \code{comb} function is used to combine multiple \code{"swmpr"} objects into a single object with a continuous time series at a given step.  The \code{setstep} function is used internally such that \code{timestep} and \code{differ} are accepted arguments for \code{comb}.  Data are combined by creating a master time series that is used to iteratively merge all \code{"swmpr"} objects.  The time series for merging depends on the value passed to the \code{method} argument.  Passing \code{'union'} to \code{method} will create a time series that is continuous from the earliest and latest dates for all input objects, whereas \code{'intersect'} will create a continuous time series from the set of dates that are shared between input objects.  A character string or numeric vector can also be used to specify which of the input objects to use as the master time series for combining.  As with \code{setstep}, a default method for \code{comb} is provided to allow use with arbitrary data structures.  
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # import, qaqc removal
-> data(apadbwq)
-> dat <- qaqc(apadbwq)
-> 
-> # convert time series to two hour invervals
-> # tolerance of +/- 30 minutes for matching existing data
-> setstep(dat, timestep = 120, differ = 30)
-> 
-> # convert a nutrient time series to a continuous time series
-> # then remove empty rows and columns
-> data(apacpnut)
-> dat_nut <- apacpnut
-> dat_nut <- setstep(dat_nut, timestep = 60)
-> subset(dat_nut, rem_rows = T, rem_cols = T)
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+# get nut, wq, and met data as separate objects
+data(apacpnut)
+data(apacpwq)
+data(apaebmet)
+swmp1 <- apacpnut
+swmp2 <- apacpwq
+swmp3 <- apaebmet
 
-The \code{comb} function is used to combine multiple \code{"swmpr"} objects into a single object with a continuous time series at a given step.  The \code{setstep} function is used internally such that \code{timestep} and \code{differ} are accepted arguments for \code{comb}.  All arguments must be called explicitly since an arbitrary number of \code{"swmpr"} objects can be used as input to \code{comb}.  The function combines data by creating a master time series that is used to iteratively merge all \code{"swmpr"} objects.  The time series for merging depends on the value passed to the \code{method} argument.  Passing \code{`union'} to \code{method} will create a time series that is continuous from the earliest and latest dates for all input objects.  Passing \code{`intersect'} to \code{method} will create a continuous time series from the set of dates that are shared between all input objects.  Finally, a seven or eight character station name passed to \code{method} will merge all data based on a continuous time series for the specified station, which must be present in the input data.  Currently, combining identical data types from different stations is not possible (e.g., two water quality stations from the same reserve).  
+# combine nut and wq data by union
+comb(swmp1, swmp2, method = 'union')
 
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> # get nut, wq, and met data as separate objects
-> data(apacpnut)
-> data(apacpwq)
-> data(apaebmet)
-> swmp1 <- apacpnut
-> swmp2 <- apacpwq
-> swmp3 <- apaebmet
-> 
-> # combine nut and wq data by union
-> comb(swmp1, swmp2, method = 'union')
-> 
-> # combine nut and wq data by intersect
-> comb(swmp1, swmp3, method = 'intersect')
-> 
-> # combine nut, wq, and met data by nut time series, two hour time step
-> comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
+# combine nut and wq data by intersect
+comb(swmp1, swmp3, method = 'intersect')
+
+# combine nut, wq, and met data by nut time series, two hour time step
+comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 \subsection{Data analysis}
 
-The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (Table~\ref{tab:analyze}).  The general purpose tools are \code{"swmpr"} methods that were developed for existing generic functions in the R base installation or relevant packages (\pkg{SWMPr} imports and dependencies are listed on \href{http://cran.r-project.org/web/packages/SWMPr/index.html}{CRAN}). These functions include \code{"swmpr"} methods for \code{aggreswmp}, \code{filter}, and \code{approx} to deal with missing or noisy data and more general functions for exploratory data analysis, such as \code{plot}, \code{lines}, and \code{hist} methods.  Decomposition functions, \code{decomp} and \code{decomp\_cj}, are provided as relatively simple approaches for decomposing time series into additive or multiplicative components. Functions to estimate and plot ecosystem metabolism from combined water quality and weather data are provided by the \code{ecometab} and \code{plot\_metab} functions.  The analysis functions may or may not return a \code{"swmpr"} object depending on whether further processing with \code{"swmpr"} methods is possible from the output.    
-
-The \code{aggreswmp} function aggregates parameter data for a \code{"swmpr"} object by set units of time.  This function is most useful for aggregating noisy data to evaluate trends on longer time scales or to simply reduce the size of a dataset.  Data can be aggregated by years, quarters, months, weeks, days, or hours by a user-defined function, which defaults to the mean.  A \code{"swmpr"} object is returned for the aggregated data, although the \code{datetimestamp} vector will be converted to a date object if the aggregation period is a day or longer.  Days are assigned to the date vector if the aggregation period is a week or longer based on the \code{round} method for \code{"IDate"} objects created in the \CRANpkg{data.table} package \citep{Dowle14}.  Additionally, the method of treating \code{NA} values for the aggregation function should be noted since this may greatly affect the quantity of data that are returned, particularly for nutrient data (see the example below).
+The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (Table~\ref{tab:analyze}).  The general purpose tools are \code{"swmpr"} methods for existing S3 generics or are slight modifications to existing functions. These include \code{aggreswmp} to combine observations by set periods of time (e.g., weeks, months), \code{smoother} to average time series with a moving window, and \code{approx} to substitute missing data with interpolated values.  For brevity, the general functions are not discussed.  More specific functions for environmental time series include decomposition functions, \code{decomp} and \code{decomp\_cj}, and functions to estimate and plot ecosystem metabolism from combined water quality and weather data.  Several plotting methods to facilitate analysis are also descibed below.  
 
 % table for analysis functions
 %latex.default(to_tab[, "Description", drop = F], file = "", caption = "Analysis functions available from the \\pkg{SWMPr} package.  Full documentation for each function is in the help file (e.g., execute \\code{?aggreswmp} for individual functions or \\code{help.search(`analyze', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:analyze",     table.env = FALSE, where = "!tbp")%
@@ -426,127 +370,39 @@ The \code{aggreswmp} function aggregates parameter data for a \code{"swmpr"} obj
 \hline
 \code{aggreswmp}&Aggregate \code{"swmpr"} objects for different time periods - years, quarters, months,  weeks, days, or hours.  The aggregation function defaults to the mean.\tabularnewline
 \code{aggremetab}&Aggregate metabolism data from a \code{"swmpr"} object.  This is primarly used within \code{plot\_metab} but may be useful for simple summaries of daily metabolism data.\tabularnewline
-\code{ecometab}&Estimate ecosystem metabolism for a combined water quality and weather dataset using the open-water method.\tabularnewline
+\code{ecometab}&Estimate ecosystem metabolism for a combined water quality and weather dataset using the open-water method \citep{Odum56}.\tabularnewline
 \code{decomp}&Decompose a \code{"swmpr"} time series into trend, seasonal, and residual components.  This is a simple wrapper to \code{decompose} \citep{Kendall83}.  Decomposition of monthly or daily trends is possible.\tabularnewline
 \code{decomp\_cj}&Decompose a \code{"swmpr"} time series into grandmean, annual, seasonal, and events components.  This is a simple wrapper to \code{decompTs} in the \CRANpkg{wq} package \citep{Jassby14}.  Only monthly decomposition is possible.\tabularnewline
-\code{hist}&Plot a histogram for a \code{"swmpr"} object.\tabularnewline
+\code{hist}&Plot a histogram for a single variable.\tabularnewline
 \code{lines}&Add lines to an existing plot created with \code{plot}.\tabularnewline
 \code{map\_reserve}&Create a map of all stations in a reserve using the \CRANpkg{ggmap} package \citep{Kahle13}.\tabularnewline
-\code{na.approx}&Linearly interpolate missing data (\code{NA} values) in a \code{"swmpr"} object. The maximum gap size that is interpolated is defined by the arguments.\tabularnewline
+\code{na.approx}&Linearly interpolate missing data (\code{NA} values) in a \code{"swmpr"} object.\tabularnewline
 \code{overplot}&Plot multiple time series on the same y-axis.\tabularnewline
-\code{plot}&Plot a univariate  time series for a \code{"swmpr"} object.  The parameter name must be specified.\tabularnewline
+\code{plot}&Plot a univariate  time series for a \code{"swmpr"} object.\tabularnewline
 \code{plot\_metab}&Plot ecosystem metabolism estimates after running \code{ecometab} on a combined \code{"swmpr"} object.\tabularnewline
-\code{plot\_summary}&Create summary plots of seasonal/annual trends and anomalies for a water a single paramter of interest.\tabularnewline
-\code{smoother}&Smooth \code{"swmpr"} objects with a moving window average.  Window size and sides (e.g., centered) can be specified, passed to \code{filter}.\tabularnewline
+\code{plot\_summary}&Create summary plots of seasonal/annual trends and anomalies for a single parameter.\tabularnewline
+\code{smoother}&Smooth \code{"swmpr"} objects with a moving window average, passed to \code{filter}.\tabularnewline
 \hline
 \end{tabular}\end{center}
 
 \end{table}
 
 
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> # get data, keep all observations
-> data(apacpnut)
-> dat <- qaqc(apacpnut, qaqc_keep = NULL)
-> 
-> # aggregate by quarters
-> agg_dat <- aggreswmp(dat, by = 'quarters')
-> nrow(agg_dat)
-## [1] 47
-> # aggregate by quarters, remove rows with NA values
-> # note the reduction in the number of rows
-> agg_dat2 <- aggreswmp(dat, by = 'quarters', na.action = na.omit)
-> nrow(agg_dat2)
-## [1] 16
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-Time series can be smoothed to better characterize a signal from noisy data (Figure~\ref{fig:smooth_ex}).  Although there are many approaches to smoothing, a moving window average is intuitive and commonly used.  The \code{smoother} function can be used to smooth parameters in a \code{"swmpr"} object using a specified window size.  The \code{window} argument specifies the number of observations included in the moving average where larger windows result in greater smoothing.  The \code{sides} argument specifies how the average is calculated for each observation.  Setting \code{sides = 1} will filter observations within the window that are previous to the current observation, whereas \code{sides = 2} will filter observations within the window centered at zero lag from the current observation. As before, the \code{params} argument specifies which parameters to smooth.
+The disaggregation of time series into additive or multiplicative components is a common application for trend analysis.  The \code{decomp} function is a simple wrapper to \code{decompose} \citep{Kendall83} that separates a time series into a trend, cyclical variation (e.g., daily or annual), and the remainder  (Figure~\ref{fig:decomp_ex1}).  An additive decomposition assumes that the cyclical component of the time series is stationary (i.e., the variance is constant), otherwise a multiplicative decomposition can be used.  The \code{frequency} argument describes the periodicity of the cyclical parameter in units of the native time step.  For example, the \code{frequency} for a parameter with daily periodicity would be 96 if the time step is 15 minutes (24 hours * 60 minutes / 15 minutes).  For simplicity, character strings of \code{'daily'} or \code{'annual'} can be supplied in place of numeric values, although any number can be used to identify an arbitrary cyclical component.  A starting value of the time series must be supplied in the latter case that indicates the sequence in the cycle for the first observation (see \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html}{\code{ts}} for details).
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # import data, qaqc and subset
-> data(apadbwq)
-> dat <- qaqc(apadbwq)
-> dat <- subset(dat, select = 'do_mgl', 
-+   subset = c('2012-07-09 00:00', '2012-07-24 00:00')
-+   )
-> 
-> # smooth using a window of 50 observations
-> dat_smooth <- smoother(dat, window = 50, params = 'do_mgl')
-> 
-> # plot raw and smoothed
-> plot(dat)
-> lines(dat_smooth, col = 'red', lwd = 2)
-\end{verbatim}
-\end{kframe}\begin{figure}[!h]
+# get data
+data(apadbwq)
+dat <- apadbwq
 
-{\centering \includegraphics[width=\textwidth]{figure/smooth_ex-1} 
+# subset for daily decomposition
+dat <- subset(dat, subset = c('2013-07-01 00:00', '2013-07-31 00:00'))
 
-}
-
-\caption[Raw and smoothed dissolved oxygen data for a two-week period after using the \code{smoother} function]{Raw and smoothed dissolved oxygen data for a two-week period after using the \code{smoother} function.}\label{fig:smooth_ex}
-\end{figure}
-
-
-\end{knitrout}
-
-A common issue with any statistical analysis is the treatment of missing values.  Missing data can be excluded from the analysis, included but treated as true zeroes, or interpolated based on similar values.  An approach implemented in \pkg{SWMPr} is linear interpolation using the \code{na.approx} function (Figure~\ref{fig:interp_ex}).  A simple curve fitting method is used to create a continuous set of records between observations separated by missing data.  However, the ability of the interpolated data to approximate actual trends is related to the maximum gap size between observations with missing data.  Interpolation between larger gaps are less likely to resemble patterns of an actual parameter, whereas interpolation between smaller gaps are often more accurate.  An upper limit on the maximum gap size to interpolate trends depends on the characteristics of the dataset such that a trial and error approach is appropriate for most applications.  The \code{maxgap} argument passed to \code{na.approx} defines the maximum gap size for interpolation and the following illustrates use of different maximum values to fill missing data.  
-
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> # get data, qaqc and subset
-> data(apadbwq)
-> dat <- qaqc(apadbwq)
-> dat <- subset(dat, select = 'do_mgl', 
-+   subset = c('2013-01-22 00:00', '2013-01-26 00:00'))
-> 
-> # interpolate, maxgap of 10 records
-> fill1 <- na.approx(dat, params = 'do_mgl', maxgap = 10)
-> 
-> # interpolate maxgap of 30 records
-> fill2 <- na.approx(dat, params = 'do_mgl', maxgap = 30)
-> 
-> # plot for comparison
-> par(mfrow = c(3, 1))
-> plot(dat, main = 'Raw')
-> plot(fill1, col = 'red', main = 'Interpolation - maximum gap of 10 records')
-> lines(dat)
-> plot(fill2, col = 'red', main = 'Interpolation - maximum gap of 30 records')
-> lines(dat)
-\end{verbatim}
-\end{kframe}\begin{figure}[!h]
-
-{\centering \includegraphics[width=\textwidth]{figure/interp_ex-1} 
-
-}
-
-\caption[Examples illustrating use of the \code{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.]{Examples illustrating use of the \code{na.approx} function to fill gaps of different sizes in a dissolved oxygen time series for a four day period.}\label{fig:interp_ex}
-\end{figure}
-
-
-\end{knitrout}
-
-The disaggregation of time series into additive or multiplicative components that can be attributed to separate sources of variance is another common application for trend analysis.  The \code{decomp} function is a simple wrapper to \code{decompose} \citep{Kendall83} that separates a time series into components describing a trend, cyclical variation (e.g., daily or annual), and the remainder  (Figure~\ref{fig:decomp_ex1}).  An additive decomposition assumes that the cyclical component of the time series is stationary (i.e., the variance is constant), otherwise a multiplicative decomposition can be used.  The \code{frequency} argument describes the periodicity of the cyclical parameter in units of the native time step.  For example, the \code{frequency} for a parameter with daily periodicity would be 96 if the time step is 15 minutes (24 hours * 60 minutes / 15 minutes).  The frequency of a parameter with annual periodicity at a 15 minute time step would be 35040 (365 days * 24 hours * 60 minutes / 15 minutes).  For simplicity, character strings of \code{'daily'} or \code{'annual'} can be supplied in place of numeric values, although any number can be used to identify an arbitrary cyclical component.  A starting value of the time series must be supplied in the latter case that indicates the sequence in the cycle for the first observation.  For example, the starting value would be 1 if the first observation is at sunrise for a diurnal cycle (see the help file for the \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html}{\code{ts}} function for details).  Use of the \code{setstep} function is also required to standardize the time step prior to decomposition.
-
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> # get data
-> data(apadbwq)
-> dat <- apadbwq
-> 
-> # subset for daily decomposition
-> dat <- subset(dat, subset = c('2013-07-01 00:00', '2013-07-31 00:00'))
-> 
-> # daily decomposition of DO and plot
-> dc_dat <- decomp(dat, param = 'do_mgl', frequency = 'daily')
-> plot(dc_dat)
+# daily decomposition of DO and plot
+dc_dat <- decomp(dat, param = 'do_mgl', frequency = 'daily')
+plot(dc_dat)
 \end{verbatim}
 \end{kframe}\begin{figure}[!h]
 
@@ -560,18 +416,18 @@ The disaggregation of time series into additive or multiplicative components tha
 
 \end{knitrout}
 
-An alternative approach to time series decomposition is provided by the \code{decomp\_cj} function, which is a simple wrapper to the \code{decompTs} function in the \CRANpkg{wq} package \citep{Cloern10,Jassby14}.  The \code{decomp\_cj} function provides only a monthly decomposition, which is appropriate for characterizing relatively long-term trends.  This approach works best for nutrient data that are typically obtained on a monthly cycle.  The function will also work with continuous water quality or weather data but note that the data must first be aggregated on the monthly scale before decomposition.  The time series is decomposed into the grandmean, annual, seasonal, and events components, as compared to trend, seasonal, and random components for the \code{decomp} function described above.  For both, the random or events components can be considered anomalies that do not follow the trends in the remaining categories.  Additional arguments passed to \code{decompTs} can be used with \code{decomp\_cj}, such as \code{startyr}, \code{endyr}, and \code{type}.  Values passed to \code{type} are \code{mult} (default) or \code{add}, referring to multiplicative or additive decomposition.  Figure~\ref{fig:decomp_ex2} shows the results from the \code{decomp\_cj} function applied to a multi-year chlorophyll time series.
+An alternative approach for decomposition is provided by the \code{decomp\_cj} function, which is a simple wrapper to the \code{decompTs} function in the \CRANpkg{wq} package \citep{Cloern10,Jassby14}.  The \code{decomp\_cj} function is a monthly decomposition for characterizing relatively long-term trends.  This approach works best for nutrient data that are typically obtained on a monthly cycle.  The time series is decomposed into the grandmean, annual, seasonal, and events components (Figure~\ref{fig:decomp_ex2}), as compared to trend, seasonal, and random components for the \code{decomp} function above.  For both functions, the random or events components can be considered anomalies that do not follow the trends in the remaining categories.  Additional arguments passed to \code{decompTs} can be used with \code{decomp\_cj}, such as \code{startyr}, \code{endyr}, and \code{type}.  Values passed to \code{type} are \code{mult} (default) or \code{add}, referring to multiplicative or additive decomposition.
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # get data
-> data(apacpnut)
-> dat <- apacpnut
-> dat <- qaqc(dat, qaqc_keep = NULL)
-> 
-> # decomposition of chl
-> decomp_cj(dat, param = 'chla_n')
+# get data
+data(apacpnut)
+dat <- apacpnut
+dat <- qaqc(dat, qaqc_keep = NULL)
+
+# decomposition of chl
+decomp_cj(dat, param = 'chla_n')
 \end{verbatim}
 \end{kframe}\begin{figure}[!h]
 
@@ -585,72 +441,23 @@ An alternative approach to time series decomposition is provided by the \code{de
 
 \end{knitrout}
 
-Detailed exploratory graphics are also useful for evaluating general trends in observed data.  Several graphics showing seasonal and annual trends for a single SWMP parameter can be obtained using the \code{plot\_summary} function (Figure~\ref{fig:summary_ex}).  The plots include monthly distributions, monthly anomalies, and annual anomalies in multiple formats.  An interactive Shiny web application \citep{Chang15} that uses this function is available for viewing results of any parameter at all SWMP sites (see the \nameref{swmp_apps} section).
+Estimates of ecosystem metabolism provide a measure of system productivity to evaluate whether an ecosystem is a net source or sink of organic material.  The open-water method \citep{Odum56} is a common approach to quantify metabolism using a mass balance equation that describes the change in dissolved oxygen over time from the balance between photosynthetic and respiration processes, corrected using an empirically constrained air-sea gas diffusion model \citep{Ro06,Thebault08}. A detailed discussion of the method is beyond the scope of this article, although users are encouraged to consult references herein for additional information (see \citet{Kemp12,Needoba12,Caffrey14}, also the package help files).  Methods for estuaries have not previously been available in R, although the \CRANpkg{StreamMetabolism} package provides an approach for freshwater systems.  The following is an example that shows use of \code{ecometab} with a combined water quality and weather data set.  Monthly aggregations of the raw, daily estimates are plotted using \code{plot\_metab} (Figure~\ref{fig:metab_ex}).
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> ## import data
-> data(apacpnut)
-> dat <- qaqc(apacpnut)
-> 
-> ## plot
-> plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
-\end{verbatim}
-\end{kframe}\begin{figure}[!h]
+## import water quality and weather data
+data(apadbwq)
+data(apaebmet)
 
-{\centering \includegraphics[width=\textwidth]{figure/summary_ex-1} 
+## qaqc, combine
+wq <- qaqc(apadbwq)
+met <- qaqc(apaebmet)
+dat <- comb(wq, met)
 
-}
-
-\caption[Summaries of a multi-year chlorophyll time series using the \code{plot\_summary} function]{Summaries of a multi-year chlorophyll time series using the \code{plot\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)}\label{fig:summary_ex}
-\end{figure}
-
-
-\end{knitrout}
-
-The \code{overplot} function provides an alternative approach to viewing observed data from the same station.  This function uses the base \pkg{graphics} package to plot multiple time series on the same y-axis.
-
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> ## import data
-> data(apacpwq)
-> dat <- qaqc(apacpwq)
-> 
-> ## plot
-> overplot(dat, select = c('depth', 'do_mgl', 'ph', 'turb'),
-+   subset = c('2013-01-01 0:0', '2013-02-01 0:0'), lwd = 2)
-\end{verbatim}
-\end{kframe}\begin{figure}[!h]
-
-{\centering \includegraphics[width=\textwidth]{figure/overplot-1} 
-
-}
-
-\caption[The \code{overplot} function plots multiple variables on the same y-axis]{The \code{overplot} function plots multiple variables on the same y-axis.}\label{fig:overplot}
-\end{figure}
-
-
-\end{knitrout}
-
-Estimates of ecosystem metabolism provide a measure of overall system productivity to evaluate whether an ecosystem is a net source or sink of organic material.  The open-water method \citep{Odum56} is a common approach to quantify metabolism using a mass balance equation that describes the change in dissolved oxygen over time from the balance between photosynthetic and respiration processes, corrected using an empirically constrained air-sea gas diffusion model \citep{Ro06,Thebault08}. A detailed discussion of the method is beyond the scope of this article, although users are strongly encouraged to consult references herein for additional information (see \citet{Kemp12,Needoba12,Caffrey14}, also the package help files).  The following is an example that shows use of the \code{ecometab} function from a combined water quality and weather data set.  Monthly aggregations of the raw, daily estimates are plotted using \code{plot\_metab} (Figure~\ref{fig:metab_ex}).
-
-\begin{knitrout}\small
-\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-> ## import water quality and weather data
-> data(apadbwq)
-> data(apaebmet)
-> 
-> ## qaqc, combine
-> wq <- qaqc(apadbwq)
-> met <- qaqc(apaebmet)
-> dat <- comb(wq, met)
-> 
-> ## estimate metabolism
-> res <- ecometab(dat, trace = FALSE)
-> plot_metab(res)
+## estimate metabolism
+res <- ecometab(dat, trace = FALSE)
+plot_metab(res)
 \end{verbatim}
 \end{kframe}\begin{figure}[!h]
 
@@ -664,13 +471,62 @@ Estimates of ecosystem metabolism provide a measure of overall system productivi
 
 \end{knitrout}
 
-Finally, the \code{map\_reserve} function can be used to create a map with all stations at a reserve using functions in the \CRANpkg{ggmap} package \citep{Kahle13}. This map may be useful for aiding the interpretation of spatial trends in water quality parameters given the relative locations in a reserve.  The current function is limited to Google maps of four types that can be set with the \code{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \code{zoom} argument can be chosen through trial and error depending on the spatial extent of the reserve.  See the help documentation for the \code{ggmap} function for more info on \code{zoom}.
+Exploratory graphics are also useful for evaluating general trends in observed data.  Several graphics showing seasonal and annual trends for a single SWMP parameter can be obtained using the \code{plot\_summary} function (Figure~\ref{fig:summary_ex}).  The plots include monthly distributions, monthly anomalies, and annual anomalies in multiple formats.  An interactive \CRANpkg{shiny} web application \citep{Chang15} that uses this function is available for viewing results for all SWMP sites (see the \nameref{swmp_apps} section).
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-> # plot the stations at Jacques Cousteau reserve
-> map_reserve('jac')
+## import data
+data(apacpnut)
+dat <- qaqc(apacpnut)
+
+## plot
+plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
+
+{\centering \includegraphics[width=\textwidth]{figure/summary_ex-1} 
+
+}
+
+\caption[Summaries of a multi-year chlorophyll time series using the \code{plot\_summary} function]{Summaries of a multi-year chlorophyll time series using the \code{plot\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)}\label{fig:summary_ex}
+\end{figure}
+
+
+\end{knitrout}
+
+Similarly, the \code{overplot} function provides an alternative approach to viewing observed data from the same station.  This function uses the base \pkg{graphics} package to plot multiple time series on the same y-axis.
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## import data
+data(apacpwq)
+dat <- qaqc(apacpwq)
+
+## plot
+overplot(dat, select = c('depth', 'do_mgl', 'ph', 'turb'),
+  subset = c('2013-01-01 0:0', '2013-02-01 0:0'), lwd = 2)
+\end{verbatim}
+\end{kframe}\begin{figure}[!h]
+
+{\centering \includegraphics[width=\textwidth]{figure/overplot-1} 
+
+}
+
+\caption[The \code{overplot} function plots multiple variables on the same y-axis]{The \code{overplot} function plots multiple variables on the same y-axis.}\label{fig:overplot}
+\end{figure}
+
+
+\end{knitrout}
+
+Finally, the \code{map\_reserve} function can be used to create a map of stations at a reserve using the \CRANpkg{ggmap} package \citep{Kahle13}. The function uses Google maps of four types that can be set with the \code{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \code{zoom} argument can be chosen through trial and error depending on the spatial extent of the reserve.
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+# plot the stations at Jacques Cousteau reserve
+map_reserve('jac')
 \end{verbatim}
 \end{kframe}\begin{figure}[!h]
 
@@ -687,11 +543,11 @@ Finally, the \code{map\_reserve} function can be used to create a map with all s
 \section{Applications using the \pkg{SWMPr} package}
 \label{swmp_apps}
 
-Two \CRANpkg{shiny} web applications hav been created that illustrate the improved ability to synthesize and evaluate multi-year time series using \pkg{SWMPr}.  The first application evaluates trends in SWMP data within and between sites using an interactive \pkg{leaflet} map (\citet{Cheng15}, Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time, whereas trends between sites are shown on the map for each station as circles that identify the direction and significance of the trend.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting.
+Two \CRANpkg{shiny} web applications illustrate the improved ability to synthesize and evaluate multi-year time series using \pkg{SWMPr}.  The first application evaluates trends in SWMP data within and between sites using an interactive \pkg{leaflet} map (\citet{Cheng15}, Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time, whereas trends between sites are shown on the map for each station as circles that identify the direction and significance of the trend.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/swmp_comp.pdf}
+\includegraphics[width = \textwidth]{figure/swmp_comp.pdf}
 \caption{Online application for comparing trends in SWMP data parameters using an interactive map.  Link: \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}}
 \label{fig:swmp_comp}
 \end{center}
@@ -699,7 +555,7 @@ Two \CRANpkg{shiny} web applications hav been created that illustrate the improv
 
 \section{Conclusions}
 
-\pkg{SWMPr} was developed to augment existing data management programs (i.e., CDMO) by providing a bridge betwen the raw data and the analysis software through its numerous data retrieval functions (Table~\ref{tab:retrieve}).  Established QAQC methods and data processing techniques are also enhanced with \pkg{SWMPr} by functions that filter observations for different QAQC flags (\code{qaqc}) and subset by selected dates or variables (\code{subset}).  Additionally, challenges comparing differents datasets are addressed by the \code{setstep} and \code{comb} functions that standardize and combine time series.  Finally, the analysis functions provide numerous tools to implement common analyses for time series and more specific methods for water quality data.  Further development of the package will include modifications and additional functions to better integrate data analysis with the quality of information provided by SWMP.  For example, several functions include default methods to extend use beyond the \code{"swmpr"} object and additional development will continue to focus on modifying the package to handle arbitrary data structures.   
+\pkg{SWMPr} was developed to augment existing data management programs (i.e., CDMO) by providing a bridge betwen the raw data and the analysis software through its numerous data retrieval functions (Table~\ref{tab:retrieve}).  Established QAQC methods and data processing techniques are also enhanced with \pkg{SWMPr} by functions that filter observations for different QAQC flags (\code{qaqc}) and subset by selected dates or variables (\code{subset}).  Additionally, challenges comparing differents datasets are addressed by the \code{setstep} and \code{comb} functions that standardize and combine time series.  Finally, the analysis functions provide numerous tools to implement common analyses for time series and more specific methods for water quality data.  Further development of the package will include modifications and additional functions to better integrate data analysis with the quality of information provided by SWMP.  Several functions include default methods to extend use beyond the \code{"swmpr"} object and additional development will continue to focus on modifying the package to handle arbitrary data structures.  These challenges are not unique to the SWMP database such that many of the functions will facilitate evaluations of more generic time series datasets.  
 
 \section{Acknowledgments}
 
