@@ -1,4 +1,4 @@
-for R journal, follow instructions on website, particularly use the wrapper and template files
+for R journal, follow instructions on website, use the wrapper and template files
 
 RJournal.sty must be in working directory
 
