@@ -44,11 +44,12 @@ options(replace.assign=TRUE,width=90,digits=1)
 
 {\it Response to reviewer comments ``SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries'', by M. W. Beck}
 
-{\it The authors wish to thank the reviewers for providing thoughtful comments and suggestions on my manuscript.  My response to these comments are shown in italics.  Page and paragraph numbers refer to the original manuscript.}
+{\it I thank the reviewers for providing thoughtful comments on my manuscript and the SWMPr package.  My response to these comments are shown in italics.  Page and paragraph numbers refer to the original manuscript.}
 
 \Bigtxt{Reviewer 1:}
 
 *Main text*
+
 I didn't find it obvious from the text whether the setstep and comb functions would handle missing data with interpolation or NA. (It's NA, as it turns out.) Perhaps it is because I don't do a lot of work in this domain, though.
 
 *Package performance*
@@ -73,9 +74,23 @@ In the file https://github.com/fawda123/swmp\_summary/blob/master/server.R, the 
 
 First, I did not see any information about how SWMPR treats censored data, i.e., measurements that can be reported only as less than or greater than an analysis or reporting limit. For example, measurements of nutrient parameters could include values that are below analytical detection limits. A considerable amount of research has shown that the assumptions and methods used to analyze data that include censored values can influence the conclusions of the analyses (for example, see Helsel 2012). Considerable attention is given in the manuscript, appropriately, to various quality assurance/quality control functions and flags, and I realize not every aspect of QA/QC needs to be covered explicitly in the manuscript. However, I believe that the topic of censored values is important enough that the paper would be improved by providing explicit information about how censored values may be coded, retrieved, and ultimately used in various data analyses carried out by SWMPr.
 
+{\it I fully agree that considering censored data is a necessary aspect of processing and analyzing water quality data.  Censored data, either above or below the detection limit, are given unique QAQC flags during initial data processing through the Centralized Data Management Office (CDMO).  Censored values in the imported data can be identified using functions in the SWMPr package.  The default behavior of the qaqc function is to remove censored values, but the user can also retain these values by changing the function arguments.  A data frame showing the number of observations for a given QAQC flag can also be retrieved using the qaqcchk function.  I have revised the text to more clearly describe the presence of censored values in SWMP data and how SWMPr can be used to assess their distribution (page 4, paragraph 3): 
+
+``SWMP data often contain observations above or below the detection limit for the sensor or laboratory method used to quantify the parameters.  For example, nutrient data exceeding the high sensor range are assigned a QAQC flag of -5, whereas data below the low sensor range are assigned a QAQC flag of -4.  The presence of censored data is non-trivial and can influence the types of analyses that are appropriate for the time series (Helsel, 2012).  A detailed discussion of methods for evaluating censored data is beyond the scope of the manuscript and existing methods for R are provided by other packages (e.g., cents, McLeod et al., 2014).  However, the functions in SWMPr can be used to identify censored data based on the appropriate QAQC flag for a given parameter.  Viewing this information can be helpful for determining how to further process the data with the qaqc function or alternative methods outside of SWMPr.  The qaqcchk function returns a data.frame of the number of observations for a parameter that are assigned to all QAQC flags, including those for censored data.  SWMP data should not be analyzed without viewing this information to determine an appropriate method to address data with questionable QAQC flags.''
+}
+
 Second, in the "Applications using the SWMPr package" section near the end of the manuscript, simple linear regression (SLR) is identified as a technique used to summarize trends in a parameter over time. This particular statistical method may or may not be appropriate for a given data set. Alternative trend analysis methods exist, including several that treat censored values appropriately (again, Helsel 2012 is a useful reference). It is unclear from the manuscript what alternatives to SLR may be available in SWMPr (e.g., maximum likelihood estimation, Akritas-Theil-Sen nonparametric regression, others). Therefore, clarifying text that either identifies the availability of other trend analysis procedures in SWMPr or provides caveats to the use of SLR (e.g., used only for initial exploratory analysis) should be added to this section.
+
+{\it I agree that the use of SLR is a simple method that may not be appropriate for all datasets provided by SWMP.  The application is meant to be exploratory and I have revised the text to clarify that SLR is a simple and potentially inadequate method for trend analysis, particularly with censored data.  The text description on the application was also revised.
+
+Page 12, paragraph one: `More robust methods for evaluating trends are currently not provided by the application and the use of simple linear regression is meant for exploratory purposes only.'
+
+Added to app: `Please note that the use of simple regression to identify trends is for exploratory purposes only and may not be appropriate for all datasets.'
+}
 
 Reference:
 Helsel, D.R. 2012. Statistics for Censored Environmental Data Using Minitab and R. 2nd edition, John Wiley \& Sons, Inc. Hoboken, New Jersey. 324pp.
+
+{\it This reference was added to the manuscript.}
 
 \end{document}

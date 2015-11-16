@@ -1,22 +1,9 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Bulthius(1995)]{Bulthius95}
-D.~A. Bulthius.
-\newblock Distribution of seagrasses in a north {P}uget {S}ound estuary -
-  {P}adilla {B}ay, {W}ashington, {USA}.
-\newblock \emph{Aquatic Botany}, 50\penalty0 (1):\penalty0 99--105, 1995.
-
-\bibitem[Caffrey(2003)]{Caffrey03}
-J.~M. Caffrey.
-\newblock Production, respiration and net ecosystem metabolism in {U.S.}
-  estuaries.
-\newblock \emph{Environmental Monitoring and Assessment}, 81\penalty0
-  (1-3):\penalty0 207--219, 2003.
 
 \bibitem[Caffrey et~al.(2013)Caffrey, Murrell, Amacker, Harper, Phipps, and
   Woodrey]{Caffrey14}
@@ -48,21 +35,6 @@ J.~E. Cloern and A.~D. Jassby.
 \newblock \emph{Estuaries and Coasts}, 33\penalty0 (2):\penalty0 230--241,
   2010.
 
-\bibitem[Dix et~al.(2008)Dix, Phlips, and Gleeson]{Dix08}
-N.~G. Dix, E.~J. Phlips, and R.~A. Gleeson.
-\newblock Water quality changes in the {G}uana {T}olomato {M}atanzas {N}ational
-  {E}stuarine {R}esearch {R}eserve, {F}lorida, associated with four tropical
-  storms.
-\newblock \emph{Journal of Coastal Research}, 55\penalty0 (SI):\penalty0
-  26--37, 2008.
-
-\bibitem[Dowle et~al.(2014)Dowle, Short, Lianoglou, Srinivasan, Saporta, and
-  Antonyan]{Dowle14}
-M.~Dowle, T.~Short, S.~Lianoglou, A.~Srinivasan, R.~Saporta, and E.~Antonyan.
-\newblock \emph{data.table: Extension of data.frame}, 2014.
-\newblock URL \url{http://CRAN.R-project.org/package=data.table}.
-\newblock R package version 1.9.4.
-
 \bibitem[Fries et~al.(2008)Fries, Ivanov, Bhanushali, wilson, Broadbent, and
   Sanderson]{Fries08}
 D.~P. Fries, S.~Z. Ivanov, P.~H. Bhanushali, J.~A. wilson, H.~A. Broadbent, and
@@ -78,6 +50,12 @@ H.~B. Glasgow, J.~M. Burkholder, R.~E. Reed, A.~J. Lewitus, and J.~E. Kleinman.
   technologies.
 \newblock \emph{Journal of Experimental Marine Biology and Ecology},
   300\penalty0 (1-2):\penalty0 409--448, 2004.
+
+\bibitem[Helsel(2012)]{Helsel12}
+D.~R. Helsel.
+\newblock \emph{Statistics for Censored Environmental Data Using Minitab and
+  R}.
+\newblock John Wiley \& Sons, Inc., Hoboken New Jersey, 2nd edition, 2012.
 
 \bibitem[Jassby and Cloern(2014)]{Jassby14}
 A.~D. Jassby and J.~E. Cloern.
@@ -104,6 +82,13 @@ M.~Kendall and A.~Stuart.
 \newblock \emph{The Advanced Theory of Statistics}, volume~3.
 \newblock MacMillan Publishing Company, New York, New York, 1983.
 
+\bibitem[McLeod et~al.(2014)McLeod, Mohammad, Veenstra, and
+  El-Shaarawi]{McLeod14}
+A.~McLeod, N.~M. Mohammad, J.~Veenstra, and A.~El-Shaarawi.
+\newblock \emph{cents: Censored time series}, 2014.
+\newblock URL \url{http://CRAN.R-project.org/package=cents}.
+\newblock R package version 0.1-41.
+
 \bibitem[Needoba et~al.(2012)Needoba, Peterson, and Johnson]{Needoba12}
 J.~A. Needoba, T.~D. Peterson, and K.~S. Johnson.
 \newblock Method for the quantification of aquatic primary production and net
@@ -124,16 +109,6 @@ K.~S. Ro and P.~G. Hunt.
 \newblock \emph{Transactions of the American Society of Agricultural and
   Biological Engineers}, 49\penalty0 (5):\penalty0 1615--1622, 2006.
 
-\bibitem[Sanger et~al.(2002)Sanger, Arendt, Chen, Wenner, Holland, Edwards, and
-  Caffrey]{Sanger02}
-D.~M. Sanger, M.~D. Arendt, Y.~Chen, E.~L. Wenner, A.~F. Holland, D.~Edwards,
-  and J.~Caffrey.
-\newblock A synthesis of water quality data: National estuarine research
-  reserve system-wide monitoring program (1995-2000).
-\newblock Technical report, National Estuarine Research Reserve Technical
-  Report Series 2002:3. South Carolina Department of Natural Resources, Marine
-  Resources Division Contribution No. 500, Charleston, South Carolina, 2002.
-
 \bibitem[{System-Wide Monitoring Program Data Analysis Training}(2014)]{SWMP14}
 {System-Wide Monitoring Program Data Analysis Training}.
 \newblock Swmp data analysis training workshop provided at the 2014 nerrs/nerra
@@ -146,13 +121,5 @@ J.~Th\'{e}bault, T.~S. Schraga, J.~E. Cloern, and E.~G. Dunlavey.
 \newblock Primary production and carrying capacity of former salt ponds after
   reconnection to {S}an {F}rancisco {B}ay.
 \newblock \emph{Wetlands}, 28\penalty0 (3):\penalty0 841--851, 2008.
-
-\bibitem[Wenner et~al.(2004)Wenner, Sanger, Arendt, Holland, and
-  Chen]{Wenner04}
-E.~Wenner, D.~Sanger, M.~Arendt, A.~F. Holland, and Y.~Chen.
-\newblock Variability in dissolved oxygen and other water-quality variables
-  within the {N}ational {E}stuarine {R}esearch {R}eserve {S}ystem.
-\newblock \emph{Journal of Coastal Research}, 45\penalty0 (SI):\penalty0
-  17--38, 2004.
 
 \end{thebibliography}

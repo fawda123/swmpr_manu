@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  16 NOV 2015 13:04
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  16 NOV 2015 16:04
 entering extended mode
 **swmpr_manu.tex
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.tex
@@ -1507,25 +1507,21 @@ Underfull \hbox (badness 3138) in paragraph at lines 382--383
 []|\T1/ppl/m/n/10 (+20) Plot ecosys-tem metabolism es-ti-mates af-ter run-ning
  []
 
-[6] [7] <figure/decomp_ex1-1.pdf, id=137, 505.89pt x 433.62pt>
+[6] [7] <figure/decomp_ex1-1.pdf, id=144, 505.89pt x 433.62pt>
 File: figure/decomp_ex1-1.pdf Graphic file (type pdf)
 
 <use figure/decomp_ex1-1.pdf>
 Package pdftex.def Info: figure/decomp_ex1-1.pdf used on input line 409.
 (pdftex.def)             Requested size: 398.33858pt x 341.43785pt.
-
-<figure/decomp_ex2-1.pdf, id=144, 505.89pt x 433.62pt>
+ [8 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex1-1.pdf>] <figure/decomp_ex
+2-1.pdf, id=164, 505.89pt x 433.62pt>
 File: figure/decomp_ex2-1.pdf Graphic file (type pdf)
 
 <use figure/decomp_ex2-1.pdf>
 Package pdftex.def Info: figure/decomp_ex2-1.pdf used on input line 434.
 (pdftex.def)             Requested size: 398.33858pt x 341.43785pt.
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[8 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex1-1.pdf>]
-<figure/metab_ex-1.pdf, id=176, 578.16pt x 289.08pt>
+<figure/metab_ex-1.pdf, id=179, 578.16pt x 289.08pt>
 File: figure/metab_ex-1.pdf Graphic file (type pdf)
 
 <use figure/metab_ex-1.pdf>
@@ -1536,7 +1532,7 @@ Package pdftex.def Info: figure/metab_ex-1.pdf used on input line 464.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [9 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex2-1.pdf>]
-<figure/summary_ex-1.pdf, id=197, 939.51pt x 505.89pt>
+<figure/summary_ex-1.pdf, id=201, 939.51pt x 505.89pt>
 File: figure/summary_ex-1.pdf Graphic file (type pdf)
 
 <use figure/summary_ex-1.pdf>
@@ -1544,18 +1540,22 @@ Package pdftex.def Info: figure/summary_ex-1.pdf used on input line 488.
 (pdftex.def)             Requested size: 398.33858pt x 214.48706pt.
  [10 <M:/docs/manuscripts/swmpr_manu/figure/metab_ex-1.pdf> <M:/docs/manuscript
 s/swmpr_manu/figure/summary_ex-1.pdf>]
-<figure/overplot-1.pdf, id=220, 650.43pt x 289.08pt>
+<figure/overplot-1.pdf, id=227, 650.43pt x 289.08pt>
 File: figure/overplot-1.pdf Graphic file (type pdf)
 
 <use figure/overplot-1.pdf>
 Package pdftex.def Info: figure/overplot-1.pdf used on input line 513.
 (pdftex.def)             Requested size: 398.33858pt x 177.0443pt.
- <figure/map_ex-1.pdf, id=224, 505.89pt x 361.35pt>
+ <figure/map_ex-1.pdf, id=231, 505.89pt x 361.35pt>
 File: figure/map_ex-1.pdf Graphic file (type pdf)
 
 <use figure/map_ex-1.pdf>
 Package pdftex.def Info: figure/map_ex-1.pdf used on input line 533.
 (pdftex.def)             Requested size: 398.33858pt x 284.53156pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 
 Overfull \hbox (17.45496pt too wide) in paragraph at lines 546--547
 \T1/ppl/m/n/9 (-20) ing an in-ter-ac-tive \T1/ppl/b/n/9 leaflet \T1/ppl/m/n/9 (
@@ -1563,19 +1563,18 @@ Overfull \hbox (17.45496pt too wide) in paragraph at lines 546--547
 ://beckmw.shinyapps.io/swmp_comp[][].
  []
 
-[11 <M:/docs/manuscripts/swmpr_manu/figure/overplot-1.pdf> <M:/docs/manuscripts
-/swmpr_manu/figure/map_ex-1.pdf>]
-<figure/swmp_comp.pdf, id=249, 718.8797pt x 517.02162pt>
+<figure/swmp_comp.pdf, id=239, 794.97pt x 581.04118pt>
 File: figure/swmp_comp.pdf Graphic file (type pdf)
 
 <use figure/swmp_comp.pdf>
 Package pdftex.def Info: figure/swmp_comp.pdf used on input line 550.
-(pdftex.def)             Requested size: 398.33858pt x 286.48494pt.
- [12 <M:/docs/manuscripts/swmpr_manu/figure/swmp_comp.pdf>] (M:\docs\manuscript
-s\swmpr_manu\swmpr_manu.bbl
+(pdftex.def)             Requested size: 398.33858pt x 291.14935pt.
+ [11 <M:/docs/manuscripts/swmpr_manu/figure/overplot-1.pdf>] (M:\docs\manuscrip
+ts\swmpr_manu\swmpr_manu.bbl
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.brf)
 \tf@brf=\write6
- [13])
+ [12 <M:/docs/manuscripts/swmpr_manu/figure/map_ex-1.pdf>] [13 <M:/docs/manuscr
+ipts/swmpr_manu/figure/swmp_comp.pdf, page is rotated 90 degrees>])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 575.
  [14]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 575.
@@ -1586,17 +1585,17 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 575.
 Package rerunfilecheck Info: File `swmpr_manu.out' has not changed.
 (rerunfilecheck)             Checksum: 5CC4FBA04011BB482FD78B0606C4117D;842.
 Package rerunfilecheck Info: File `swmpr_manu.brf' has not changed.
-(rerunfilecheck)             Checksum: E41AC485E3DCDF6CD7A40780AF07FB5E;932.
+(rerunfilecheck)             Checksum: D76739B04825898841B8762C6A792CDC;1035.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 575.
  ) 
 Here is how much of TeX's memory you used:
- 20270 strings out of 493921
- 347048 string characters out of 3147282
- 453636 words of memory out of 3000000
- 22856 multiletter control sequences out of 15000+200000
- 51408 words of font info for 231 fonts, out of 3000000 for 9000
+ 20236 strings out of 493921
+ 346613 string characters out of 3147282
+ 453373 words of memory out of 3000000
+ 22832 multiletter control sequences out of 15000+200000
+ 51098 words of font info for 227 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 63i,14n,57p,1329b,614s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,14n,57p,1412b,612s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/mbeck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-ts1
 .enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}{C:/Users/mbe
 ck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}<C:/Users
@@ -1605,9 +1604,9 @@ ck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}<C:/Users
 gram Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/Mi
 KTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/urw/palatino/uplri8a.pfb>
-Output written on swmpr_manu.pdf (14 pages, 1139454 bytes).
+Output written on swmpr_manu.pdf (14 pages, 1056814 bytes).
 PDF statistics:
- 345 PDF objects out of 1000 (max. 8388607)
- 60 named destinations out of 1000 (max. 500000)
+ 347 PDF objects out of 1000 (max. 8388607)
+ 56 named destinations out of 1000 (max. 500000)
  40072 words of extra memory for PDF output out of 42996 (max. 10000000)
 
