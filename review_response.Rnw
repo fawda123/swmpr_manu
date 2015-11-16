@@ -1,0 +1,81 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{setspace}
+\usepackage[colorlinks=true,urlcolor=blue,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{indentfirst}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[final]{animate}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{rotating}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{subfig} 
+\usepackage[noae]{Sweave}
+\usepackage{cleveref}
+\usepackage[figureposition=bottom]{caption}
+\usepackage{paralist}
+\usepackage{acronym}
+\usepackage{outlines}
+\usepackage{amsmath}
+
+%acronyms
+% \acrodef{}{}
+
+%knitr options
+<<setup, cache = F, echo = F>>=
+# set global chunk options
+opts_chunk$set(fig.align = 'center', message = F, dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!ht', warning = F, echo = F)
+options(replace.assign=TRUE,width=90,digits=1)
+@
+
+\setlength{\parskip}{5mm}
+\setlength{\parindent}{0in}
+
+\newcommand{\Bigtxt}[1]{\textbf{\textit{#1}}}
+
+\begin{document}
+\raggedright
+
+% \title{}
+% \author{}
+% \maketitle
+
+{\it Response to reviewer comments ``SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries'', by M. W. Beck}
+
+{\it The authors wish to thank the reviewers for providing thoughtful comments and suggestions on my manuscript.  My response to these comments are shown in italics.  Page and paragraph numbers refer to the original manuscript.}
+
+\Bigtxt{Reviewer 1:}
+
+*Main text*
+I didn't find it obvious from the text whether the setstep and comb functions would handle missing data with interpolation or NA. (It's NA, as it turns out.) Perhaps it is because I don't do a lot of work in this domain, though.
+
+*Package performance*
+
+Some of the functions can spend a surprising amount of time parsing. For example, the call: all\_params\_dtrng('hudscwq', dtrng = c('09/01/2013', '10/01/2013')) took 19 seconds on my machine, and running under a profiler showed that about 12-3 of those seconds were spent parsing the data, not downloading it. The SWMPr::parser code calls htmlTreeParse, which is where all that time is being spent; I found that changing it to xmlTreeParse made almost all of that time go away. The only difference I noticed was that htmlTreeParse converts all of the tag names to lowercase, while xmlTreeParse does not. This can be easily fixed by having the parser() function change the `out` data frame's names to lowercase before returning. With these two modifications, the elapsed time drops to 6-7 seconds--the bulk of the time now being spent downloading the data (as far as I can tell).
+
+*shiny\_comp app*
+
+The Shiny app that uses Leaflet is using a deprecated API. The new API is documented at https://rstudio.github.io/leaflet/ and I think it would significantly simplify the code. I can lend a hand if the author wants.
+
+The Leaflet map could use a color legend, which is possible with the new Leaflet API. (It could use a radius legend too, but that is not yet a feature of the Leaflet package.)
+
+There is a feature in the new Leaflet API that lets you have a label <http://leaflet.github.io/Leaflet.label/> for each circle that is either always shown, or shown on mouseover. This is a nicer experience for the user than having to click. This feature has not yet made it to CRAN, but it is available in the GitHub master branch of Leaflet.
+
+It would be interesting if the Leaflet app could let you select multiple stations and see the data plotted together.
+
+*shiny\_summary app*
+
+In the file https://github.com/fawda123/swmp\_summary/blob/master/server.R, the plotInput should not be a reactive(), but a regular function that takes no arguments. This is because reactives cache their values, and should not be executed for their side effects (in this case, plotting). As the app is written now, there doesn't appear to be an actual user-visible bug, but a change as simple as setting the plot width to "100\%" would introduce a bug (I'd expect it to fail to redraw the plot when the window was resized).
+
+\Bigtxt{Reviewer 2:}
+
+First, I did not see any information about how SWMPR treats censored data, i.e., measurements that can be reported only as less than or greater than an analysis or reporting limit. For example, measurements of nutrient parameters could include values that are below analytical detection limits. A considerable amount of research has shown that the assumptions and methods used to analyze data that include censored values can influence the conclusions of the analyses (for example, see Helsel 2012). Considerable attention is given in the manuscript, appropriately, to various quality assurance/quality control functions and flags, and I realize not every aspect of QA/QC needs to be covered explicitly in the manuscript. However, I believe that the topic of censored values is important enough that the paper would be improved by providing explicit information about how censored values may be coded, retrieved, and ultimately used in various data analyses carried out by SWMPr.
+
+Second, in the "Applications using the SWMPr package" section near the end of the manuscript, simple linear regression (SLR) is identified as a technique used to summarize trends in a parameter over time. This particular statistical method may or may not be appropriate for a given data set. Alternative trend analysis methods exist, including several that treat censored values appropriately (again, Helsel 2012 is a useful reference). It is unclear from the manuscript what alternatives to SLR may be available in SWMPr (e.g., maximum likelihood estimation, Akritas-Theil-Sen nonparametric regression, others). Therefore, clarifying text that either identifies the availability of other trend analysis procedures in SWMPr or provides caveats to the use of SLR (e.g., used only for initial exploratory analysis) should be added to this section.
+
+Reference:
+Helsel, D.R. 2012. Statistics for Censored Environmental Data Using Minitab and R. 2nd edition, John Wiley \& Sons, Inc. Hoboken, New Jersey. 324pp.
+
+\end{document}
