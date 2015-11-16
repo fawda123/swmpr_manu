@@ -96,7 +96,12 @@ At the time of writing, the CDMO web portal provides over 60 million water quali
 
 \section{Structure of the \pkg{SWMPr} package}
 
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]): there is no package called 'Rcpp'}}\end{kframe}
+\end{knitrout}
 
 \pkg{SWMPr} functions are categorized by one of three steps in the data workflow: \Bigtxt{retrieving}, \Bigtxt{organizing}, and \Bigtxt{analyzing}.  Functions for retrieving are used to import the data into R as a \code{"swmpr"} object class.  Functions for organizing and analyzing the data provide methods for working with a \code{"swmpr"} object.  The following describes the package structure, beginning with the retrieval functions, a description of the \code{"swmpr"} object returned after retrieval, and, finally, the organizing and analyzing functions.
 
@@ -105,25 +110,12 @@ At the time of writing, the CDMO web portal provides over 60 million water quali
 \pkg{SWMPr} can import data into R through direct download from the CDMO or by importing local data that was previously downloaded (Table~\ref{tab:retrieve}). The IP address for the computer making the request must be registered if the first approach is used (see CDMO \href{http://cdmo.baruch.sc.edu/data/qaqc.cfm}{website}).  The \code{site\_codes} or \code{site\_codes\_ind} functions can be used to view site metadata. 
 
 % table for retrieval functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Retrieval functions available from the \\pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \\code{?all\\_params} for individual functions or \\code{help.search(`retrieve', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:retrieve",     table.env = FALSE, where = "!tbp")%
-\begin{table}[!tbp]
-\caption{Retrieval functions available from the \pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \code{?all\_params} for individual functions or \code{help.search(`retrieve', package = `SWMPr')} for all).\label{tab:retrieve}} 
-\begin{center}
-\begin{tabular}{lp{3.5in}}
-\hline\hline
-\multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
-\code{all\_params}&Retrieve records starting with the most recent at a given station, all parameters.  Wrapper to \code{exportAllParamsXMLNew} function on web services.\tabularnewline
-\code{all\_params\_dtrng}&Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter. Wrapper to \code{exportAllParamsDateRangeXMLNew}.\tabularnewline
-\code{import\_local}&Import files from a local path.  The files must be in a specific format, such as those returned from the CDMO using the zip downloads option.\tabularnewline
-\code{single\_param}&Retrieve records for a single parameter starting with the most recent at a given station.  Wrapper to \code{exportSingleParamXMLNew} function on web services.\tabularnewline
-\code{site\_codes}&Get metadata for all stations, wrapper to \code{exportStationCodesXMLNew} function on web services.\tabularnewline
-\code{site\_codes\_ind}&Get metadata for all stations at a single site, wrapper to \code{NERRFilterStationCodesXMLNew} function on web services.\tabularnewline
-\hline
-\end{tabular}\end{center}
+\begin{kframe}
 
-\end{table}
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: package 'ggplot2' could not be loaded}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): could not find function "{}latex"{}}}\end{kframe}
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
@@ -169,21 +161,15 @@ All data retrieval functions return a \code{"swmpr"} object that includes releva
 # import all paramaters for the station
 # three most recent records
 exdat <- all_params('apadbwq', Max = 3, trace = F)
-exdat
-##         datetimestamp temp f_temp spcond f_spcond sal f_sal do_pct
-## 1 2015-11-03 11:15:00   26      0     45        0  29     0     78
-## 2 2015-11-03 11:30:00   26      0     46        0  30     0     76
-## 3 2015-11-03 11:45:00   26      0     46        0  30     0     75
-##   f_do_pct do_mgl f_do_mgl depth f_depth ph f_ph turb f_turb chlfluor
-## 1        0      5        0     2       0  8    0    2      0       NA
-## 2        0      5        0     2       0  8    0    5      0       NA
-## 3        0      5        0     2       0  8    0    5      0       NA
-##   f_chlfluor level f_level cdepth clevel f_cdepth f_clevel
-## 1         -2    NA      -1      2     NA        3         
-## 2         -2    NA      -1      2     NA        3         
-## 3         -2    NA      -1      2     NA        3
 \end{verbatim}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): could not find function "{}all\_params"{}}}\begin{verbatim}
+exdat
+\end{verbatim}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'exdat' not found}}\end{kframe}
 \end{knitrout}
 
 The attributes of a \code{"swmpr"} object are descriptors that are appended to the raw data (Table~\ref{tab:attributes}).  These act as metadata that are used internally by many of the package functions and are updated as the data are processed. The attributes are not visible with the raw data but can be viewed as follows.
@@ -205,28 +191,12 @@ attr(dat, 'station')
 \end{knitrout}
  
 % attributes table
-%latex.default(to_tab[, -1, drop = F], file = "", caption = "Attributes of a \\code{\"swmpr\"} object that describe characteristics of the data.",     rowlabel = "Attributes", colheads = c("Class", "Description"),     rowname = to_tab$Attributes, caption.loc = "top", insert.bottom = foot,     col.just = c("p{0.75in}", "p{3.25in}"), label = "tab:attributes",     table.env = FALSE, where = "!tbp")%
-\begin{table}[!tbp]
-\caption{Attributes of a \code{"swmpr"} object that describe characteristics of the data.\label{tab:attributes}} 
-\begin{center}
-\begin{tabular}{lp{0.75in}p{3.25in}}
-\hline\hline
-\multicolumn{1}{l}{Attributes}&\multicolumn{1}{c}{Class}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
-\code{names}&character&Column names of the entire data set, inherited from the \code{data.frame} object class.\tabularnewline
-\code{row.names}&integer&Row names of the data set, inherited from the \code{data.frame} object class.\tabularnewline
-\code{class}&character&Class of the data object indicating \code{"swmpr"} and \code{"data.frame"}.\tabularnewline
-\code{station}&character&Station identifier used by NERRS as a string with 7 or 8 characters.\tabularnewline
-\code{parameters}&character&Character vector of column names for data parameters, e.g., \code{'do\_mgl'}, \code{'turb'}, etc.\tabularnewline
-\code{qaqc\_cols}&logical&Indicates if QAQC columns are present in the raw data.\tabularnewline
-\code{date\_rng}&POSIXct&Start and end dates for the data.\tabularnewline
-\code{timezone}&character&Timezone of the station using the city/country format\textsuperscript{a}.\tabularnewline
-\code{stamp\_class}&character&Class of the \code{datetimestamp} column, usually \code{"POSIXct"} unless data have been aggregated.\tabularnewline
-\hline
-\end{tabular}\end{center}
+\begin{kframe}
 
-\textsuperscript{a}\footnotesize Time zones that do not observe daylight savings are used for \code{"swmpr"} objects and may not be cities in the United States.  For example, \code{America/Jamaica} is used for Eastern Standard Time.\end{table}
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: package 'ggplot2' could not be loaded}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): could not find function "{}latex"{}}}\end{kframe}
 
 The \code{"swmpr"} object class was created for use with the organizing and analyzing functions.  This uses the standard S3 object class system for R, such that specific methods for generic functions are developed for the object class.  A \code{"swmpr"} object also secondarily inherits methods from the \code{"data.frame"} class. Available methods for the \code{"swmpr"} class are described below and can also be viewed:
  
@@ -246,25 +216,12 @@ The organize functions are used to `clean' or prepare the imported data for anal
 The \code{qaqc} function is a simple screen to retain observations from the data with specified QAQC flags (see \url{http://cdmo.baruch.sc.edu/data/qaqc.cfm}). Each parameter in the imported \code{"swmpr"} object will have a corresponding QAQC column of the same name with the added prefix \code{f\_} (e.g., \code{f\_do\_mgl} for \code{do\_mgl}).  Values in the QAQC column range from -5 to 5 to indicate the QAQC flag that was assigned by CDMO during initial processing.  The \code{qaqc} function is used to remove observations in the raw data with given flags, with the default option to retain only values with the \code{0} QAQC flag (i.e., passed initial CDMO checks).     Additionally, simple filters are used to remove obviously bad values, e.g., wind speed values less than zero or pH values greater than 12. Erroneous data entered as -99 are also removed. The function returns the original data with the QAQC columns removed and \code{NA} (not available) values for observations that do not meet the criteria specified in the function call.
 
 % table for organize functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Organizing functions available from the \\pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \\code{?comb} for individual functions or \\code{help.search(`organize', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:organize",     table.env = FALSE, where = "!tbp")%
-\begin{table}[!tbp]
-\caption{Organizing functions available from the \pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \code{?comb} for individual functions or \code{help.search(`organize', package = `SWMPr')} for all).\label{tab:organize}} 
-\begin{center}
-\begin{tabular}{lp{3.5in}}
-\hline\hline
-\multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
-\code{comb}&Combines \code{"swmpr"} objects to a common time series using setstep, such as combining the weather, nutrients, and water quality data for a single station.\tabularnewline
-\code{qaqc}&Remove QAQC columns and remove data based on QAQC flag values for a \code{"swmpr"} object.\tabularnewline
-\code{qaqcchk}&View a summary of the number of observations in a \code{"swmpr"} object that are assigned to each QAQC flag used by CDMO.\tabularnewline
-\code{rem\_reps}&Remove replicate nutrient data that occur on the same day.  The default is to average replicates.\tabularnewline
-\code{setstep}&Format data from a \code{"swmpr"} object to a continuous time series at a given timestep.\tabularnewline
-\code{subset}&Subset by dates and/or columns for a \code{"swmpr"} object.  This is a method passed to the generic \code{subset} function in the base installation.\tabularnewline
-\hline
-\end{tabular}\end{center}
+\begin{kframe}
 
-\end{table}
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: package 'ggplot2' could not be loaded}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): could not find function "{}latex"{}}}\end{kframe}
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
@@ -330,7 +287,7 @@ setstep(dat, timestep = 120, differ = 30)
 \end{kframe}
 \end{knitrout}
 
-The \code{comb} function is used to combine multiple \code{"swmpr"} objects into a single object with a continuous time series at a given step.  The \code{setstep} function is used internally such that \code{timestep} and \code{differ} are accepted arguments for \code{comb}.  Data are combined by creating a master time series that is used to iteratively merge all \code{"swmpr"} objects.  The time series for merging depends on the value passed to the \code{method} argument.  Passing \code{'union'} to \code{method} will create a time series that is continuous from the earliest and latest dates for all input objects, whereas \code{'intersect'} will create a continuous time series from the set of dates that are shared between input objects.  A character string or numeric vector can also be used to specify which of the input objects to use as the master time series for combining.  As with \code{setstep}, a default method for \code{comb} is provided to allow use with arbitrary data structures.  
+The \code{comb} function is used to combine multiple \code{"swmpr"} objects into a single object with a continuous time series at a given step.  The \code{setstep} function is used internally such that \code{timestep} and \code{differ} are accepted arguments for \code{comb}.  Data are combined by creating a master time series that is used to iteratively merge all \code{"swmpr"} objects.  The time series for merging depends on the value passed to the \code{method} argument.  Passing \code{'union'} to \code{method} will create a time series that is continuous from the earliest and latest dates for all input objects, whereas \code{'intersect'} will create a continuous time series from the set of dates that are shared between input objects.  A character string or numeric vector can also be used to specify which of the input objects to use as the master time series for combining.  As with \code{setstep}, a default method for \code{comb} is provided to allow use with arbitrary data structures.  Both functions treat missing data as \code{NA} values, either for observations that exceed the allowable tolerance for the \code{differ} argument of \code{setstep} or for time series that do not overlap given the \code{method} argument passed to \code{comb}.   
 
 \begin{knitrout}\small
 \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}\begin{kframe}
@@ -360,33 +317,12 @@ comb(swmp1, swmp2, swmp3, timestep = 120, method = 'apacpnut')
 The analysis functions range from general purpose tools for time series analysis to more specific functions for working with continuous monitoring data in estuaries (Table~\ref{tab:analyze}).  The general purpose tools are \code{"swmpr"} methods for existing S3 generics or are slight modifications to existing functions. These include \code{aggreswmp} to combine observations by set periods of time (e.g., weeks, months), \code{smoother} to average time series with a moving window, and \code{approx} to substitute missing data with interpolated values.  For brevity, the general functions are not discussed.  More specific functions for environmental time series include decomposition functions, \code{decomp} and \code{decomp\_cj}, and functions to estimate and plot ecosystem metabolism from combined water quality and weather data.  Several plotting methods to facilitate analysis are also descibed below.  
 
 % table for analysis functions
-%latex.default(to_tab[, "Description", drop = F], file = "", caption = "Analysis functions available from the \\pkg{SWMPr} package.  Full documentation for each function is in the help file (e.g., execute \\code{?aggreswmp} for individual functions or \\code{help.search(`analyze', package = `SWMPr')} for all).",     rowlabel = "Function", colheads = "Description", rowname = to_tab$Functions,     caption.loc = "top", col.just = c("p{3.5in}"), label = "tab:analyze",     table.env = FALSE, where = "!tbp")%
-\begin{table}[!tbp]
-\caption{Analysis functions available from the \pkg{SWMPr} package.  Full documentation for each function is in the help file (e.g., execute \code{?aggreswmp} for individual functions or \code{help.search(`analyze', package = `SWMPr')} for all).\label{tab:analyze}} 
-\begin{center}
-\begin{tabular}{lp{3.5in}}
-\hline\hline
-\multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
-\code{aggreswmp}&Aggregate \code{"swmpr"} objects for different time periods - years, quarters, months,  weeks, days, or hours.  The aggregation function defaults to the mean.\tabularnewline
-\code{aggremetab}&Aggregate metabolism data from a \code{"swmpr"} object.  This is primarly used within \code{plot\_metab} but may be useful for simple summaries of daily metabolism data.\tabularnewline
-\code{ecometab}&Estimate ecosystem metabolism for a combined water quality and weather dataset using the open-water method \citep{Odum56}.\tabularnewline
-\code{decomp}&Decompose a \code{"swmpr"} time series into trend, seasonal, and residual components.  This is a simple wrapper to \code{decompose} \citep{Kendall83}.  Decomposition of monthly or daily trends is possible.\tabularnewline
-\code{decomp\_cj}&Decompose a \code{"swmpr"} time series into grandmean, annual, seasonal, and events components.  This is a simple wrapper to \code{decompTs} in the \CRANpkg{wq} package \citep{Jassby14}.  Only monthly decomposition is possible.\tabularnewline
-\code{hist}&Plot a histogram for a single variable.\tabularnewline
-\code{lines}&Add lines to an existing plot created with \code{plot}.\tabularnewline
-\code{map\_reserve}&Create a map of all stations in a reserve using the \CRANpkg{ggmap} package \citep{Kahle13}.\tabularnewline
-\code{na.approx}&Linearly interpolate missing data (\code{NA} values) in a \code{"swmpr"} object.\tabularnewline
-\code{overplot}&Plot multiple time series on the same y-axis.\tabularnewline
-\code{plot}&Plot a univariate  time series for a \code{"swmpr"} object.\tabularnewline
-\code{plot\_metab}&Plot ecosystem metabolism estimates after running \code{ecometab} on a combined \code{"swmpr"} object.\tabularnewline
-\code{plot\_summary}&Create summary plots of seasonal/annual trends and anomalies for a single parameter.\tabularnewline
-\code{smoother}&Smooth \code{"swmpr"} objects with a moving window average, passed to \code{filter}.\tabularnewline
-\hline
-\end{tabular}\end{center}
+\begin{kframe}
 
-\end{table}
 
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: package 'ggplot2' could not be loaded}}
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): could not find function "{}latex"{}}}\end{kframe}
 
 The disaggregation of time series into additive or multiplicative components is a common application for trend analysis.  The \code{decomp} function is a simple wrapper to \code{decompose} \citep{Kendall83} that separates a time series into a trend, cyclical variation (e.g., daily or annual), and the remainder  (Figure~\ref{fig:decomp_ex1}).  An additive decomposition assumes that the cyclical component of the time series is stationary (i.e., the variance is constant), otherwise a multiplicative decomposition can be used.  The \code{frequency} argument describes the periodicity of the cyclical parameter in units of the native time step.  For example, the \code{frequency} for a parameter with daily periodicity would be 96 if the time step is 15 minutes (24 hours * 60 minutes / 15 minutes).  For simplicity, character strings of \code{'daily'} or \code{'annual'} can be supplied in place of numeric values, although any number can be used to identify an arbitrary cyclical component.  A starting value of the time series must be supplied in the latter case that indicates the sequence in the cycle for the first observation (see \href{https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html}{\code{ts}} for details).
 

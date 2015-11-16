@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  16 NOV 2015 16:04
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  16 NOV 2015 17:29
 entering extended mode
 **swmpr_manu.tex
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.tex
@@ -1304,309 +1304,288 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 [1{C:/Users/mbeck/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 ]
-LaTeX Font Info:    Font shape `T1/ppl/bx/it' in size <9> not available
-(Font)              Font shape `T1/ppl/b/it' tried instead on input line 101.
-LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 103.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 112.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 112.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 112.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 112.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 112.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 112.
-LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.20004pt on input line 116.
+LaTeX Font Info:    Font shape `T1/zi4/bx/n' in size <9> not available
+(Font)              Font shape `T1/zi4/b/n' tried instead on input line 103.
+LaTeX Font Info:    Font shape `T1/zi4/b/n' will be
+(Font)              scaled to size 9.18004pt on input line 103.
 Package microtype Info: Character `textendash ' is missing
-(microtype)             in font `T1/zi4/m/n/10'.
+(microtype)             in font `T1/zi4/b/n/9'.
 (microtype)             Ignoring protrusion settings for this character.
 Package microtype Info: Character `textemdash ' is missing
-(microtype)             in font `T1/zi4/m/n/10'.
+(microtype)             in font `T1/zi4/b/n/9'.
 (microtype)             Ignoring protrusion settings for this character.
+LaTeX Font Info:    Font shape `T1/ppl/bx/it' in size <9> not available
+(Font)              Font shape `T1/ppl/b/it' tried instead on input line 106.
+LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10> not available
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 108.
 
-Underfull \hbox (badness 3281) in paragraph at lines 119--120
-\T1/ppl/m/n/10 (+20) the most re-cent at a given sta-tion. Wrap-per to
- []
 
+LaTeX Warning: Reference `tab:retrieve' on page 2 undefined on input line 110.
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--121
-[]|\T1/ppl/m/n/10 (+20) Get meta-data for all sta-tions, wrap-per to
- []
-
-LaTeX Font Info:    Try loading font information for TS1+zi4 on input line 136.
+LaTeX Font Info:    Try loading font information for TS1+zi4 on input line 128.
 
 (C:\Users\mbeck\AppData\Roaming\MiKTeX\2.9\tex\latex\inconsolata\ts1zi4.fd
 File: ts1zi4.fd 2014/06/22 Fontinst v1.933 font definitions for TS1/zi4.
 )
 LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
-(Font)              scaled to size 9.18004pt on input line 136.
+(Font)              scaled to size 9.18004pt on input line 128.
 Package microtype Info: Loading generic settings for font family
 (microtype)             `zi4' (encoding: TS1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (24.50272pt too wide) in paragraph at lines 140--142
+Overfull \hbox (24.50272pt too wide) in paragraph at lines 132--134
 []\T1/ppl/m/n/9 (-20) Retrieval func-tions to im-port data di-rectly into R fro
 m the CDMO in-clude \T1/zi4/m/n/9 all_params\T1/ppl/m/n/9 (-20) , \T1/zi4/m/n/9
  all_params_dtrng\T1/ppl/m/n/9 (-20) ,
  []
 
 [2]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 162.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\do' on input line 162.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\catcode' on input line 162.
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.20004pt on input line 154.
+Package microtype Info: Character `textendash ' is missing
+(microtype)             in font `T1/zi4/m/n/10'.
+(microtype)             Ignoring protrusion settings for this character.
+Package microtype Info: Character `textemdash ' is missing
+(microtype)             in font `T1/zi4/m/n/10'.
+(microtype)             Ignoring protrusion settings for this character.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\`' on input line 162.
+(hyperref)                removing `\<let>-command' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<' on input line 162.
+(hyperref)                removing `\do' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\>' on input line 162.
+(hyperref)                removing `\catcode' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\,' on input line 162.
+(hyperref)                removing `\`' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\'' on input line 162.
+(hyperref)                removing `\<' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\-' on input line 162.
+(hyperref)                removing `\>' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\active' on input line 162.
+(hyperref)                removing `\,' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 162.
+(hyperref)                removing `\'' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\lccode' on input line 162.
+(hyperref)                removing `\-' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\`' on input line 162.
+(hyperref)                removing `\active' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<' on input line 162.
+(hyperref)                removing `\begingroup' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\>' on input line 162.
+(hyperref)                removing `\lccode' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\,' on input line 162.
+(hyperref)                removing `\`' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\'' on input line 162.
+(hyperref)                removing `\<' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\-' on input line 162.
+(hyperref)                removing `\>' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\lowercase' on input line 162.
+(hyperref)                removing `\,' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\endgroup' on input line 162.
+(hyperref)                removing `\'' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<def>-command' on input line 162.
+(hyperref)                removing `\-' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\csname\endcsname' on input line 162.
+(hyperref)                removing `\lowercase' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 162.
+(hyperref)                removing `\endgroup' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\csname\endcsname' on input line 162.
+(hyperref)                removing `\<def>-command' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 162.
+(hyperref)                removing `\csname\endcsname' on input line 154.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\csname\endcsname' on input line 162.
+(hyperref)                removing `\<let>-command' on input line 154.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\csname\endcsname' on input line 154.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 154.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\csname\endcsname' on input line 154.
 
 
 Package hyperref Warning: Composite letter `\texttilde+`'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\texttilde' on input line 162.
+(hyperref)                removing `\texttilde' on input line 154.
 
 
 Package hyperref Warning: Glyph not defined in PD1 encoding,
-(hyperref)                removing `\textquotesingle' on input line 162.
+(hyperref)                removing `\textquotesingle' on input line 154.
 
 
-Underfull \hbox (badness 1371) in paragraph at lines 217--218
-[]|\T1/ppl/m/n/10 (+20) Row names of the data set, in-her-ited from the
- []
+LaTeX Warning: Reference `tab:attributes' on page 3 undefined on input line 175
+.
 
 
-Underfull \hbox (badness 1448) in paragraph at lines 218--219
-[]|\T1/ppl/m/n/10 (+20) Class of the data ob-ject in-di-cat-ing \T1/zi4/m/n/10 
-"swmpr" \T1/ppl/m/n/10 (+20) and
- []
+LaTeX Warning: Reference `tab:organize' on page 3 undefined on input line 214.
 
-LaTeX Font Info:    Font shape `TS1/zi4/m/n' will be
-(Font)              scaled to size 10.20004pt on input line 220.
+[3] [4]
 
-Underfull \hbox (badness 2261) in paragraph at lines 223--224
-[]|\T1/ppl/m/n/10 (+20) Timezone of the sta-tion us-ing the city/country
- []
+LaTeX Warning: Reference `tab:analyze' on page 5 undefined on input line 317.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 224--225
-[]|\T1/ppl/m/n/10 (+20) Class of the \T1/zi4/m/n/10 datetimestamp \T1/ppl/m/n/1
-0 (+20) col-umn, usu-ally
- []
-
-LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 8.16003pt on input line 228.
-Package microtype Info: Character `textendash ' is missing
-(microtype)             in font `T1/zi4/m/n/8'.
-(microtype)             Ignoring protrusion settings for this character.
-Package microtype Info: Character `textemdash ' is missing
-(microtype)             in font `T1/zi4/m/n/8'.
-(microtype)             Ignoring protrusion settings for this character.
-[3] [4] [5]
-Underfull \hbox (badness 3138) in paragraph at lines 382--383
-[]|\T1/ppl/m/n/10 (+20) Plot ecosys-tem metabolism es-ti-mates af-ter run-ning
- []
-
-[6] [7] <figure/decomp_ex1-1.pdf, id=144, 505.89pt x 433.62pt>
+[5] <figure/decomp_ex1-1.pdf, id=115, 505.89pt x 433.62pt>
 File: figure/decomp_ex1-1.pdf Graphic file (type pdf)
 
 <use figure/decomp_ex1-1.pdf>
-Package pdftex.def Info: figure/decomp_ex1-1.pdf used on input line 409.
+Package pdftex.def Info: figure/decomp_ex1-1.pdf used on input line 345.
 (pdftex.def)             Requested size: 398.33858pt x 341.43785pt.
- [8 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex1-1.pdf>] <figure/decomp_ex
-2-1.pdf, id=164, 505.89pt x 433.62pt>
+ [6 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex1-1.pdf>] <figure/decomp_ex
+2-1.pdf, id=136, 505.89pt x 433.62pt>
 File: figure/decomp_ex2-1.pdf Graphic file (type pdf)
 
 <use figure/decomp_ex2-1.pdf>
-Package pdftex.def Info: figure/decomp_ex2-1.pdf used on input line 434.
+Package pdftex.def Info: figure/decomp_ex2-1.pdf used on input line 370.
 (pdftex.def)             Requested size: 398.33858pt x 341.43785pt.
-
-<figure/metab_ex-1.pdf, id=179, 578.16pt x 289.08pt>
+ [7 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex2-1.pdf>] <figure/metab_ex-
+1.pdf, id=169, 578.16pt x 289.08pt>
 File: figure/metab_ex-1.pdf Graphic file (type pdf)
 
 <use figure/metab_ex-1.pdf>
-Package pdftex.def Info: figure/metab_ex-1.pdf used on input line 464.
+Package pdftex.def Info: figure/metab_ex-1.pdf used on input line 400.
 (pdftex.def)             Requested size: 398.33858pt x 199.16986pt.
+
+<figure/summary_ex-1.pdf, id=175, 939.51pt x 505.89pt>
+File: figure/summary_ex-1.pdf Graphic file (type pdf)
+
+<use figure/summary_ex-1.pdf>
+Package pdftex.def Info: figure/summary_ex-1.pdf used on input line 424.
+(pdftex.def)             Requested size: 398.33858pt x 214.48706pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9 <M:/docs/manuscripts/swmpr_manu/figure/decomp_ex2-1.pdf>]
-<figure/summary_ex-1.pdf, id=201, 939.51pt x 505.89pt>
-File: figure/summary_ex-1.pdf Graphic file (type pdf)
-
-<use figure/summary_ex-1.pdf>
-Package pdftex.def Info: figure/summary_ex-1.pdf used on input line 488.
-(pdftex.def)             Requested size: 398.33858pt x 214.48706pt.
- [10 <M:/docs/manuscripts/swmpr_manu/figure/metab_ex-1.pdf> <M:/docs/manuscript
-s/swmpr_manu/figure/summary_ex-1.pdf>]
-<figure/overplot-1.pdf, id=227, 650.43pt x 289.08pt>
+<figure/overplot-1.pdf, id=176, 650.43pt x 289.08pt>
 File: figure/overplot-1.pdf Graphic file (type pdf)
 
 <use figure/overplot-1.pdf>
-Package pdftex.def Info: figure/overplot-1.pdf used on input line 513.
+Package pdftex.def Info: figure/overplot-1.pdf used on input line 449.
 (pdftex.def)             Requested size: 398.33858pt x 177.0443pt.
- <figure/map_ex-1.pdf, id=231, 505.89pt x 361.35pt>
-File: figure/map_ex-1.pdf Graphic file (type pdf)
 
-<use figure/map_ex-1.pdf>
-Package pdftex.def Info: figure/map_ex-1.pdf used on input line 533.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figure/map_ex-1.pdf, id=180, 505.89pt x 361.35pt>
+File: figure/map_ex-1.pdf Graphic file (type pdf)
+ <use figure/map_ex-1.pdf>
+Package pdftex.def Info: figure/map_ex-1.pdf used on input line 469.
 (pdftex.def)             Requested size: 398.33858pt x 284.53156pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (17.45496pt too wide) in paragraph at lines 546--547
+Overfull \hbox (17.45496pt too wide) in paragraph at lines 482--483
 \T1/ppl/m/n/9 (-20) ing an in-ter-ac-tive \T1/ppl/b/n/9 leaflet \T1/ppl/m/n/9 (
 -20) map ([][][]Cheng and Xie[][] ([][]2015[][]), Fig-ure [][]7[][]): [][]https
 ://beckmw.shinyapps.io/swmp_comp[][].
  []
 
-<figure/swmp_comp.pdf, id=239, 794.97pt x 581.04118pt>
+[8 <M:/docs/manuscripts/swmpr_manu/figure/metab_ex-1.pdf>]
+<figure/swmp_comp.pdf, id=203, 794.97pt x 581.04118pt>
 File: figure/swmp_comp.pdf Graphic file (type pdf)
 
 <use figure/swmp_comp.pdf>
-Package pdftex.def Info: figure/swmp_comp.pdf used on input line 550.
+Package pdftex.def Info: figure/swmp_comp.pdf used on input line 486.
 (pdftex.def)             Requested size: 398.33858pt x 291.14935pt.
- [11 <M:/docs/manuscripts/swmpr_manu/figure/overplot-1.pdf>] (M:\docs\manuscrip
-ts\swmpr_manu\swmpr_manu.bbl
+
+
+LaTeX Warning: Reference `tab:retrieve' on page 9 undefined on input line 494.
+
+[9 <M:/docs/manuscripts/swmpr_manu/figure/summary_ex-1.pdf> <M:/docs/manuscript
+s/swmpr_manu/figure/overplot-1.pdf>]
+(M:\docs\manuscripts\swmpr_manu\swmpr_manu.bbl
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.brf)
 \tf@brf=\write6
- [12 <M:/docs/manuscripts/swmpr_manu/figure/map_ex-1.pdf>] [13 <M:/docs/manuscr
+ [10 <M:/docs/manuscripts/swmpr_manu/figure/map_ex-1.pdf>] [11 <M:/docs/manuscr
 ipts/swmpr_manu/figure/swmp_comp.pdf, page is rotated 90 degrees>])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 575.
- [14]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 575.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 511.
+ [12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 511.
 
 (M:\docs\manuscripts\swmpr_manu\swmpr_manu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 575.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 575.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 511.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 511.
 Package rerunfilecheck Info: File `swmpr_manu.out' has not changed.
 (rerunfilecheck)             Checksum: 5CC4FBA04011BB482FD78B0606C4117D;842.
 Package rerunfilecheck Info: File `swmpr_manu.brf' has not changed.
-(rerunfilecheck)             Checksum: D76739B04825898841B8762C6A792CDC;1035.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 575.
+(rerunfilecheck)             Checksum: E272D94E2157D1851A28BE1F4FAFB8A1;848.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 511.
  ) 
 Here is how much of TeX's memory you used:
- 20236 strings out of 493921
- 346613 string characters out of 3147282
- 453373 words of memory out of 3000000
- 22832 multiletter control sequences out of 15000+200000
- 51098 words of font info for 227 fonts, out of 3000000 for 9000
+ 20141 strings out of 493921
+ 345282 string characters out of 3147282
+ 447497 words of memory out of 3000000
+ 22783 multiletter control sequences out of 15000+200000
+ 39333 words of font info for 176 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 63i,14n,57p,1412b,612s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,11n,57p,1412b,612s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/mbeck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-ts1
 .enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}{C:/Users/mbe
 ck/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/inconsolata/i4-t1-0.enc}<C:/Users
 /mbeck/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/inconsolata/Inconsolata-zi
-4r.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/urw/palatino/uplri8a.pfb>
-Output written on swmpr_manu.pdf (14 pages, 1056814 bytes).
+4b.pfb><C:/Users/mbeck/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/inconsolat
+a/Inconsolata-zi4r.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/up
+lb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplbi8a.pfb><C:/
+Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on swmpr_manu.pdf (12 pages, 1057394 bytes).
 PDF statistics:
- 347 PDF objects out of 1000 (max. 8388607)
- 56 named destinations out of 1000 (max. 500000)
- 40072 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 318 PDF objects out of 1000 (max. 8388607)
+ 50 named destinations out of 1000 (max. 500000)
+ 32392 words of extra memory for PDF output out of 35830 (max. 10000000)
 

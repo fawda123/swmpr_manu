@@ -87,7 +87,7 @@
 % \author{}
 % \maketitle
 
-{\it Response to reviewer comments ``SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries'', by M. W. Beck}
+{\it Response to reviewer comments ``SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries'', by M. W. Beck.}
 
 {\it I thank the reviewers for providing thoughtful comments on my manuscript and the SWMPr package.  My response to these comments are shown in italics.  Page and paragraph numbers refer to the original manuscript.}
 
@@ -97,23 +97,37 @@
 
 I didn't find it obvious from the text whether the setstep and comb functions would handle missing data with interpolation or NA. (It's NA, as it turns out.) Perhaps it is because I don't do a lot of work in this domain, though.
 
+{\it This was clarified in the revision, page 6 paragraph one:
+
+`Both functions treat missing data as NA values, either for observations that exceed the allowable tolerance for the differ argument of setstep or for time series that do not overlap given the method argument passed to comb.' 
+}
+
 *Package performance*
 
-Some of the functions can spend a surprising amount of time parsing. For example, the call: all\_params\_dtrng('hudscwq', dtrng = c('09/01/2013', '10/01/2013')) took 19 seconds on my machine, and running under a profiler showed that about 12-3 of those seconds were spent parsing the data, not downloading it. The SWMPr::parser code calls htmlTreeParse, which is where all that time is being spent; I found that changing it to xmlTreeParse made almost all of that time go away. The only difference I noticed was that htmlTreeParse converts all of the tag names to lowercase, while xmlTreeParse does not. This can be easily fixed by having the parser() function change the `out` data frame's names to lowercase before returning. With these two modifications, the elapsed time drops to 6-7 seconds--the bulk of the time now being spent downloading the data (as far as I can tell).
+Some of the functions can spend a surprising amount of time parsing. For example, the call: all\_params\_dtrng(`hudscwq', dtrng = c(`09/01/2013', `10/01/2013')) took 19 seconds on my machine, and running under a profiler showed that about 12-3 of those seconds were spent parsing the data, not downloading it. The SWMPr::parser code calls htmlTreeParse, which is where all that time is being spent; I found that changing it to xmlTreeParse made almost all of that time go away. The only difference I noticed was that htmlTreeParse converts all of the tag names to lowercase, while xmlTreeParse does not. This can be easily fixed by having the parser() function change the `out' data frame's names to lowercase before returning. With these two modifications, the elapsed time drops to 6-7 seconds--the bulk of the time now being spent downloading the data (as far as I can tell).
+
+{\it That is a fantastic suggestion and I've made these changes in the development repository of the package.  I noticed an immediate increase in performance with the import functions.  I will push the new version to CRAN if or when the paper is accepted for publication. 
+}
 
 *shiny\_comp app*
 
 The Shiny app that uses Leaflet is using a deprecated API. The new API is documented at https://rstudio.github.io/leaflet/ and I think it would significantly simplify the code. I can lend a hand if the author wants.
 
+{\it I would be interested in working together to improve the code.  I made the app by borrowing an example from the rstudio GitHub repo (https://github.com/rstudio/leaflet/tree/master/inst/legacy/examples/population) and tweaking the code for my application.  I admit that I have a fuzzy understanding of using leaflets maps reactively and I have always had trouble editing the code as a result.  Simplification with the new API would be great not only for performance, but also to help me better understand reactive programming.}
+
 The Leaflet map could use a color legend, which is possible with the new Leaflet API. (It could use a radius legend too, but that is not yet a feature of the Leaflet package.)
 
-There is a feature in the new Leaflet API that lets you have a label <http://leaflet.github.io/Leaflet.label/> for each circle that is either always shown, or shown on mouseover. This is a nicer experience for the user than having to click. This feature has not yet made it to CRAN, but it is available in the GitHub master branch of Leaflet.
+There is a feature in the new Leaflet API that lets you have a label http://leaflet.github.io/Leaflet.label/ for each circle that is either always shown, or shown on mouseover. This is a nicer experience for the user than having to click. This feature has not yet made it to CRAN, but it is available in the GitHub master branch of Leaflet.
 
 It would be interesting if the Leaflet app could let you select multiple stations and see the data plotted together.
 
+{\it Again, these are all great suggestions but I would probably need assistance to implement these changes with the new API.}
+
 *shiny\_summary app*
 
-In the file https://github.com/fawda123/swmp\_summary/blob/master/server.R, the plotInput should not be a reactive(), but a regular function that takes no arguments. This is because reactives cache their values, and should not be executed for their side effects (in this case, plotting). As the app is written now, there doesn't appear to be an actual user-visible bug, but a change as simple as setting the plot width to "100\%" would introduce a bug (I'd expect it to fail to redraw the plot when the window was resized).
+In the file https://github.com/fawda123/swmp\_summary/blob/master/server.R, the plotInput should not be a reactive(), but a regular function that takes no arguments. This is because reactives cache their values, and should not be executed for their side effects (in this case, plotting). As the app is written now, there doesn't appear to be an actual user-visible bug, but a change as simple as setting the plot width to ``100\%'' would introduce a bug (I'd expect it to fail to redraw the plot when the window was resized).
+
+{\it Yes, the plot fails to render on shinyapps when the window is resized.  I had not noticed the bug so I appreciate the comment.  I've changed the code in server.R to make plotInput a regular function.  I've redeployed the app and the bug has been fixed.}
 
 \Bigtxt{Reviewer 2:}
 
@@ -124,7 +138,7 @@ First, I did not see any information about how SWMPR treats censored data, i.e.,
 ``SWMP data often contain observations above or below the detection limit for the sensor or laboratory method used to quantify the parameters.  For example, nutrient data exceeding the high sensor range are assigned a QAQC flag of -5, whereas data below the low sensor range are assigned a QAQC flag of -4.  The presence of censored data is non-trivial and can influence the types of analyses that are appropriate for the time series (Helsel, 2012).  A detailed discussion of methods for evaluating censored data is beyond the scope of the manuscript and existing methods for R are provided by other packages (e.g., cents, McLeod et al., 2014).  However, the functions in SWMPr can be used to identify censored data based on the appropriate QAQC flag for a given parameter.  Viewing this information can be helpful for determining how to further process the data with the qaqc function or alternative methods outside of SWMPr.  The qaqcchk function returns a data.frame of the number of observations for a parameter that are assigned to all QAQC flags, including those for censored data.  SWMP data should not be analyzed without viewing this information to determine an appropriate method to address data with questionable QAQC flags.''
 }
 
-Second, in the "Applications using the SWMPr package" section near the end of the manuscript, simple linear regression (SLR) is identified as a technique used to summarize trends in a parameter over time. This particular statistical method may or may not be appropriate for a given data set. Alternative trend analysis methods exist, including several that treat censored values appropriately (again, Helsel 2012 is a useful reference). It is unclear from the manuscript what alternatives to SLR may be available in SWMPr (e.g., maximum likelihood estimation, Akritas-Theil-Sen nonparametric regression, others). Therefore, clarifying text that either identifies the availability of other trend analysis procedures in SWMPr or provides caveats to the use of SLR (e.g., used only for initial exploratory analysis) should be added to this section.
+Second, in the ``Applications using the SWMPr package'' section near the end of the manuscript, simple linear regression (SLR) is identified as a technique used to summarize trends in a parameter over time. This particular statistical method may or may not be appropriate for a given data set. Alternative trend analysis methods exist, including several that treat censored values appropriately (again, Helsel 2012 is a useful reference). It is unclear from the manuscript what alternatives to SLR may be available in SWMPr (e.g., maximum likelihood estimation, Akritas-Theil-Sen nonparametric regression, others). Therefore, clarifying text that either identifies the availability of other trend analysis procedures in SWMPr or provides caveats to the use of SLR (e.g., used only for initial exploratory analysis) should be added to this section.
 
 {\it I agree that the use of SLR is a simple method that may not be appropriate for all datasets provided by SWMP.  The application is meant to be exploratory and I have revised the text to clarify that SLR is a simple and potentially inadequate method for trend analysis, particularly with censored data.  The text description on the application was also revised.
 
@@ -136,6 +150,6 @@ Added to app: `Please note that the use of simple regression to identify trends 
 Reference:
 Helsel, D.R. 2012. Statistics for Censored Environmental Data Using Minitab and R. 2nd edition, John Wiley \& Sons, Inc. Hoboken, New Jersey. 324pp.
 
-{\it This reference was added to the manuscript.}
+{\it This reference was added for the text additions above.}
 
 \end{document}
