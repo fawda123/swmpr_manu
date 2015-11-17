@@ -4,7 +4,7 @@
 \maketitle
 
 \abstract{
-The System-Wide Monitoring Program (SWMP) was implemented in 1995 by the US National Estuarine Research Reserve System. This program has provided two decades of continuous monitoring data at over 140 fixed stations in 28 estuaries. Simple tools for processing and evaluating the increasing quantity of data provided by the monitoring network have prevented broad-scale comparisons between systems and, in some cases, simple trend analysis of water quality parameters at individual sites.  This article describes the \CRANpkg{SWMPr} package that provides several functions to facilitate data retrieval, organization, and analysis of time series data in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  The \CRANpkg{SWMPr} package has facilitated a cross-reserve comparison of water quality trends and links quantitative information with analysis tools that has use for more generic applications to environmental time series.
+The System-Wide Monitoring Program (SWMP) was implemented in 1995 by the US National Estuarine Research Reserve System. This program has provided two decades of continuous monitoring data at over 140 fixed stations in 28 estuaries. However, the increasing quantity of data provided by the monitoring network has complicated broad-scale comparisons between systems and, in some cases, prevented simple trend analysis of water quality parameters at individual sites.  This article describes the \CRANpkg{SWMPr} package that provides several functions to facilitate data retrieval, organization, and analysis of time series data in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  The \CRANpkg{SWMPr} package has facilitated a cross-reserve comparison of water quality trends and links quantitative information with analysis tools that has use for more generic applications to environmental time series.
 }
 
 \section{Introduction}
@@ -86,17 +86,17 @@ All data retrieval functions return a \code{"swmpr"} object that includes releva
 exdat <- all_params('apadbwq', Max = 3, trace = F)
 exdat
 ##         datetimestamp temp f_temp spcond f_spcond sal f_sal do_pct
-## 1 2015-08-18 07:00:00   28      0     34        0  21     0     77
-## 2 2015-08-18 07:15:00   28      0     34        0  21     0     75
-## 3 2015-08-18 07:30:00   28      0     33        0  21     0     82
+## 1 2015-11-03 11:15:00   26      0     45        0  29     0     78
+## 2 2015-11-03 11:30:00   26      0     46        0  30     0     76
+## 3 2015-11-03 11:45:00   26      0     46        0  30     0     75
 ##   f_do_pct do_mgl f_do_mgl depth f_depth ph f_ph turb f_turb chlfluor
-## 1        0      5        0     2       0  8    0   13      0       NA
-## 2        0      5        0     2       0  8    0    9      0       NA
-## 3        0      6        0     2       0  8    0   11      0       NA
+## 1        0      5        0     2       0  8    0    2      0       NA
+## 2        0      5        0     2       0  8    0    5      0       NA
+## 3        0      5        0     2       0  8    0    5      0       NA
 ##   f_chlfluor level f_level cdepth clevel f_cdepth f_clevel
-## 1         -2    NA      -1     NA     NA       -1         
-## 2         -2    NA      -1     NA     NA       -1         
-## 3         -2    NA      -1     NA     NA       -1
+## 1         -2    NA      -1      2     NA        3         
+## 2         -2    NA      -1      2     NA        3         
+## 3         -2    NA      -1      2     NA        3
 \end{example}
 
 The attributes of a \code{"swmpr"} object are descriptors that are appended to the raw data (Table~\ref{tab:attributes}).  These act as metadata that are used internally by many of the package functions and are updated as the data are processed. The attributes are not visible with the raw data but can be viewed as follows.
@@ -182,7 +182,7 @@ qaqc(dat, qaqc_keep = NULL)
 qaqc(dat, qaqc_keep = c(0, -1))
 \end{example}
 
-Viewing the number of observations for each parameter that are assigned to a QAQC flag may be useful for deciding how to process the data with \code{qaqc}.  The \code{qaqcchk} function can be used to view this information.
+SWMP data often contain observations above or below the detection limit for the sensor or laboratory method used to quantify the parameters.  For example, nutrient data exceeding the high sensor range are assigned a QAQC flag of -5, whereas data below the low sensor range are assigned a QAQC flag of -4.  The presence of censored data is non-trivial and can influence the types of analyses that are appropriate for a time series \citep{Helsel12}.  A detailed discussion of methods for evaluating censored data is beyond the scope of the manuscript and existing methods for R are provided by other packages \citep[e.g., \CRANpkg{cents},][]{McLeod14}.  However, the functions in \pkg{SWMPr} can be used to identify censored data based on the appropriate QAQC flag for a parameter.  Viewing this information can be helpful for determining how to further process the data with the \code{qaqc} function or alternative methods outside of \pkg{SWMPr}.  The \code{qaqcchk} function returns a \code{data.frame} of the number of observations for a parameter that are assigned to all QAQC flags, including those for censored data.  SWMP data should not be analyzed without viewing this information to determine an appropriate method to address data with questionable QAQC flags.    
 
 \begin{example}
 # view the number of observations in each QAQC flag
@@ -219,7 +219,7 @@ dat <- qaqc(apadbwq)
 setstep(dat, timestep = 120, differ = 30)
 \end{example}
 
-The \code{comb} function is used to combine multiple \code{"swmpr"} objects into a single object with a continuous time series at a given step.  The \code{setstep} function is used internally such that \code{timestep} and \code{differ} are accepted arguments for \code{comb}.  Data are combined by creating a master time series that is used to iteratively merge all \code{"swmpr"} objects.  The time series for merging depends on the value passed to the \code{method} argument.  Passing \code{'union'} to \code{method} will create a time series that is continuous from the earliest and latest dates for all input objects, whereas \code{'intersect'} will create a continuous time series from the set of dates that are shared between input objects.  A character string or numeric vector can also be used to specify which of the input objects to use as the master time series for combining.  As with \code{setstep}, a default method for \code{comb} is provided to allow use with arbitrary data structures.  
+The \code{comb} function is used to combine multiple \code{"swmpr"} objects into a single object with a continuous time series at a given step.  The \code{setstep} function is used internally such that \code{timestep} and \code{differ} are accepted arguments for \code{comb}.  Data are combined by creating a master time series that is used to iteratively merge all \code{"swmpr"} objects.  The time series for merging depends on the value passed to the \code{method} argument.  Passing \code{'union'} to \code{method} will create a time series that is continuous from the earliest and latest dates for all input objects, whereas \code{'intersect'} will create a continuous time series from the set of dates that are shared between input objects.  A character string or numeric vector can also be used to specify which of the input objects to use as the master time series for combining.  As with \code{setstep}, a default method for \code{comb} is provided to allow use with arbitrary data structures.  Both functions treat missing data as \code{NA} values, either for observations that exceed the allowable tolerance for the \code{differ} argument of \code{setstep} or for portions of time series that do not overlap given the \code{method} argument passed to \code{comb}.   
 
 \begin{example}
 # get nut, wq, and met data as separate objects
@@ -233,7 +233,7 @@ swmp3 <- apaebmet
 # combine nut and wq data by union
 comb(swmp1, swmp2, method = 'union')
 
-# combine nut and wq data by intersect
+# combine nut and met data by intersect
 comb(swmp1, swmp3, method = 'intersect')
 
 # combine nut, wq, and met data by nut time series, two hour time step
@@ -262,7 +262,7 @@ The analysis functions range from general purpose tools for time series analysis
 \code{lines}&Add lines to an existing plot created with \code{plot}.\tabularnewline
 \code{map\_reserve}&Create a map of all stations in a reserve using the \CRANpkg{ggmap} package \citep{Kahle13}.\tabularnewline
 \code{na.approx}&Linearly interpolate missing data (\code{NA} values) in a \code{"swmpr"} object.\tabularnewline
-\code{overplot}&Plot multiple time series on the same y-axis.\tabularnewline
+\code{overplot}&Plot multiple time series in a \code{"swmpr"} object on the same y-axis.\tabularnewline
 \code{plot}&Plot a univariate  time series for a \code{"swmpr"} object.\tabularnewline
 \code{plot\_metab}&Plot ecosystem metabolism estimates after running \code{ecometab} on a combined \code{"swmpr"} object.\tabularnewline
 \code{plot\_summary}&Create summary plots of seasonal/annual trends and anomalies for a single parameter.\tabularnewline
@@ -307,6 +307,7 @@ dat <- qaqc(dat, qaqc_keep = NULL)
 # decomposition of chl
 decomp_cj(dat, param = 'chla_n')
 \end{example}
+
 \begin{figure}[!h]
 
 {\centering \includegraphics[width=\textwidth]{decomp_ex2-1} 
@@ -351,6 +352,7 @@ dat <- qaqc(apacpnut)
 ## plot
 plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
 \end{example}
+
 \begin{figure}[!h]
 
 {\centering \includegraphics[width=\textwidth]{summary_ex-1} 
@@ -360,7 +362,7 @@ plot_summary(dat, param = 'chla_n', years = c(2007, 2013))
 \caption[Summaries of a multi-year chlorophyll time series using the \code{plot\_summary} function]{Summaries of a multi-year chlorophyll time series using the \code{plot\_summary} function.  Summaries include monthly distributions (means on top left, quantiles on bottom left), monthly histograms (center), monthly means by year (top right), deviation from monthly means (middle right), and annual trends as deviations from the grand mean (bottom right)}\label{fig:summary_ex}
 \end{figure}
 
-Similarly, the \code{overplot} function provides an alternative approach to viewing observed data from the same station.  This function uses the base \pkg{graphics} package to plot multiple time series on the same y-axis.
+Similarly, the \code{overplot} function provides an alternative approach to viewing observed data from the same station.  This function uses the base \pkg{graphics} package to plot multiple time series on the same y-axis (Figure~\ref{fig:overplot}).
 
 \begin{example}
 ## import data
@@ -371,6 +373,7 @@ dat <- qaqc(apacpwq)
 overplot(dat, select = c('depth', 'do_mgl', 'ph', 'turb'),
   subset = c('2013-01-01 0:0', '2013-02-01 0:0'), lwd = 2)
 \end{example}
+
 \begin{figure}[!h]
 
 {\centering \includegraphics[width=\textwidth]{overplot-1} 
@@ -380,12 +383,13 @@ overplot(dat, select = c('depth', 'do_mgl', 'ph', 'turb'),
 \caption[The \code{overplot} function plots multiple variables on the same y-axis]{The \code{overplot} function plots multiple variables on the same y-axis.}\label{fig:overplot}
 \end{figure}
 
-Finally, the \code{map\_reserve} function can be used to create a map of stations at a reserve using the \CRANpkg{ggmap} package \citep{Kahle13}. The function uses Google maps of four types that can be set with the \code{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \code{zoom} argument can be chosen through trial and error depending on the spatial extent of the reserve.
+Finally, the \code{map\_reserve} function can be used to create a map of stations at a reserve using the \CRANpkg{ggmap} package (Figure~\ref{fig:map_ex}, \citet{Kahle13}). The function uses Google maps of four types that can be set with the \code{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \code{zoom} argument can be chosen through trial and error depending on the spatial extent of the reserve.
 
 \begin{example}
 # plot the stations at Jacques Cousteau reserve
 map_reserve('jac')
 \end{example}
+
 \begin{figure}[!h]
 
 {\centering \includegraphics[width=\textwidth]{map_ex-1} 
@@ -398,9 +402,9 @@ map_reserve('jac')
 \section{Applications using the \pkg{SWMPr} package}
 \label{swmp_apps}
 
-Two \CRANpkg{shiny} web applications illustrate the improved ability to synthesize and evaluate multi-year time series using \pkg{SWMPr}.  The first application evaluates trends in SWMP data within and between sites using an interactive \pkg{leaflet} map (\citet{Cheng15}, Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time, whereas trends between sites are shown on the map for each station as circles that identify the direction and significance of the trend.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting.
+Two \CRANpkg{shiny} web applications illustrate the improved ability to synthesize and evaluate multi-year time series using \pkg{SWMPr}.  The first application evaluates trends in SWMP data within and between sites using an interactive \pkg{leaflet} map (\citet{Cheng15}, Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time, whereas trends between sites are shown on the map for each station as circles that identify the direction and significance of the trend.  More robust methods for evaluating trends are currently not provided by the application and the use of simple linear regression is meant for initial exploratory analysis.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting.
 
-\begin{figure}
+\begin{figure}[!h]
 \begin{center}
 \includegraphics[width = \textwidth]{swmp_comp.pdf}
 \caption{Online application for comparing trends in SWMP data parameters using an interactive map.  Link: \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}}
@@ -414,7 +418,7 @@ Two \CRANpkg{shiny} web applications illustrate the improved ability to synthesi
 
 \section{Acknowledgments}
 
-I acknowledge the significant work of NERRS researchers and staff that has allowed access to high-quality monitoring data.  Thanks to Todd O'Brien for the inspiration for the online widgets. Thanks to Mike Murrell and Jim Hagy III for assistance with the ecosystem metabolism functions. Thanks to Jeffrey Hollister for providing useful comments on an earlier draft.
+I acknowledge the significant work of NERRS researchers and staff that has allowed access to high-quality monitoring data.  Thanks to Todd O'Brien for the inspiration for the online widgets. Thanks to Mike Murrell and Jim Hagy III for assistance with the ecosystem metabolism functions. Thanks to Jeff Hollister for providing useful comments on an earlier draft.
 
 \bibliography{beck}
 

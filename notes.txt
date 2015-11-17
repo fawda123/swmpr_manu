@@ -4,4 +4,6 @@ RJournal.sty must be in working directory
 
 do not use acronym or cleverref packages
 
-code cunk environments from knitr in the tex file must be replaced with \begin{example}\end{example}
+code chunk environments from knitr in the tex file must be replaced with \begin{example}\end{example}
+
+fix figure paths for woring directory

@@ -87,7 +87,7 @@ swmp3 <- apaebmet
 # combine nut and wq data by union
 comb(swmp1, swmp2, method = 'union')
 
-# combine nut and wq data by intersect
+# combine nut and met data by intersect
 comb(swmp1, swmp3, method = 'intersect')
 
 # combine nut, wq, and met data by nut time series, two hour time step
