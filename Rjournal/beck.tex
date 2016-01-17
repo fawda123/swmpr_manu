@@ -4,14 +4,14 @@
 \maketitle
 
 \abstract{
-The System-Wide Monitoring Program (SWMP) was implemented in 1995 by the US National Estuarine Research Reserve System. This program has provided two decades of continuous monitoring data at over 140 fixed stations in 28 estuaries. However, the increasing quantity of data provided by the monitoring network has complicated broad-scale comparisons between systems and, in some cases, prevented simple trend analysis of water quality parameters at individual sites.  This article describes the \CRANpkg{SWMPr} package that provides several functions to facilitate data retrieval, organization, and analysis of time series data in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  The \CRANpkg{SWMPr} package has facilitated a cross-reserve comparison of water quality trends and links quantitative information with analysis tools that has use for more generic applications to environmental time series.
+The System-Wide Monitoring Program (SWMP) was implemented in 1995 by the US National Estuarine Research Reserve System. This program has provided two decades of continuous monitoring data at over 140 fixed stations in 28 estuaries. However, the increasing quantity of data provided by the monitoring network has complicated broad-scale comparisons between systems and, in some cases, prevented simple trend analysis of water quality parameters at individual sites.  This article describes the \CRANpkg{SWMPr} package that provides several functions to facilitate data retrieval, organization, and analysis of time series data in the reserve estuaries.  Previously unavailable functions for estuaries are also provided to estimate rates of ecosystem metabolism using the open-water method.  The \pkg{SWMPr} package has facilitated a cross-reserve comparison of water quality trends and links quantitative information with analysis tools that has use for more generic applications to environmental time series.
 }
 
 \section{Introduction}
 
 The development of low-cost, automated sensors that collect data in near real-time has enabled a proliferation of standardized environmental monitoring programs \citep{Glasgow04,Fries08}.  An invaluable source of monitoring data for coastal regions in the United States is provided by the National Estuarine Research Reserve System (NERRS, \url{http://www.nerrs.noaa.gov/}).  This network of 28 estuary reserves was created to address long-term research, monitoring, education, and stewardship goals in support of coastal management.  The System-Wide Monitoring Program (SWMP) was implemented in 1995 at over 140 stations across the reserves to provide a robust, long-term monitoring system for water quality, weather, and land-use/habitat change.  Environmental researchers have expressed a need for quantitative analysis tools to evaluate trends in water quality time series given the quantity and quality of data provided by SWMP \citep{SWMP14}.
 
-This article describes the \CRANpkg{SWMPr} package that was developed for estuary monitoring data from the System-Wide Monitoring Program.  Functions provided by \CRANpkg{SWMPr} address many common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify parameters of interest.  Additionally, web applications derived from \CRANpkg{SWMPr} and \CRANpkg{shiny} illustrate potential applications using the functions in this package.  The software is provided specifically for use with NERRS data, although many of the applications are relevant for addressing common challenges working with large environmental datasets.
+This article describes the \CRANpkg{SWMPr} package that was developed for estuary monitoring data from the System-Wide Monitoring Program.  Functions provided by \pkg{SWMPr} address many common issues working with large datasets created from automated sensor networks, such as data pre-processing to remove unwanted information, combining data from different sources, and exploratory analyses to identify parameters of interest.  Additionally, web applications derived from \pkg{SWMPr} and \CRANpkg{shiny} illustrate potential applications using the functions in this package.  The software is provided specifically for use with NERRS data, although many of the applications are relevant for addressing common challenges working with large environmental datasets.
 
 \section{Overview of the SWMP network}
 
@@ -35,16 +35,16 @@ At the time of writing, the CDMO web portal provides over 60 million water quali
 \caption{Retrieval functions available from the \pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \code{?all\_params} for individual functions or \code{help.search(`retrieve', package = `SWMPr')} for all).\label{tab:retrieve}} 
 \begin{center}
 \begin{tabular}{lp{3.5in}}
-\hline\hline
+\toprule
 \multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
+\midrule
 \code{all\_params}&Retrieve records starting with the most recent at a given station, all parameters.  Wrapper to \code{exportAllParamsXMLNew} function on web services.\tabularnewline
 \code{all\_params\_dtrng}&Retrieve records of all parameters within a given date range for a station.  Optional argument for a single parameter. Wrapper to \code{exportAllParamsDateRangeXMLNew}.\tabularnewline
 \code{import\_local}&Import files from a local path.  The files must be in a specific format, such as those returned from the CDMO using the zip downloads option.\tabularnewline
 \code{single\_param}&Retrieve records for a single parameter starting with the most recent at a given station.  Wrapper to \code{exportSingleParamXMLNew} function on web services.\tabularnewline
 \code{site\_codes}&Get metadata for all stations, wrapper to \code{exportStationCodesXMLNew} function on web services.\tabularnewline
 \code{site\_codes\_ind}&Get metadata for all stations at a single site, wrapper to \code{NERRFilterStationCodesXMLNew} function on web services.\tabularnewline
-\hline
+\bottomrule
 \end{tabular}\end{center}
 
 \end{table}
@@ -119,9 +119,9 @@ attr(dat, 'station')
 \caption{Attributes of a \code{"swmpr"} object that describe characteristics of the data.\label{tab:attributes}} 
 \begin{center}
 \begin{tabular}{lp{0.75in}p{3.25in}}
-\hline\hline
+\toprule
 \multicolumn{1}{l}{Attributes}&\multicolumn{1}{c}{Class}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
+\midrule
 \code{names}&character&Column names of the entire data set, inherited from the \code{data.frame} object class.\tabularnewline
 \code{row.names}&integer&Row names of the data set, inherited from the \code{data.frame} object class.\tabularnewline
 \code{class}&character&Class of the data object indicating \code{"swmpr"} and \code{"data.frame"}.\tabularnewline
@@ -131,7 +131,7 @@ attr(dat, 'station')
 \code{date\_rng}&POSIXct&Start and end dates for the data.\tabularnewline
 \code{timezone}&character&Timezone of the station using the city/country format\textsuperscript{a}.\tabularnewline
 \code{stamp\_class}&character&Class of the \code{datetimestamp} column, usually \code{"POSIXct"} unless data have been aggregated.\tabularnewline
-\hline
+\bottomrule
 \end{tabular}\end{center}
 
 \textsuperscript{a}\footnotesize Time zones that do not observe daylight savings are used for \code{"swmpr"} objects and may not be cities in the United States.  For example, \code{America/Jamaica} is used for Eastern Standard Time.\end{table}
@@ -156,16 +156,16 @@ The \code{qaqc} function is a simple screen to retain observations from the data
 \caption{Organizing functions available from the \pkg{SWMPr} package. Full documentation for each function is in the help file (e.g., execute \code{?comb} for individual functions or \code{help.search(`organize', package = `SWMPr')} for all).\label{tab:organize}} 
 \begin{center}
 \begin{tabular}{lp{3.5in}}
-\hline\hline
+\toprule
 \multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
+\midrule
 \code{comb}&Combines \code{"swmpr"} objects to a common time series using setstep, such as combining the weather, nutrients, and water quality data for a single station.\tabularnewline
 \code{qaqc}&Remove QAQC columns and remove data based on QAQC flag values for a \code{"swmpr"} object.\tabularnewline
 \code{qaqcchk}&View a summary of the number of observations in a \code{"swmpr"} object that are assigned to each QAQC flag used by CDMO.\tabularnewline
 \code{rem\_reps}&Remove replicate nutrient data that occur on the same day.  The default is to average replicates.\tabularnewline
 \code{setstep}&Format data from a \code{"swmpr"} object to a continuous time series at a given timestep.\tabularnewline
 \code{subset}&Subset by dates and/or columns for a \code{"swmpr"} object.  This is a method passed to the generic \code{subset} function in the base installation.\tabularnewline
-\hline
+\bottomrule
 \end{tabular}\end{center}
 
 \end{table}
@@ -250,9 +250,9 @@ The analysis functions range from general purpose tools for time series analysis
 \caption{Analysis functions available from the \pkg{SWMPr} package.  Full documentation for each function is in the help file (e.g., execute \code{?aggreswmp} for individual functions or \code{help.search(`analyze', package = `SWMPr')} for all).\label{tab:analyze}} 
 \begin{center}
 \begin{tabular}{lp{3.5in}}
-\hline\hline
+\toprule
 \multicolumn{1}{l}{Function}&\multicolumn{1}{c}{Description}\tabularnewline
-\hline
+\midrule
 \code{aggreswmp}&Aggregate \code{"swmpr"} objects for different time periods - years, quarters, months,  weeks, days, or hours.  The aggregation function defaults to the mean.\tabularnewline
 \code{aggremetab}&Aggregate metabolism data from a \code{"swmpr"} object.  This is primarly used within \code{plot\_metab} but may be useful for simple summaries of daily metabolism data.\tabularnewline
 \code{ecometab}&Estimate ecosystem metabolism for a combined water quality and weather dataset using the open-water method \citep{Odum56}.\tabularnewline
@@ -267,7 +267,7 @@ The analysis functions range from general purpose tools for time series analysis
 \code{plot\_metab}&Plot ecosystem metabolism estimates after running \code{ecometab} on a combined \code{"swmpr"} object.\tabularnewline
 \code{plot\_summary}&Create summary plots of seasonal/annual trends and anomalies for a single parameter.\tabularnewline
 \code{smoother}&Smooth \code{"swmpr"} objects with a moving window average, passed to \code{filter}.\tabularnewline
-\hline
+\bottomrule
 \end{tabular}\end{center}
 
 \end{table}
@@ -296,7 +296,7 @@ plot(dc_dat)
 \caption[An additive decomposition of dissolved oxygen into a trend, seasonal (daily), and random component using the \code{decomp} function]{An additive decomposition of dissolved oxygen into a trend, seasonal (daily), and random component using the \code{decomp} function.}\label{fig:decomp_ex1}
 \end{figure}
 
-An alternative approach for decomposition is provided by the \code{decomp\_cj} function, which is a simple wrapper to the \code{decompTs} function in the \CRANpkg{wq} package \citep{Cloern10,Jassby14}.  The \code{decomp\_cj} function is a monthly decomposition for characterizing relatively long-term trends.  This approach works best for nutrient data that are typically obtained on a monthly cycle.  The time series is decomposed into the grandmean, annual, seasonal, and events components (Figure~\ref{fig:decomp_ex2}), as compared to trend, seasonal, and random components for the \code{decomp} function above.  For both functions, the random or events components can be considered anomalies that do not follow the trends in the remaining categories.  Additional arguments passed to \code{decompTs} can be used with \code{decomp\_cj}, such as \code{startyr}, \code{endyr}, and \code{type}.  Values passed to \code{type} are \code{mult} (default) or \code{add}, referring to multiplicative or additive decomposition.
+An alternative approach for decomposition is provided by the \code{decomp\_cj} function, which is a simple wrapper to the \code{decompTs} function in the \pkg{wq} package \citep{Cloern10,Jassby14}.  The \code{decomp\_cj} function is a monthly decomposition for characterizing relatively long-term trends.  This approach works best for nutrient data that are typically obtained on a monthly cycle.  The time series is decomposed into the grandmean, annual, seasonal, and events components (Figure~\ref{fig:decomp_ex2}), as compared to trend, seasonal, and random components for the \code{decomp} function above.  For both functions, the random or events components can be considered anomalies that do not follow the trends in the remaining categories.  Additional arguments passed to \code{decompTs} can be used with \code{decomp\_cj}, such as \code{startyr}, \code{endyr}, and \code{type}.  Values passed to \code{type} are \code{mult} (default) or \code{add}, referring to multiplicative or additive decomposition.
 
 \begin{example}
 # get data
@@ -342,7 +342,7 @@ plot_metab(res)
 \caption[Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida]{Monthly means (95\% confidence) of ecosystem metabolism estimates (net ecosystem metabolism, gross production, and total respiration) for combined water quality and weather data for two years at Apalachicola Bay, Florida.}\label{fig:metab_ex}
 \end{figure}
 
-Exploratory graphics are also useful for evaluating general trends in observed data.  Several graphics showing seasonal and annual trends for a single SWMP parameter can be obtained using the \code{plot\_summary} function (Figure~\ref{fig:summary_ex}).  The plots include monthly distributions, monthly anomalies, and annual anomalies in multiple formats.  An interactive \CRANpkg{shiny} web application \citep{Chang15} that uses this function is available for viewing results for all SWMP sites (see the \nameref{swmp_apps} section).
+Exploratory graphics are also useful for evaluating general trends in observed data.  Several graphics showing seasonal and annual trends for a single SWMP parameter can be obtained using the \code{plot\_summary} function (Figure~\ref{fig:summary_ex}).  The plots include monthly distributions, monthly anomalies, and annual anomalies in multiple formats.  An interactive \pkg{shiny} web application \citep{Chang15} that uses this function is available for viewing results for all SWMP sites (see the \nameref{swmp_apps} section).
 
 \begin{example}
 ## import data
@@ -383,7 +383,7 @@ overplot(dat, select = c('depth', 'do_mgl', 'ph', 'turb'),
 \caption[The \code{overplot} function plots multiple variables on the same y-axis]{The \code{overplot} function plots multiple variables on the same y-axis.}\label{fig:overplot}
 \end{figure}
 
-Finally, the \code{map\_reserve} function can be used to create a map of stations at a reserve using the \CRANpkg{ggmap} package (Figure~\ref{fig:map_ex}, \citet{Kahle13}). The function uses Google maps of four types that can be set with the \code{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \code{zoom} argument can be chosen through trial and error depending on the spatial extent of the reserve.
+Finally, the \code{map\_reserve} function can be used to create a map of stations at a reserve using the \pkg{ggmap} package (Figure~\ref{fig:map_ex}, \citet{Kahle13}). The function uses Google maps of four types that can be set with the \code{map\_type} argument: terrain (default), satellite, roadmap, or hybrid.  The \code{zoom} argument can be chosen through trial and error depending on the spatial extent of the reserve.
 
 \begin{example}
 # plot the stations at Jacques Cousteau reserve
@@ -402,12 +402,12 @@ map_reserve('jac')
 \section{Applications using the \pkg{SWMPr} package}
 \label{swmp_apps}
 
-Two \CRANpkg{shiny} web applications illustrate the improved ability to synthesize and evaluate multi-year time series using \pkg{SWMPr}.  The first application evaluates trends in SWMP data within and between sites using an interactive \pkg{leaflet} map (\citet{Cheng15}, Figure~\ref{fig:swmp_comp}): \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time, whereas trends between sites are shown on the map for each station as circles that identify the direction and significance of the trend.  More robust methods for evaluating trends are currently not provided by the application and the use of simple linear regression is meant for initial exploratory analysis.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \href{https://beckmw.shinyapps.io/swmp_summary/}{https://beckmw.shinyapps.io/swmp\_summary}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting.
+Two \pkg{shiny} web applications illustrate the improved ability to synthesize and evaluate multi-year time series using \pkg{SWMPr}.  The first application evaluates trends in SWMP data within and between sites using an interactive \pkg{leaflet} map (\citet{Cheng15}, Figure~\ref{fig:swmp_comp}): \url{https://beckmw.shinyapps.io/swmp_comp}.  Trends between reserves can be viewed using the map, whereas trends at individual sites can be viewed by clicking on a map location.  Site-level trends are shown below the map with a simple linear regression to show an increase or decrease in values over time, whereas trends between sites are shown on the map for each station as circles that identify the direction and significance of the trend.  More robust methods for evaluating trends are currently not provided by the application and the use of simple linear regression is meant for initial exploratory analysis.  The second application provides graphical summaries of water quality, weather, or nutrient station data at individual stations using the \code{plot\_summary} function: \url{https://beckmw.shinyapps.io/swmp_summary/}.  The output is identical to Figure~\ref{fig:summary_ex} with the addition of drop down menus to select the station, date range, and parameter for plotting.
 
 \begin{figure}[!h]
 \begin{center}
 \includegraphics[width = \textwidth]{swmp_comp.pdf}
-\caption{Online application for comparing trends in SWMP data parameters using an interactive map.  Link: \href{https://beckmw.shinyapps.io/swmp_comp}{https://beckmw.shinyapps.io/swmp\_comp}}
+\caption{Online application for comparing trends in SWMP data parameters using an interactive map.  Link: \url{https://beckmw.shinyapps.io/swmp_comp}}
 \label{fig:swmp_comp}
 \end{center}
 \end{figure}
@@ -423,8 +423,9 @@ I acknowledge the significant work of NERRS researchers and staff that has allow
 \bibliography{beck}
 
 \address{Marcus W Beck\\
-  ORISE Research Participation Program\\
-  USEPA National Health and Environmental Effects Research Laboratory, Gulf Ecology Division\\
+  US Environmental Protection Agency\\
+  National Health and Environmental Effects Research Laboratory\\
+  Gulf Ecology Division\\
   1 Sabine Island Drive, Gulf Breeze, FL 32651\\
   USA\\}
 \email{beck.marcus@epa.gov}
